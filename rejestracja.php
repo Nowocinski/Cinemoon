@@ -1,0 +1,1 @@
+SELECT filmy.tytul ,sale.nr_sali, repertuar.czas_rozpoczecia, repertuar.cena_biletu FROM repertuar, sale, filmy WHERE repertuar.id_sali = sale.nr_sali AND repertuar.id_filmu=filmy.tytul
