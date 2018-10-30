@@ -30,8 +30,9 @@
 
     include "side_part/gora.php";
     include "side_part/nav.php";
+    $id_klienta = $_SESSION['id_klienta'];
 ?>
-<div class="konto">
+
     <div class="container">
         [<a href="wyloguj.php">Wyloguj</a>]<br>
 
@@ -76,24 +77,63 @@
                 <b>TWOJE REZERWACJE</b>
             </header>
             <section>
-                
-                <table>
-                    <tr>
-                        <th>Film</th>
-                        <th>Termin</th>
-                        <th>Sala</th>
-                        <th>Rząd</th>
-                        <th>Miejsce</th>
-                    </tr>
+<?php
+            //Wyłączenie worningów i włączenie wyświetlania wyjątków
+            mysqli_report(MYSQLI_REPORT_STRICT);
+            require_once "connect.php";
                     
-                    <tr>
-                        <th><span style="font-weight: 400;">Film</span></th>
-                        <th>Termin</th>
-                        <th>Sala</th>
-                        <th>Rząd</th>
-                        <th>Miejsce</th>
-                    </tr>
-                </table>
+            try
+            {
+                $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+            
+                if($polaczenie->connect_errno != 0)
+                    throw new Exception(mysqli_connect_errno());
+                
+                else
+                {
+                    // Kodowanie polskich znaków
+                    $polaczenie->query("SET NAMES utf8");
+                    $rezultat = $polaczenie->query("SELECT * FROM rezerwacje INNER JOIN klienci ON rezerwacje.id_klienta=klienci.id_klienta INNER JOIN repertuar ON rezerwacje.id_repertuaru=repertuar.id_repertuaru INNER JOIN filmy ON repertuar.id_filmu=filmy.id_filmu INNER JOIN sale ON repertuar.id_sali=sale.id_sali WHERE rezerwacje.id_klienta='$id_klienta' AND repertuar.czas_rozpoczecia > CAST(CONCAT(CURDATE(),' ',CURTIME()) as DATETIME) ORDER BY repertuar.czas_rozpoczecia ASC");
+                    
+                    if(!$rezultat)
+                        throw new Exception($polaczenie->error);
+                    
+                    else
+                    {
+                        $ilosc_filmow = $rezultat->num_rows;
+                        
+                        if($ilosc_filmow == 0)
+                        {
+                            echo '<span style="color: gray">Brak rezerwacji na tym koncie</span>';
+                        }
+                        
+                        else
+                        {
+                            echo '<span style="font-weight: 500;">Ile rezerwacji: '.$ilosc_filmow.'</span>';
+                            echo '<div class="table"><table class="table"><tr><th>Film</th><th>Termin</th><th>Sala</th><th>Rząd</th><th>Miejsce</th><th>Cena</th><tr>';
+                            while($wiersz = $rezultat->fetch_assoc())
+                            {
+                                echo '<tr><th><span style="font-weight: 400;">'.$wiersz['tytul'].'</span></th>';
+                                echo '<th><span style="font-weight: 400;">'.$wiersz['czas_rozpoczecia'].'</span></th>';
+                                echo '<th><span style="font-weight: 400;">'.$wiersz['nr_sali'].'</span></th>';
+                                echo '<th><span style="font-weight: 400;">'.$wiersz['rzad'].'</span></th>';
+                                echo '<th><span style="font-weight: 400;">'.$wiersz['miejsce'].'</span></th>';
+                                echo '<th><span style="font-weight: 400;">'.$wiersz['koszt'].' zł</span></th>';
+                                echo '<th><span style="font-weight: 400;"><a href="odwolaj-rezerwacje.php" class="btn btn-warning" role="button">Odwołaj</a></form></span></th></tr>';
+                            }
+                            echo '</table></div>';
+                        }
+                    }
+                    $polaczenie->close();
+                }
+            }
+                    
+            catch(Eeception $e)
+            {
+                echo '<span style="color: red">Błąd serwera. Spróbuj zarejestrować się później</span>';
+                echo '<br>Informacja deweloperska: '.$e;
+            }
+?>
             </section>
         </article>
         
@@ -102,20 +142,67 @@
                 <b>POPRZEDNIE REZERWACJE</b>
             </header>
             <section>
+<?php
+            //Wyłączenie worningów i włączenie wyświetlania wyjątków
+            mysqli_report(MYSQLI_REPORT_STRICT);
+            require_once "connect.php";
+                    
+            try
+            {
+                $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+            
+                if($polaczenie->connect_errno != 0)
+                    throw new Exception(mysqli_connect_errno());
                 
-                <table>
-                    <tr>
-                        <th>Film</th>
-                        <th>Termin</th>
-                        <th>Sala</th>
-                        <th>Rząd</th>
-                        <th>Miejsce</th>
-                    </tr>
-                </table>
+                else
+                {
+                    // Kodowanie polskich znaków
+                    $polaczenie->query("SET NAMES utf8");
+                    $rezultat = $polaczenie->query("SELECT * FROM rezerwacje INNER JOIN klienci ON rezerwacje.id_klienta=klienci.id_klienta INNER JOIN repertuar ON rezerwacje.id_repertuaru=repertuar.id_repertuaru INNER JOIN filmy ON repertuar.id_filmu=filmy.id_filmu INNER JOIN sale ON repertuar.id_sali=sale.id_sali WHERE rezerwacje.id_klienta='$id_klienta' AND repertuar.czas_rozpoczecia < CAST(CONCAT(CURDATE(),' ',CURTIME()) as DATETIME) ORDER BY repertuar.czas_rozpoczecia ASC");
+                    
+                    if(!$rezultat)
+                        throw new Exception($polaczenie->error);
+                    
+                    else
+                    {
+                        $ilosc_filmow = $rezultat->num_rows;
+                        
+                        if($ilosc_filmow == 0)
+                        {
+                            echo '<span style="color: gray">Brak wcześniejszych rezerwacji na tym koncie</span>';
+                        }
+                        
+                        else
+                        {
+                            echo '<span style="font-weight: 500;">Ile rezerwacji: '.$ilosc_filmow.'</span>';
+                            echo '<div class="table"><table class="table"><tr><th>Film</th><th>Termin</th><th>Sala</th><th>Rząd</th><th>Miejsce</th><th>Cena</th><tr>';
+                            while($wiersz = $rezultat->fetch_assoc())
+                            {
+                                echo '<tr><th><span style="font-weight: 400;">'.$wiersz['tytul'].'</span></th>';
+                                echo '<th><span style="font-weight: 400;">'.$wiersz['czas_rozpoczecia'].'</span></th>';
+                                echo '<th><span style="font-weight: 400;">'.$wiersz['nr_sali'].'</span></th>';
+                                echo '<th><span style="font-weight: 400;">'.$wiersz['rzad'].'</span></th>';
+                                echo '<th><span style="font-weight: 400;">'.$wiersz['miejsce'].'</span></th>';
+                                echo '<th><span style="font-weight: 400;">'.$wiersz['koszt'].' zł</span></th>';
+                                echo '<th><span style="font-weight: 400;"><a href="odwolaj-rezerwacje.php" class="btn btn-warning" role="button">Odwołaj</a></form></span></th></tr>';
+                            }
+                            echo '</table></div>';
+                        }
+                    }
+                    $polaczenie->close();
+                }
+            }
+                    
+            catch(Eeception $e)
+            {
+                echo '<span style="color: red">Błąd serwera. Spróbuj zarejestrować się później</span>';
+                echo '<br>Informacja deweloperska: '.$e;
+            }
+?>
             </section>
         </article>
     </div>
-</div>
+
 <?php
     include 'side_part/dol.php'
 ?>

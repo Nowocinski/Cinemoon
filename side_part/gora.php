@@ -12,4 +12,4 @@
 		<link rel="Shortcut icon" href="https://pbs.twimg.com/profile_images/623896926031732737/o9AWiktC.jpg" />
 		<script src='https://www.google.com/recaptcha/api.js'></script>
     </head>
-    <body>
+    <body class="konto">

@@ -6,7 +6,7 @@
 
     include "side_part/gora.php";
     include "side_part/nav.php";
-    echo '<div class="konto">';
+    //echo '<div class="konto">';
     echo '<div class="container">';
     echo '<div class="row">';
     //--------------------------------------------------------------------------
@@ -49,7 +49,7 @@
                    echo '</div>'; /* Zamknięcie - Row na zdjęcie i opis wilmu */
                    echo '</div>'; /* Zamknięcie - Contener na zdjęcie i opis wilmu */
                    
-                   $rezultat2 = $polaczenie->query("SELECT * FROM repertuar INNER JOIN sale ON repertuar.id_sali=sale.id_sali INNER JOIN filmy ON repertuar.id_filmu=filmy.id_filmu WHERE filmy.tytul='$tytul' ORDER BY repertuar.czas_rozpoczecia ASC");
+                   $rezultat2 = $polaczenie->query("SELECT * FROM repertuar INNER JOIN sale ON repertuar.id_sali=sale.id_sali INNER JOIN filmy ON repertuar.id_filmu=filmy.id_filmu WHERE filmy.tytul='$tytul' AND repertuar.czas_rozpoczecia > CAST(CONCAT(CURDATE(),' ',CURTIME()) as DATETIME) ORDER BY repertuar.czas_rozpoczecia ASC");
                    
                    if(!$rezultat2)
                         throw new Exception($polaczenie->error);
@@ -68,6 +68,8 @@
                            echo '<div class="col-3"><b>Nr sali: </b>'.$wiersz2['nr_sali'].'</div>';
                            echo '<div class="col-3"><b>Termin: </b>'.$wiersz2['czas_rozpoczecia'].'</div>';
                            echo '<div class="col-3"><b>Cena biletu: </b>'.$wiersz2['cena_biletu'].' zł</div>';
+                           
+                           // !!!!!!!!!! Na później: Zmień przycisk cena na napis "Wszystkie miejsca zajęte"
                            echo '<div class="col-3"><button type="button" class="btn-warning btn-md">Zapisz się</button></div>';
                            
                            echo '</div>';
@@ -92,7 +94,7 @@
     }
     echo '</div>'; /* Zamknięcie diva row */
     echo '</div>'; /* Zamknięcie diva container */
-    echo '</div>'; /* Zamknięcie div konto */
+    //echo '</div>'; /* Zamknięcie div konto */
     include "side_part/dol.php";
 
 ?>

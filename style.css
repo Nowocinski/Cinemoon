@@ -35,12 +35,17 @@
 .konto{
     background-color: #182529;
     width: 100%;
-    height: 1000px; /* Później trzev=ba to zmienić :-/ */
 }
 
 .dane-konta{
     background-color: white;
     color: black;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.dane-konta2{
+    color: white;
     padding: 10px;
     margin-bottom: 20px;
 }

@@ -9,6 +9,7 @@
     include "side_part/gora.php";
 ?>
 
+<div class="dane-konta2">
 <header>
     <h1>Logowanie</h1>
     <section>
@@ -38,3 +39,4 @@
         echo '<span style="color: red">'.$_SESSION['blad'].'</span><br>';
     include "side_part/dol.php";
 ?>
+</div>
