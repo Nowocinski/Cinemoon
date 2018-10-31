@@ -29,14 +29,15 @@
                     {
 echo<<<END
                        </ul>
-                       <form class="form-inline" action="zaloguj.php" method="post">
-                            <input type="text" name="login" class="form-control mr-2" placeholder="Login">
-                            <input type="password" name="haslo" class="form-control mr-2" placeholder="hasło">
-                            <button type="submit" class="btn btn-primary mr-5">Zaloguj</button>
-                       </form>
-                       <form action="rejestracja.php">
-                       <button type="submit" class="btn btn-danger mt-2">REJESTRACJA</button>
-                       </form>
+                       <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggler="dropdown role="button">KONTO</a>
+                            
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="logowanie.php">Logowanie</a>
+                                <a class="dropdown-item" href="rejestracja.php">Rejestracja</a>
+                            </div>
+                            
+                       </div>
 END;
                     }
                     else

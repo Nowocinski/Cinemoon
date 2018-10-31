@@ -110,7 +110,7 @@
                         else
                         {
                             echo '<span style="font-weight: 500;">Ile rezerwacji: '.$ilosc_filmow.'</span>';
-                            echo '<div class="table"><table class="table"><tr><th>Film</th><th>Termin</th><th>Sala</th><th>Rząd</th><th>Miejsce</th><th>Cena</th><tr>';
+                            echo '<div class="table-responsive"><table class="table"><tr><th>Film</th><th>Termin</th><th>Sala</th><th>Rząd</th><th>Miejsce</th><th>Cena</th><tr>';
                             while($wiersz = $rezultat->fetch_assoc())
                             {
                                 echo '<tr><th><span style="font-weight: 400;">'.$wiersz['tytul'].'</span></th>';
@@ -175,7 +175,7 @@
                         else
                         {
                             echo '<span style="font-weight: 500;">Ile rezerwacji: '.$ilosc_filmow.'</span>';
-                            echo '<div class="table"><table class="table"><tr><th>Film</th><th>Termin</th><th>Sala</th><th>Rząd</th><th>Miejsce</th><th>Cena</th><tr>';
+                            echo '<div class="table-responsive"><table class="table"><tr><th>Film</th><th>Termin</th><th>Sala</th><th>Rząd</th><th>Miejsce</th><th>Cena</th><tr>';
                             while($wiersz = $rezultat->fetch_assoc())
                             {
                                 echo '<tr><th><span style="font-weight: 400;">'.$wiersz['tytul'].'</span></th>';

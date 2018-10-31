@@ -2,6 +2,7 @@
     $title = "Rejestracja";
     //----------------------------------------------
     include "side_part/gora.php";
+    include "side_part/nav.php";
 
     
 ?>
@@ -50,6 +51,10 @@
                 <option>Normalne</option>
                 <option>Studenckie</option>
             </select>
+        </div>
+        
+        <div class="form-group">
+            <label><input type="checkbox" value=""> Przeczytałem i akceptuję regulamin</label>
         </div>
 
         <button type="submit" class="btn btn-primary">Wyślij</button> <button type="reset" class="btn btn-default">Wyczyść</button>

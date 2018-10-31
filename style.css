@@ -44,8 +44,19 @@
     margin-bottom: 20px;
 }
 
-.dane-konta2{
+.dane-konta2{ /* Margines u dołu */
     color: white;
     padding: 10px;
     margin-bottom: 20px;
+}
+
+.dane-konta3{ /* Margines u góry */
+    background-color: white;
+    color: black;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.obraz{
+    width: 100%;
 }

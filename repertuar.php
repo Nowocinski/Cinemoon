@@ -7,7 +7,7 @@
     include "side_part/gora.php";
     include "side_part/nav.php";
     //echo '<div class="konto">';
-    echo '<div class="container">';
+    echo '<div class="container mt-3">';
     echo '<div class="row">';
     //--------------------------------------------------------------------------
     //Wyłączenie worningów i włączenie wyświetlania wyjątków
@@ -70,7 +70,7 @@
                            echo '<div class="col-3"><b>Cena biletu: </b>'.$wiersz2['cena_biletu'].' zł</div>';
                            
                            // !!!!!!!!!! Na później: Zmień przycisk cena na napis "Wszystkie miejsca zajęte"
-                           echo '<div class="col-3"><button type="button" class="btn-warning btn-md">Zapisz się</button></div>';
+                           echo '<div class="col-3"><button type="button" class="btn btn-warning btn-md">Zapisz się</button></div>';
                            
                            echo '</div>';
                            echo '</div>';

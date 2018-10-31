@@ -36,7 +36,7 @@
                         {
                             if($i>=8) break;
                             //Plakaty mają na około tą dziwaczną obwódkę od przycisku, fujj :-/
-                            echo '<div class="col-sm-3"><form action="nasze-filmy.php" method="post"><figure><button type="submit" class="btn-link" name="film" value='.$wiersz['grafika'].'>';
+                            echo '<div class="col-sm-3"><form action="nasze-filmy.php" method="post"><figure><button type="submit" class="btn btn-link" name="film" value='.$wiersz['grafika'].'>';
                             echo '';
                             echo '<img src="side_part/filmy/'.$wiersz['grafika'].'" alt="'.$wiersz['grafika'].' height="400" width="200">';
                             echo '</button>';
