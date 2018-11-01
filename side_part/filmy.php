@@ -52,7 +52,7 @@
             
             catch(Exception $e)
             {
-                echo '<span style="color: red">Błąd serwera. Spróbuj zarejestrować się później</span>';
+                echo '<span style="color: red;">Błąd serwera. Spróbuj zarejestrować się później</span>';
                 //echo '<br>Informacja deweloperska: '.$e;
             }
 ?>

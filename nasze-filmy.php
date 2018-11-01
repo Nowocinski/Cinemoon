@@ -124,20 +124,28 @@ END;
                                     $ilosc_miejsc_w_sali = $wiersz['ilosc_rzedow'] * $wiersz['ilosc_miejsc'];
                                     $id_repertuaru = $wiersz['id_repertuaru'];
 //------------------------------------------------------------------------------------------------------------------------
-        $rezultat2 = $polaczenie->query("SELECT * FROM rezerwacje WHERE id_repertuaru='$id_repertuaru'");
-        $ilosc_osob_ktore_poszly_na_repertuar = $rezultat2->num_rows;
+        $rezultatX = $polaczenie->query("SELECT * FROM rezerwacje WHERE id_repertuaru='$id_repertuaru'");
+        $ilosc_osob_ktore_poszly_na_repertuar = $rezultatX->num_rows;
                                     
-        if(!$rezultat2)
+        if(!$rezultatX)
             throw new Exception($polaczenie->error);
 //------------------------------------------------------------------------------------------------------------------------
 echo<<<END
                     <tr><th>$nr_sali</th><th>$czas_rozpoczecia</th><th>$cena_biletu zł</th>
                     <th>
 END;
-                    if($ilosc_osob_ktore_poszly_na_repertuar >= $ilosc_miejsc_w_sali)
-                        echo '<button type="button" class="btn btn-danger btn-md">Bilety wyprzedane</button>';
+                    if($ilosc_osob_ktore_poszly_na_repertuar < $ilosc_miejsc_w_sali)
+                    {
+                        echo '<div class="col-3"><button type="button" class="btn btn-warning btn-md">Zapisz się</button></div>';
+                        echo 'ilosc_osob_ktore_poszly_na_repertuar: '.$ilosc_osob_ktore_poszly_na_repertuar.'<br>ilosc_miejsc_w_sali: '.$ilosc_miejsc_w_sali;
+                        echo '<br>Id_repertuaru: '.$id_repertuaru;
+                    }
                     else
-                        echo '<button type="button" class="btn btn-warning btn-md">Zapisz się</button>';
+                    {
+                        echo '<div class="col-3"><button type="button" class="btn btn-danger btn-md">Bilety wyprzedane</button></div>';
+                        echo 'ilosc_osob_ktore_poszly_na_repertuar: '.$ilosc_osob_ktore_poszly_na_repertuar.'<br>ilosc_miejsc_w_sali: '.$ilosc_miejsc_w_sali;
+                        echo '<br>Id_repertuaru: '.$id_repertuaru;
+                    }
 echo<<<END
                     </th><tr>
 END;
@@ -152,6 +160,8 @@ END;
                             }
                         }
                     }
+                    
+                    $polaczenie->close();
                 }
                 
                 catch(Exception $e)

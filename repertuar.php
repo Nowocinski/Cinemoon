@@ -6,7 +6,6 @@
 
     include "side_part/gora.php";
     include "side_part/nav.php";
-    //echo '<div class="konto">';
     echo '<div class="container mt-3">';
     echo '<div class="row">';
     //--------------------------------------------------------------------------
@@ -69,9 +68,30 @@
                            echo '<div class="col-3"><b>Termin: </b>'.$wiersz2['czas_rozpoczecia'].'</div>';
                            echo '<div class="col-3"><b>Cena biletu: </b>'.$wiersz2['cena_biletu'].' zł</div>';
                            
-                           // !!!!!!!!!! Na później: Zmień przycisk cena na napis "Wszystkie miejsca zajęte"
-                           echo '<div class="col-3"><button type="button" class="btn btn-warning btn-md">Zapisz się</button></div>';
-                           
+                           $ilosc_miejsc_w_sali = $wiersz2['ilosc_rzedow'] * $wiersz2['ilosc_miejsc'];
+                           $id_repertuaru = $wiersz2['id_repertuaru'];
+//------------------------------------------------------------------------------------------------------------------------
+        $rezultat3 = $polaczenie->query("SELECT * FROM rezerwacje WHERE id_repertuaru='$id_repertuaru'");
+        $ilosc_osob_ktore_poszly_na_repertuar = $rezultat2->num_rows;
+
+        if(!$rezultat3)
+            throw new Exception($polaczenie->error);
+//------------------------------------------------------------------------------------------------------------------------
+                           if($ilosc_osob_ktore_poszly_na_repertuar < $ilosc_miejsc_w_sali)
+                           {
+echo<<<END
+        <div class="col-3">
+        <form action="wybor-miejsca.php" method="post">
+                <button type="submit" class="btn btn-warning btn-md" name="id_repertuaru" value="$id_repertuaru">
+                    Zapisz się
+                </button>
+            </form>
+        </div>
+END;
+                           }
+                                
+                           else
+                               echo '<div class="col-3"><button type="button" class="btn btn-danger btn-md">Bilety wyprzedane</button></div>';
                            echo '</div>';
                            echo '</div>';
                            
@@ -94,7 +114,6 @@
     }
     echo '</div>'; /* Zamknięcie diva row */
     echo '</div>'; /* Zamknięcie diva container */
-    //echo '</div>'; /* Zamknięcie div konto */
     include "side_part/dol.php";
 
 ?>
