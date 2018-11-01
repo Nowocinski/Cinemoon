@@ -5,18 +5,20 @@
         exit();
     }
     
+    if (session_status() == PHP_SESSION_NONE)
+        session_start();
+
     $id_repertuaru = $_POST['id_repertuaru'];
 
     $title = "Wybór miejsca";
     include "side_part/gora.php";
-    //include "side_part/nav.php";
+    include "side_part/nav.php";
 
-    session_start();
     require_once "connect.php";
 
 echo<<<END
-<div class="container-fluid">
-    <div class="dane-konta mt-3">
+<div class="container-fluid mt-3">
+    <div class="dane-konta">
         <div class="row text-center">
 END;
 
@@ -79,7 +81,7 @@ END;
 echo<<<END
 <div class="col-12 "><div style="color: white; background-color: blue; width: 30%; min-width: 300px; margin-left: auto; margin-right: auto;">EKRAN</div></div>
 <div class="col-12 mt-3">
-<form action="potwierdzenie.php">
+<form action="potwierdzenie.php" method="post">
 END;
       for($i=1; $i<=$ilosc_rzedow; $i++)
       {
@@ -94,7 +96,7 @@ if(!$rezultat4)
     throw new Exception($polaczenie->error);
 //---------------------------------------------------------------------------------------------------------------------------------
               if($czy_zajete == 0)
-                  echo '<button type="submit" class="btn btn-success btn-md m-1 name="miejsce" value="'.$i.' '.$j.'">'.$j.'</button>';
+                  echo '<name="adam" value="adam1"><button type="submit" class="btn btn-success btn-md m-1" name="miejsce" value="'.$id_repertuaru.' '.$i.' '.$j.'" formtarget="_blank">'.$j.'</button>';
               else
                   echo '<button type="button" class="btn btn-danger btn-md m-1">'.$j.'</button>';
           }
@@ -107,7 +109,7 @@ echo<<<END
         <button type="button" class="btn btn-success btn-md m-1 ">9</button> - miejsce wolne
     </div>
     <div class="col-12">
-        <button type="button" class="btn btn-danger btn-md m-1 ">9</button> - miejsce wolne
+        <button type="button" class="btn btn-danger btn-md m-1 ">9</button> - miejsce zajęte
     </div>
 END;
 
@@ -118,7 +120,7 @@ END;
     catch(Exception $e)
     {
         echo '<span style="color: red">Błąd serwera. Spróbuj zarejestrować się później</span>';
-        echo '<br>Informacja deweloperska: '.$e;
+        //echo '<br>Informacja deweloperska: '.$e;
     }
 
 echo<<<END

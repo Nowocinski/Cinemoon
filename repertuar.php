@@ -82,7 +82,7 @@
 echo<<<END
         <div class="col-3">
         <form action="wybor-miejsca.php" method="post">
-                <button type="submit" class="btn btn-warning btn-md" name="id_repertuaru" value="$id_repertuaru">
+                <button type="submit" class="btn btn-warning btn-md" name="id_repertuaru" value="$id_repertuaru" formtarget="_blank">
                     Zapisz się
                 </button>
             </form>
@@ -91,7 +91,7 @@ END;
                            }
                                 
                            else
-                               echo '<div class="col-3"><button type="button" class="btn btn-danger btn-md">Bilety wyprzedane</button></div>';
+                            echo '<div class="col-3"><button type="button" class="btn btn-danger btn-md">Bilety wyprzedane</button></div>';
                            echo '</div>';
                            echo '</div>';
                            
