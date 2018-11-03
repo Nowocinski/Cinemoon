@@ -6,12 +6,6 @@
         exit();
     }
 
-    if(isset($_SESSION['pierwszewejscie']))
-    {
-        echo 'Dziękujemy za zalogowanie się.<br>Oto Twoje konto<br>';
-        unset($_SESSION['pierwszewejscie']);
-    }
-
     if(isset($_SESSION['zwd_imie'])) unset($_SESSIN['zwd_imie']);
     if(isset($_SESSION['zwd_nazwisko'])) unset($_SESSIN['zwd_nazwisko']);
     if(isset($_SESSION['zwd_email'])) unset($_SESSIN['zwd_email']);
@@ -30,12 +24,20 @@
 
     include "side_part/gora.php";
     include "side_part/nav.php";
-    $id_klienta = $_SESSION['id_klienta'];
+    
+    if(isset($_SESSION['id_klienta']))
+        $id_klienta = $_SESSION['id_klienta'];
 ?>
 
     <div class="container">
         [<a href="wyloguj.php">Wyloguj</a>]<br>
-
+<?php
+        if(isset($_SESSION['pierwszewejscie']))
+        {
+            echo '<article class="dane-konta text-center"><h5><p>Dziękujemy, '.$_SESSION['imie'].', za zarejestrowanie się na naszej witrynie.</p><p>Wszystkie informację o rezerwacjach jak i ustawieniach konta znajdują się w tym miejsce</p></h5></article>';
+            unset($_SESSION['pierwszewejscie']);
+        }
+?>
         <article class="dane-konta">
             <header>
                 <b>DANE KONTA</b>
