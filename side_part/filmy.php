@@ -1,7 +1,7 @@
 <?php
     require_once "connect.php";
 ?>
-<article class="filmy">
+<article class="filmy2 text-center">
     <p>NAJNOWSZE FILMY</p>
     <div class="container-fluid">
         <div class="row">

@@ -22,7 +22,7 @@
                     <a class="nav-link active" href="kontakt.php">KONTAKT</a>
                  </li>
                 <li>
-                    <a class="nav-link active" href="pracownicy.php">DLA PRACOWNIKÓW</a>
+                    <a class="nav-link active" href="pracownicy.php">PRACOWNICY</a>
                  </li>
 <?php
                     if(!isset($_SESSION['zalogowany']))

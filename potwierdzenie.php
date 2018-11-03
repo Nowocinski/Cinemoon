@@ -155,11 +155,14 @@ echo<<<END
             <div class="col-12"></div>
             <div class="col-12">
                 <p><span style="color: gray;">Wszystko jest gotowe. Możesz potwierdzić rezerwacje.</sapn></p>
-                <a href="zarezerwuj.php" class="btn btn-danger btn-md m-1">Potwierdzam</button>
+                <form action="zarezerwuj.php" method="post">
+                <button class="btn btn-danger btn-md m-1" name="miejsce" value="$przechwycenie">Potwierdzam</button>
+                </form>
                 <a href="index.php" class="btn btn-warning btn-md m-1">Rezygnuję</a>
             </div>
 END;
 }
+                       
 else
 {
 echo<<<END
