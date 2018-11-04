@@ -78,6 +78,7 @@
                             throw new Exception($polaczenie->error);
                     }
                 }
+                $rezultat->free_result();
                 $polaczenie->close();
             }
         }
