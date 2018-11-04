@@ -21,7 +21,7 @@
             $poprawna_walidacja = false;
             $_SESSION['blad_nowe'] = '<span style="color: red;">Niepoprawny adres e-mail</span>';
         }
-//----------------------------------------------------------------------------------------------------------------------------------
+
         if(strlen($_POST['stare']) == 0)
         {
             $poprawna_walidacja = false;
@@ -84,14 +84,16 @@
                         }
                     }
                 }
+                $rezultat1->free_result();
+                $rezultat2->free_result();
                 $polaczenie->close();
             }
         }
         
         catch(Exception $e)
         {
-            echo '<span style="color: red;">Błąd serwera. Spróbuj zmienić imię później</span>';
-            echo '<br>Informacja deweloperska: '.$e;
+            echo '<span style="color: red;">Błąd serwera. Spróbuj zmienić adres e-mail później</span>';
+            //echo '<br>Informacja deweloperska: '.$e;
         }
     }
 
@@ -101,7 +103,7 @@
 
 <div class="container dane-konta3">
         <form class="form" action="zmien-email.php" method="post">
-            <span style="text-align: center;"><h3>Zmiana imienia</h3></span>
+            <span style="text-align: center;"><h3>Zmiana adres e-mail</h3></span>
             
             <div class="form-group">
                 <label>Podaj poprzedni adres e-mail</label>
@@ -114,10 +116,7 @@
                     }
                 ?>
             </div>
-            
-            
-            
-            
+
             <div class="form-group">
                 <label>Podaj nowy e-mail</label>
                 <input type="text" class="form-control" placeholder="Nowy e-mail" name="nowe" />
@@ -129,14 +128,8 @@
                     }
                 ?>
             </div>
-            
-            
-            
                 <button type="submit" class="btn btn-primary">Zmień e-mail</button>
                 <button type="reset" class="btn btn-default">Wyczyść</button>
-            
-            
-            
         </form>
 </div>
 
