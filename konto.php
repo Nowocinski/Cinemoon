@@ -6,19 +6,19 @@
         exit();
     }
 
-    if(isset($_SESSION['zwd_imie'])) unset($_SESSIN['zwd_imie']);
-    if(isset($_SESSION['zwd_nazwisko'])) unset($_SESSIN['zwd_nazwisko']);
-    if(isset($_SESSION['zwd_email'])) unset($_SESSIN['zwd_email']);
-    if(isset($_SESSION['zwd_haslo1'])) unset($_SESSIN['zwd_haslo1']);
-    if(isset($_SESSION['zwd_haslo2'])) unset($_SESSIN['zwd_haslo2']);
-    if(isset($_SESSION['zwd_nr_telefonu'])) unset($_SESSIN['zwd_nr_telefonu']);
+    if(isset($_SESSION['zwd_imie'])) unset($_SESSION['zwd_imie']);
+    if(isset($_SESSION['zwd_nazwisko'])) unset($_SESSION['zwd_nazwisko']);
+    if(isset($_SESSION['zwd_email'])) unset($_SESSION['zwd_email']);
+    if(isset($_SESSION['zwd_haslo1'])) unset($_SESSION['zwd_haslo1']);
+    if(isset($_SESSION['zwd_haslo2'])) unset($_SESSION['zwd_haslo2']);
+    if(isset($_SESSION['zwd_nr_telefonu'])) unset($_SESSION['zwd_nr_telefonu']);
 
-    if(isset($_SESSION['blad_imie'])) unset($_SESSIN['blad_imie']);
-    if(isset($_SESSION['blad_nazwisko'])) unset($_SESSIN['blad_nazwisko']);
-    if(isset($_SESSION['blad_email'])) unset($_SESSIN['blad_email']);
-    if(isset($_SESSION['blad_haslo1'])) unset($_SESSIN['blad_haslo1']);
-    if(isset($_SESSION['blad_haslo2'])) unset($_SESSIN['blad_haslo2']);
-    if(isset($_SESSION['blad_nr_telefonu'])) unset($_SESSIN['blad_nr_telefonu']);
+    if(isset($_SESSION['blad_imie'])) unset($_SESSION['blad_imie']);
+    if(isset($_SESSION['blad_nazwisko'])) unset($_SESSION['blad_nazwisko']);
+    if(isset($_SESSION['blad_email'])) unset($_SESSION['blad_email']);
+    if(isset($_SESSION['blad_haslo1'])) unset($_SESSION['blad_haslo1']);
+    if(isset($_SESSION['blad_haslo2'])) unset($_SESSION['blad_haslo2']);
+    if(isset($_SESSION['blad_nr_telefonu'])) unset($_SESSION['blad_nr_telefonu']);
 
     $title = 'Konto';
 
@@ -64,13 +64,13 @@
                 <a href="zmien-email.php">Zmień adres e-mail</a>
             </ul>
             <ul>
-                <a href="#">Zmień adres hasło</a>
+                <a href="zmien-haslo.php">Zmień adres hasło</a>
             </ul>
             <ul>
-                <a href="#">Zmień numer telefonu</a>
+                <a href="zmien-numer.php">Zmień numer telefonu</a>
             </ul>
             <ul>
-                <a href="#">Usuń konto</a>
+                <a href="usun-konto.php">Usuń konto</a>
             </ul>
         </article>
         
