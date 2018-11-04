@@ -5,7 +5,9 @@
         exit();
     }
 
-    session_start();
+    if (session_status() == PHP_SESSION_NONE)
+        session_start();
+
     require_once "connect.php";
 
     /* Ustanowienie połączenia, @ wycisza ewntualne błędy */
@@ -28,7 +30,7 @@
         $polaczenie->query("SET NAMES utf8");
         /* Zapytanie do bazy danych */
         /* mysqli_real_escape_string - zabezpiecza skrypt przed wstrzykiwaniem SQL */
-        $sql = "SELECT * FROM klienci WHERE email='$login' AND haslo='$haslo'";
+        //$sql = "SELECT * FROM klienci WHERE email='$login' AND haslo='$haslo'";
         if($rezultat = @$polaczenie->query(
             sprintf("SELECT * FROM klienci WHERE email='%s'",
             mysqli_real_escape_string($polaczenie, $login)
