@@ -85,7 +85,7 @@
         catch(Exception $e)
         {
             echo '<span style="color: red;">Błąd serwera. Spróbuj zmienić imię później</span>';
-            echo '<br>Informacja deweloperska: '.$e;
+            //echo '<br>Informacja deweloperska: '.$e;
         }
     }
 
