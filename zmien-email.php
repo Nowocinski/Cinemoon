@@ -100,7 +100,7 @@
 ?>
 
 <div class="container dane-konta3">
-        <form class="form" action="zmiana-email.php" method="post">
+        <form class="form" action="zmien-email.php" method="post">
             <span style="text-align: center;"><h3>Zmiana imienia</h3></span>
             
             <div class="form-group">
