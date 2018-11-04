@@ -58,7 +58,7 @@
                 <a href="zmien-imie.php">Zmień imię</a>
             </ul>
             <ul>
-                <a href="#">Zmień nazwisko</a>
+                <a href="zmien-nazwisko.php">Zmień nazwisko</a>
             </ul>
             <ul>
                 <a href="#">Zmień adres e-mail</a>
