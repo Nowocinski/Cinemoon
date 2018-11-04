@@ -55,7 +55,7 @@
                 <b>USTAWIENIA KONTA</b>
             </header>
             <ul>
-                <a href="#">Zmień imię</a>
+                <a href="zmien-imie.php">Zmień imię</a>
             </ul>
             <ul>
                 <a href="#">Zmień nazwisko</a>
