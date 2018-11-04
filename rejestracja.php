@@ -161,7 +161,8 @@
                         else
                         throw new Exception($polaczenie->error);
                     }
-
+                    $rezultat->free_result();
+                    $rezultat2->free_result();
                     $polaczenie->close();
                 }
             }
@@ -170,7 +171,7 @@
         catch(Exception $e)
         {
             echo '<span style="color: red;">Błąd serwera. Spróbuj zarejestrować się później</span>';
-            echo '<br>Informacja deweloperska: '.$e;
+            //echo '<br>Informacja deweloperska: '.$e;
         }
         
     }
@@ -266,8 +267,8 @@
         <div class="form-group">
             <label for="phoneField">Typ konta</label>
             <select name="typ">
-                <option>Normalne</option>
-                <option>Studenckie</option>
+                <option>normalny</option>
+                <option>studencki</option>
             </select>
         </div>
         
