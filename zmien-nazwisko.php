@@ -84,8 +84,8 @@
         
         catch(Exception $e)
         {
-            echo '<span style="color: red;">Błąd serwera. Spróbuj zmienić imię później</span>';
-            echo '<br>Informacja deweloperska: '.$e;
+            echo '<span style="color: red;">Błąd serwera. Spróbuj zmienić nazwisko później</span>';
+            //echo '<br>Informacja deweloperska: '.$e;
         }
     }
 
@@ -95,7 +95,7 @@
 
 <div class="container dane-konta3">
         <form class="form" action="zmien-nazwisko.php" method="post">
-            <span style="text-align: center;"><h3>Zmiana imienia</h3></span>
+            <span style="text-align: center;"><h3>Zmiana nazwisko</h3></span>
             
             <div class="form-group">
                 <label>Podaj poprzednie nazwisko</label>
