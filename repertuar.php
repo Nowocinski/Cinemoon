@@ -36,14 +36,14 @@
                    echo '<div class="container">'; /* Contener na zdjęcie i opis wilmu */
                    echo '<div class="row">'; /* Row */
                    echo '<div class="col-12 col-md-2 mb-3">'; /* col-2 otwarcie */
-                   echo '<img src="side_part/filmy/'.$wiersz['grafika'].'" class="img-fluid">';
+                   echo '<img src="side_part/filmy/'.$wiersz['grafika'].'" class="img-fluid mt-3">';
                    echo '</div>'; /* col-2 zamknięcie */
                    echo '<div class="col-12 col-md-10 dane-konta">'; /* col-10 otwarcie */
-                   echo '<ul><li><b>Tytuł:</b> '.$wiersz['tytul'].'</li>';
-                   echo '<li><b>Czas:</b> '.$wiersz['min_trwania'].' min</li>';
-                   echo '<li><b>Reżyser:</b> '.$wiersz['rezyser'].'</li>';
-                   echo '<li><b>Produkcja:</b> '.$wiersz['producent'].'</li>';
-                   echo '<li><b>Gatunek:</b> '.$wiersz['gatunek'].'</li></ul>';
+                   echo '<ul style="text-align: center;"><li style="font-weight: 500; font-size: 30px;">'.$wiersz['tytul'].'</li>';
+                   echo '<li><b>Czas trwania</b><br>'.$wiersz['min_trwania'].' min</li>';
+                   echo '<li><b>Reżyser</b><br>'.$wiersz['rezyser'].'</li>';
+                   echo '<li><b>Produkcja</b><br>'.$wiersz['producent'].'</li>';
+                   echo '<li><b>Gatunek</b><br>'.$wiersz['gatunek'].'</li></ul>';
                    echo '</div>'; /* Zamknięcie col-10 otwarcie */
                    echo '</div>'; /* Zamknięcie - Row na zdjęcie i opis wilmu */
                    echo '</div>'; /* Zamknięcie - Contener na zdjęcie i opis wilmu */
