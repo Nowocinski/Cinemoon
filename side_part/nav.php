@@ -1,6 +1,12 @@
 <?php
     if (session_status() == PHP_SESSION_NONE)
         session_start();
+
+        if(isset($_SESSION['zalogowany']))
+        {
+          $imie = $_SESSION['imie'];
+          $nazwisko = $_SESSION['nazwisko'];
+        }
 ?>
 <header>
      <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
@@ -11,41 +17,61 @@
 		 </button>
 
          <div class="collapse navbar-collapse" id="mainmenu">
-             <ul class="navbar-nav">
-                 <li class="nav-item active">
+             <ul class="navbar-nav mr-auto">
+                 <li class="nav-item active btn btn-default">
                      <a class="nav-link" href="repertuar.php">REPERTUAR</a>
                  </li>
-                 <li class="nav-item active" href="bilety.php">
+                 <li class="nav-item active btn btn-default" href="bilety.php">
                      <a class="nav-link" href="cennik.php">CENNIK</a>
                  </li>
-                 <li>
+                 <li class="nav-item active btn btn-default">
                     <a class="nav-link active" href="kontakt.php">KONTAKT</a>
                  </li>
-                <li>
+                <li class="nav-item active btn btn-default">
                     <a class="nav-link active" href="pracownicy.php">PRACOWNICY</a>
                  </li>
+             </ul>
 <?php
                     if(!isset($_SESSION['zalogowany']))
                     {
 echo<<<END
-                       </ul>
                        <div class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-toggler="dropdown role="button">KONTO</a>
-                            
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="logowanie.php">Logowanie</a>
-                                <a class="dropdown-item" href="rejestracja.php">Rejestracja</a>
-                            </div>
-                            
-                       </div>
+            						<a class="nav-link dropdown-toggle btn btn-danger" href="#" data-toggle="dropdown" role="button" aria-expanded="false" id="submenu" aria-haspopup="true"> Konto klienckie </a>
+
+            						<div class="dropdown-menu" aria-labelledby="submenu">
+
+            							<a class="dropdown-item" href="logowanie.php"> Logowanie </a>
+
+            							<div class="dropdown-divider"></div>
+
+            							<a class="dropdown-item" href="rejestracja.php"> Rejestracja </a>
+
+            						</div>
+
+            					</div>
 END;
                     }
                     else
                     {
-                        echo '<li><a class="nav-link bg-danger active" href="konto.php">'.$_SESSION['imie'].' '.$_SESSION['nazwisko'].'</a></li></ul>';
+echo<<<END
+                      <div class="nav-item dropdown">
+                       <a class="nav-link dropdown-toggle btn btn-danger" href="#" data-toggle="dropdown" role="button" aria-expanded="false" id="submenu" aria-haspopup="true"> $imie $nazwisko </a>
+
+                       <div class="dropdown-menu" aria-labelledby="submenu">
+
+                         <a class="dropdown-item" href="konto.php"> Konto </a>
+
+                         <div class="dropdown-divider"></div>
+
+                         <a class="dropdown-item" href="wyloguj.php"> Wyloguj </a>
+
+                       </div>
+
+                      </div>
+END;
                     }
 ?>
-                 
+
          </div>
     </nav>
 </header>
