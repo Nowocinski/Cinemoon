@@ -35,10 +35,10 @@
                    $tytul = $wiersz['tytul'];
                    echo '<div class="container">'; /* Contener na zdjęcie i opis wilmu */
                    echo '<div class="row">'; /* Row */
-                   echo '<div class="col-2">'; /* col-2 otwarcie */
-                   echo '<img src="side_part/filmy/'.$wiersz['grafika'].'" height="150" width="100">';
+                   echo '<div class="col-12 col-md-2 mb-3">'; /* col-2 otwarcie */
+                   echo '<img src="side_part/filmy/'.$wiersz['grafika'].'" class="img-fluid">';
                    echo '</div>'; /* col-2 zamknięcie */
-                   echo '<div class="col-10 dane-konta">'; /* col-10 otwarcie */
+                   echo '<div class="col-12 col-md-10 dane-konta">'; /* col-10 otwarcie */
                    echo '<ul><li><b>Tytuł:</b> '.$wiersz['tytul'].'</li>';
                    echo '<li><b>Czas:</b> '.$wiersz['min_trwania'].' min</li>';
                    echo '<li><b>Reżyser:</b> '.$wiersz['rezyser'].'</li>';
@@ -64,9 +64,9 @@
                            echo '<div class="container">';
                            echo '<div class="row">';
 
-                           echo '<div class="col-3"><b>Nr sali: </b>'.$wiersz2['nr_sali'].'</div>';
-                           echo '<div class="col-3"><b>Termin: </b>'.$wiersz2['czas_rozpoczecia'].'</div>';
-                           echo '<div class="col-3"><b>Cena biletu: </b>'.$wiersz2['cena_biletu'].' zł</div>';
+                           echo '<div class="col-12 col-sm-6 col-md-3 text-center mt-2"><b>Nr sali: </b>'.$wiersz2['nr_sali'].'</div>';
+                           echo '<div class="col-12 col-sm-6 col-md-3 text-center mt-2"><b>Termin: </b>'.$wiersz2['czas_rozpoczecia'].'</div>';
+                           echo '<div class="col-12 col-sm-6 col-md-3 text-center mt-2"><b>Cena biletu: </b>'.$wiersz2['cena_biletu'].' zł</div>';
 
                            $ilosc_miejsc_w_sali = $wiersz2['ilosc_rzedow'] * $wiersz2['ilosc_miejsc'];
                            $id_repertuaru = $wiersz2['id_repertuaru'];
@@ -77,10 +77,10 @@
         if(!$rezultat3)
             throw new Exception($polaczenie->error);
 //------------------------------------------------------------------------------------------------------------------------
-                           if($ilosc_osob_ktore_poszly_na_repertuar < $ilosc_miejsc_w_sali)
-                           {
+                           //if($ilosc_osob_ktore_poszly_na_repertuar < $ilosc_miejsc_w_sali)
+                           //{
 echo<<<END
-        <div class="col-3">
+        <div class="col-12 col-sm-6 col-md-3 text-center">
         <form action="wybor-miejsca.php" method="post">
                 <button type="submit" class="btn btn-warning btn-md" name="id_repertuaru" value="$id_repertuaru" formtarget="_blank">
                     Zapisz się
@@ -88,10 +88,14 @@ echo<<<END
             </form>
         </div>
 END;
-                           }
+                          // }
 
-                           else
-                            echo '<div class="col-3"><button type="button" class="btn btn-danger btn-md">Bilety wyprzedane</button></div>';
+                           //else
+                           //{
+                            //echo '<div class="col-3"><button type="button" class="btn btn-danger btn-md">Bilety wyprzedane</button></div>';
+                          //  echo 'ilosc_osob_ktore_poszly_na_repertuar: '.$ilosc_osob_ktore_poszly_na_repertuar.'<br>ilosc_miejsc_w_sali: '.$ilosc_miejsc_w_sali;
+                           //}
+                          //  echo '<br>Id_repertuaru: '.$id_repertuaru;
                            echo '</div>';
                            echo '</div>';
 

@@ -42,50 +42,54 @@
 
         //Wyłączenie worningów i włączenie wyświetlania wyjątków
         mysqli_report(MYSQLI_REPORT_STRICT);
-        try
+
+        if($poprawna_walidacja == true)
         {
-          $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
-
-          if($polaczenie->connect_errno != 0)
-              throw new Exception(mysqli_connect_errno());
-          else
+          try
           {
-            $polaczenie->query("SET NAMES utf8");
-            $rezultat = $polaczenie->query("SELECT haslo FROM klienci WHERE id_klienta='$id_klienta'");
+            $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
 
-            if(!$rezultat)
-                throw new Exception($polaczenie->error);
+            if($polaczenie->connect_errno != 0)
+                throw new Exception(mysqli_connect_errno());
             else
-              {
-                $wiersz = $rezultat->fetch_assoc();
+            {
+              $polaczenie->query("SET NAMES utf8");
+              $rezultat = $polaczenie->query("SELECT haslo FROM klienci WHERE id_klienta='$id_klienta'");
 
-                if(!password_verify($stare, $wiersz['haslo']))
+              if(!$rezultat)
+                  throw new Exception($polaczenie->error);
+              else
                 {
-                  $poprawna_walidacja = false;
-                  $_SESSION['blad_stare'] = '<span style="color: red;">To nie jest twoje hasło</span>';
-                }
+                  $wiersz = $rezultat->fetch_assoc();
 
-                else
-                {
-                  if($polaczenie->query("UPDATE klienci SET haslo='$zahasowane_haslo' WHERE id_klienta='$id_klienta'"))
+                  if(!password_verify($stare, $wiersz['haslo']))
                   {
-                    header('Location: konto.php');
-                    exit();
+                    $poprawna_walidacja = false;
+                    $_SESSION['blad_stare'] = '<span style="color: red;">To nie jest twoje hasło</span>';
                   }
 
                   else
-                      throw new Exception($polaczenie->error);
+                  {
+                    if($polaczenie->query("UPDATE klienci SET haslo='$zahasowane_haslo' WHERE id_klienta='$id_klienta'"))
+                    {
+                      header('Location: konto.php');
+                      exit();
+                    }
 
-                  $rezultat->free_result();
+                    else
+                        throw new Exception($polaczenie->error);
+
+                    $rezultat->free_result();
+                  }
                 }
-              }
+            }
+            $polaczenie->close();
           }
-          $polaczenie->close();
-        }
-        catch(Exception $e)
-        {
-            echo '<span style="color: red">Błąd serwera. Spróbuj zarejestrować się później</span>';
-            echo '<br>Informacja deweloperska: '.$e;
+          catch(Exception $e)
+          {
+              echo '<span style="color: red">Błąd serwera. Spróbuj zarejestrować się później</span>';
+              //echo '<br>Informacja deweloperska: '.$e;
+          }
         }
       }
 //----------------------------------------------------------------------------------------------------------------------------------
@@ -126,7 +130,7 @@
 
 
 
-                <button type="submit" class="btn btn-primary">Zmień hasło</button>
+                <button type="submit" class="btn btn-danger">Zmień hasło</button>
                 <button type="reset" class="btn btn-default">Wyczyść</button>
 
 

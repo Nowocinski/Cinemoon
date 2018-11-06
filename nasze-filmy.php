@@ -19,7 +19,7 @@
         $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
         if($polaczenie->connect_errno != 0)
                 throw new Exception(mysqli_connect_errno());
-        
+
         else
         {
             // Kodowanie polskich znaków
@@ -27,7 +27,7 @@
             $rezultat = $polaczenie->query("SELECT * FROM filmy WHERE grafika='$grafika'");
             if(!$rezultat)
                 throw new Exception($polaczenie->error);
-            
+
             $ilosc_filmow = $rezultat->num_rows;
             if($ilosc_filmow < 0)
                 throw new Exception("Brak filmu w bazie");
@@ -60,7 +60,7 @@
         <div class="container">
             <div class="dane-konta3">
                 <div class="row">
-                <?php 
+                <?php
 echo<<<END
                 <div class="col-sm-3 col-12">
                     <img class="obraz" src="side_part/filmy/$grafika">
@@ -85,14 +85,14 @@ END;
             <?php
                 //Wyłączenie worningów i włączenie wyświetlania wyjątków
                 mysqli_report(MYSQLI_REPORT_STRICT);
-                
+
                 try
                 {
                     $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
-            
+
                     if($polaczenie->connect_errno != 0)
                         throw new Exception(mysqli_connect_errno());
-                    
+
                     else
                     {
                         $polaczenie->query("SET NAMES utf8");
@@ -103,7 +103,7 @@ END;
                         {
                             $ilosc_filmow = $rezultat->num_rows;
                             //echo 'Ilość wystąpień filmu w repertuarze: '.$ilosc_filmow;
-                            
+
                             if($ilosc_filmow > 0)
                             {
 echo<<<END
@@ -111,11 +111,11 @@ echo<<<END
         <div class="container">
             <div class="dane-konta3 mb-3">
             <span style="font-weight: 500; font-size: 30px;">REZERWACJE</span>
-            <div class="table-responsive">
+            <div class="table-responsive text-center">
                 <table class="table">
                     <tr><th>Numer sali</th><th>Termin</th><th>Cena biletu</th><th>Zapisy</th><tr>
 END;
-                                
+
                                 while($wiersz = $rezultat->fetch_assoc())
                                 {
                                     $nr_sali = $wiersz['nr_sali'];
@@ -126,7 +126,7 @@ END;
 //------------------------------------------------------------------------------------------------------------------------
         $rezultatX = $polaczenie->query("SELECT * FROM rezerwacje WHERE id_repertuaru='$id_repertuaru'");
         $ilosc_osob_ktore_poszly_na_repertuar = $rezultatX->num_rows;
-                                    
+
         if(!$rezultatX)
             throw new Exception($polaczenie->error);
 //------------------------------------------------------------------------------------------------------------------------
@@ -134,18 +134,20 @@ echo<<<END
                     <tr><th>$nr_sali</th><th>$czas_rozpoczecia</th><th>$cena_biletu zł</th>
                     <th>
 END;
-                    if($ilosc_osob_ktore_poszly_na_repertuar < $ilosc_miejsc_w_sali)
+                    //if($ilosc_osob_ktore_poszly_na_repertuar < $ilosc_miejsc_w_sali)
+                    //{
+                        echo '<form action="wybor-miejsca.php" method="post">';
+                        echo '<button formtarget="_blank" name="id_repertuaru" value="'.$id_repertuaru.'" type="submit" class="btn btn-warning btn-md">Zapisz się</button>';
+                        echo '</form>';
+                        //echo 'ilosc_osob_ktore_poszly_na_repertuar: '.$ilosc_osob_ktore_poszly_na_repertuar.'<br>ilosc_miejsc_w_sali: '.$ilosc_miejsc_w_sali;
+                        //echo '<br>Id_repertuaru: '.$id_repertuaru;
+                    //}
+                    /*else
                     {
-                        echo '<div class="col-3"><button type="button" class="btn btn-warning btn-md">Zapisz się</button></div>';
+                        echo '<button type="button" class="btn btn-danger btn-md">Bilety wyprzedane</button>';
                         echo 'ilosc_osob_ktore_poszly_na_repertuar: '.$ilosc_osob_ktore_poszly_na_repertuar.'<br>ilosc_miejsc_w_sali: '.$ilosc_miejsc_w_sali;
                         echo '<br>Id_repertuaru: '.$id_repertuaru;
-                    }
-                    else
-                    {
-                        echo '<div class="col-3"><button type="button" class="btn btn-danger btn-md">Bilety wyprzedane</button></div>';
-                        echo 'ilosc_osob_ktore_poszly_na_repertuar: '.$ilosc_osob_ktore_poszly_na_repertuar.'<br>ilosc_miejsc_w_sali: '.$ilosc_miejsc_w_sali;
-                        echo '<br>Id_repertuaru: '.$id_repertuaru;
-                    }
+                    }*/
 echo<<<END
                     </th><tr>
 END;
@@ -160,10 +162,10 @@ END;
                             }
                         }
                     }
-                    
+
                     $polaczenie->close();
                 }
-                
+
                 catch(Exception $e)
                 {
                     echo '<span style="color: red">Błąd serwera. Spróbuj zarejestrować się później</span>';

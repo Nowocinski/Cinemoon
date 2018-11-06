@@ -21,7 +21,7 @@
             $poprawna_walidacja = false;
             $_SESSION['blad_nowe'] = '<span style="color: red;">Numer telefonu musi składać się z 9 cyfr bez znaków specjalnych oraz spacji</span>';
         }
-        
+
         if(strlen($_POST['nowe']) == 0)
         {
             $poprawna_walidacja = false;
@@ -36,12 +36,12 @@
 //----------------------------------------------------------------------------------------------------------------------------------
         //Wyłączenie worningów i włączenie wyświetlania wyjątków
         mysqli_report(MYSQLI_REPORT_STRICT);
-        
+
         try
         {
             require_once "connect.php";
             $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
-            
+
             if($polaczenie->connect_errno != 0)
                     throw new Exception(mysqli_connect_errno());
             else
@@ -95,7 +95,7 @@
                 $polaczenie->close();
             }
         }
-        
+
         catch(Exception $e)
         {
             echo '<span style="color: red;">Błąd serwera. Spróbuj zmienić numer telefonu później</span>';
@@ -110,7 +110,7 @@
 <div class="container dane-konta3">
         <form class="form" action="zmien-numer.php" method="post">
             <span style="text-align: center;"><h3>Zmiana numeru telefonu</h3></span>
-            
+
             <div class="form-group">
                 <label>Podaj poprzedni numer telefonu</label>
                 <input type="text" class="form-control" placeholder="Poprzedni numer" name="stare" />
@@ -133,11 +133,11 @@
                     }
                 ?>
             </div>
-                <button type="submit" class="btn btn-primary">Zmień numer</button>
+                <button type="submit" class="btn btn-danger">Zmień numer</button>
                 <button type="reset" class="btn btn-default">Wyczyść</button>
-            
-            
-            
+
+
+
         </form>
 </div>
 

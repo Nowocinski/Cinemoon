@@ -28,46 +28,55 @@
                     <a class="nav-link active" href="kontakt.php">KONTAKT</a>
                  </li>
                 <li class="nav-item active btn btn-default">
-                    <a class="nav-link active" href="pracownicy.php">PRACOWNICY</a>
+                    <a class="nav-link active" href="pracownicy.php">DLA PRACOWNIKÓW</a>
                  </li>
              </ul>
 <?php
                     if(!isset($_SESSION['zalogowany']))
                     {
 echo<<<END
+
+
+
+<ul class="navbar-nav">
                        <div class="nav-item dropdown">
-            						<a class="nav-link dropdown-toggle btn btn-danger" href="#" data-toggle="dropdown" role="button" aria-expanded="false" id="submenu" aria-haspopup="true"> Konto klienckie </a>
+            						<a class="nav-link dropdown-toggle btn btn-danger active" href="#" data-toggle="dropdown" role="button" aria-expanded="false" id="submenu" aria-haspopup="true"> Konto Cinemoon</a></li>
 
             						<div class="dropdown-menu" aria-labelledby="submenu">
 
-            							<a class="dropdown-item" href="logowanie.php"> Logowanie </a>
+            							<a class="dropdown-item text-center" href="logowanie.php"> Logowanie </a>
 
             							<div class="dropdown-divider"></div>
 
-            							<a class="dropdown-item" href="rejestracja.php"> Rejestracja </a>
+            							<a class="dropdown-item text-center" href="rejestracja.php"> Rejestracja </a>
 
             						</div>
 
             					</div>
+
+</ul>
+
 END;
                     }
                     else
                     {
 echo<<<END
+<ul class="navbar-nav">
                       <div class="nav-item dropdown">
-                       <a class="nav-link dropdown-toggle btn btn-danger" href="#" data-toggle="dropdown" role="button" aria-expanded="false" id="submenu" aria-haspopup="true"> $imie $nazwisko </a>
+                       <a class="nav-link dropdown-toggle btn btn-danger active" href="#" data-toggle="dropdown" role="button" aria-expanded="false" id="submenu" aria-haspopup="true"> $imie $nazwisko </a>
 
                        <div class="dropdown-menu" aria-labelledby="submenu">
 
-                         <a class="dropdown-item" href="konto.php"> Konto </a>
+                         <a class="dropdown-item text-center" href="konto.php"> Moje konto </a>
 
                          <div class="dropdown-divider"></div>
 
-                         <a class="dropdown-item" href="wyloguj.php"> Wyloguj </a>
+                         <a class="dropdown-item text-center" href="wyloguj.php"> Wyloguj się </a>
 
                        </div>
 
                       </div>
+</ul>
 END;
                     }
 ?>

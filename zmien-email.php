@@ -30,12 +30,12 @@
 //----------------------------------------------------------------------------------------------------------------------------------
         //Wyłączenie worningów i włączenie wyświetlania wyjątków
         mysqli_report(MYSQLI_REPORT_STRICT);
-        
+
         try
         {
             require_once "connect.php";
             $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
-            
+
             if($polaczenie->connect_errno != 0)
                     throw new Exception(mysqli_connect_errno());
             else
@@ -89,7 +89,7 @@
                 $polaczenie->close();
             }
         }
-        
+
         catch(Exception $e)
         {
             echo '<span style="color: red;">Błąd serwera. Spróbuj zmienić adres e-mail później</span>';
@@ -104,7 +104,7 @@
 <div class="container dane-konta3">
         <form class="form" action="zmien-email.php" method="post">
             <span style="text-align: center;"><h3>Zmiana adres e-mail</h3></span>
-            
+
             <div class="form-group">
                 <label>Podaj poprzedni adres e-mail</label>
                 <input type="text" class="form-control" placeholder="Poprzedni e-mail" name="stare" />
@@ -128,7 +128,7 @@
                     }
                 ?>
             </div>
-                <button type="submit" class="btn btn-primary">Zmień e-mail</button>
+                <button type="submit" class="btn btn-danger">Zmień e-mail</button>
                 <button type="reset" class="btn btn-default">Wyczyść</button>
         </form>
 </div>

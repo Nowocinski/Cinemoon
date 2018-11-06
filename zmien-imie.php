@@ -21,7 +21,7 @@
             $poprawna_walidacja = false;
             $_SESSION['blad_nowe'] = '<span style="color: red;">Imię musi składać się od 3 do 20 znaków</span>';
         }
-        
+
         if(!preg_match('/^[a-zA-Z\ą\ć\ę\ł\ń\ó\ś\ź\ż\Ą\Ć\Ę\Ł\Ń\Ó\Ś\Ź\Ż]+$/',$_POST['nowe']))
         {
             $poprawna_walidacja = false;
@@ -36,12 +36,12 @@
 //----------------------------------------------------------------------------------------------------------------------------------
         //Wyłączenie worningów i włączenie wyświetlania wyjątków
         mysqli_report(MYSQLI_REPORT_STRICT);
-        
+
         try
         {
             require_once "connect.php";
             $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
-            
+
             if($polaczenie->connect_errno != 0)
                     throw new Exception(mysqli_connect_errno());
             else
@@ -59,7 +59,7 @@
                         $poprawna_walidacja = false;
                         $_SESSION['blad_stare'] = '<span style="color: red;">Podane imie nie jest zgodne z obecnym</span>';
                     }
-                    
+
                     if($wiersz['imie'] == $_POST['stare'] && $poprawna_walidacja == true)
                     {
                         if($polaczenie->query("UPDATE klienci SET imie='$nowe' WHERE id_klienta='$id_klienta'"))
@@ -69,11 +69,11 @@
                             unset($_SESSION['blad_nowe']);
                             unset($_POST['stare']);
                             unset($_POST['nowe']);
-                            
+
                             header('Location: konto.php');
                             exit();
                         }
-                        
+
                         else
                             throw new Exception($polaczenie->error);
                     }
@@ -82,7 +82,7 @@
                 $polaczenie->close();
             }
         }
-        
+
         catch(Exception $e)
         {
             echo '<span style="color: red;">Błąd serwera. Spróbuj zmienić imię później</span>';
@@ -97,7 +97,7 @@
 <div class="container dane-konta3">
         <form class="form" action="zmien-imie.php" method="post">
             <span style="text-align: center;"><h3>Zmiana imienia</h3></span>
-            
+
             <div class="form-group">
                 <label>Podaj poprzednie imię</label>
                 <input type="text" class="form-control" placeholder="Poprzednie imię" name="stare" />
@@ -109,10 +109,10 @@
                     }
                 ?>
             </div>
-            
-            
-            
-            
+
+
+
+
             <div class="form-group">
                 <label>Podaj nowę imię</label>
                 <input type="text" class="form-control" placeholder="Nowę imię" name="nowe" />
@@ -124,14 +124,14 @@
                     }
                 ?>
             </div>
-            
-            
-            
-                <button type="submit" class="btn btn-primary">Zmień imię</button>
+
+
+
+                <button type="submit" class="btn btn-danger">Zmień imię</button>
                 <button type="reset" class="btn btn-default">Wyczyść</button>
-            
-            
-            
+
+
+
         </form>
 </div>
 
