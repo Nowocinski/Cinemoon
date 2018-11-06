@@ -18,6 +18,20 @@
     include "side_part/gora.php";
     include "side_part/nav.php";
 //==========================================================================================================
+/*echo $_SESSION['blad_emaila'];
+  if(isset($_SESSION['wyslanomaila']))
+  {
+    if($_SESSION['wyslanomaila'] == true)
+    {
+      echo 'Potwierdzenie o dokonaniu rezerwacji powędrowało na Twój adres e-mail';
+      //unset($_SESSION['wyslanomaila']);
+    }
+    else
+    {
+      echo 'Przepraszamy, ale nie udało się wysłać potiwerdzenia na Twój adres e-mail';
+      //unset($_SESSION['wyslanomaila']);
+    }
+  }*/
 ?>
 
 <div class="container dane-konta3">
