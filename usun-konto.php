@@ -52,7 +52,7 @@
             {
                 //Wyłączenie worningów i włączenie wyświetlania wyjątków
                 mysqli_report(MYSQLI_REPORT_STRICT);
-                
+
                 require_once "connect.php";
                 $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
 
@@ -97,11 +97,10 @@
 
                                     else
                                     {
-                                        $rezultat->free_result();
                                         $polaczenie->close();
                                         $_SESSION['konto_zostalo_usuniete'] = true;
-                                        //session_unset();
                                         header('Location: powod-usuniecia.php');
+                                        exit();
                                     }
                                 }
                             }
@@ -164,7 +163,7 @@
                 }
             ?>
             </div>
-            
+
                 <button type="submit" class="btn btn-danger">Usuń konto</button>
                 <button type="reset" class="btn btn-default">Wyczyść</button>
         </form>
