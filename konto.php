@@ -83,7 +83,7 @@
 <?php
         if(isset($_SESSION['pierwszewejscie']))
         {
-            echo '<article class="dane-konta text-center mt-3"><h5><p>Dziękujemy, '.$_SESSION['imie'].', za zarejestrowanie się na naszej witrynie.</p><p>Wszystkie informację o rezerwacjach jak i ustawieniach konta znajdują się w tym miejsce</p></h5></article>';
+            echo '<article class="dane-konta2 text-center mt-3 col-12" style="color: yellow;"><h5><p>Dziękujemy, '.$_SESSION['imie'].', za zarejestrowanie się na naszej witrynie.</p><p>Wszystkie informację o rezerwacjach jak i ustawieniach konta znajdują się w tym miejsce</p></h5></article>';
             unset($_SESSION['pierwszewejscie']);
         }
 ?>
