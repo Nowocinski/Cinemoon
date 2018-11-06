@@ -24,13 +24,12 @@
 
     include "side_part/gora.php";
     include "side_part/nav.php";
-    
+
     if(isset($_SESSION['id_klienta']))
         $id_klienta = $_SESSION['id_klienta'];
 ?>
 
     <div class="container">
-        [<a href="wyloguj.php">Wyloguj</a>]<br>
 <?php
         if(isset($_SESSION['pierwszewejscie']))
         {
@@ -38,15 +37,15 @@
             unset($_SESSION['pierwszewejscie']);
         }
 ?>
-        <article class="dane-konta">
+        <article class="dane-konta mt-3">
             <header>
                 <b>DANE KONTA</b>
             </header>
             <ul>
-                <li><b>Imie:</b> <?php echo $_SESSION['imie'] ?></li>
-                <li><b>Nazwisko:</b> <?php echo $_SESSION['nazwisko'] ?></li>
-                <li><b>E-mail:</b> <?php echo $_SESSION['email'] ?></li>
-                
+                <li><b>Imie:</b> <?php echo $_SESSION['imie']; ?></li>
+                <li><b>Nazwisko:</b> <?php echo $_SESSION['nazwisko']; ?></li>
+                <li><b>E-mail:</b> <?php echo $_SESSION['email']; ?></li>
+
                 <li><b>Numer telefonu:</b> <?php if($_SESSION['nr_telefonu'] != '') echo $_SESSION['nr_telefonu']; else echo '<span style="color: gray">(nie podano)</span><br>';?></li>
             </ul>
         </article>
@@ -64,7 +63,7 @@
                 <a href="zmien-email.php">Zmień adres e-mail</a>
             </ul>
             <ul>
-                <a href="zmien-haslo.php">Zmień adres hasło</a>
+                <a href="zmien-haslo.php">Zmień hasło</a>
             </ul>
             <ul>
                 <a href="zmien-numer.php">Zmień numer telefonu</a>
@@ -73,7 +72,7 @@
                 <a href="usun-konto.php">Usuń konto</a>
             </ul>
         </article>
-        
+
         <article class="dane-konta">
             <header>
                 <b>TWOJE REZERWACJE</b>
@@ -83,32 +82,32 @@
             //Wyłączenie worningów i włączenie wyświetlania wyjątków
             mysqli_report(MYSQLI_REPORT_STRICT);
             require_once "connect.php";
-                    
+
             try
             {
                 $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
-            
+
                 if($polaczenie->connect_errno != 0)
                     throw new Exception(mysqli_connect_errno());
-                
+
                 else
                 {
                     // Kodowanie polskich znaków
                     $polaczenie->query("SET NAMES utf8");
                     $rezultat = $polaczenie->query("SELECT * FROM rezerwacje INNER JOIN klienci ON rezerwacje.id_klienta=klienci.id_klienta INNER JOIN repertuar ON rezerwacje.id_repertuaru=repertuar.id_repertuaru INNER JOIN filmy ON repertuar.id_filmu=filmy.id_filmu INNER JOIN sale ON repertuar.id_sali=sale.id_sali WHERE rezerwacje.id_klienta='$id_klienta' AND repertuar.czas_rozpoczecia > CAST(CONCAT(CURDATE(),' ',CURTIME()) as DATETIME) ORDER BY repertuar.czas_rozpoczecia ASC");
-                    
+
                     if(!$rezultat)
                         throw new Exception($polaczenie->error);
-                    
+
                     else
                     {
                         $ilosc_filmow = $rezultat->num_rows;
-                        
+
                         if($ilosc_filmow == 0)
                         {
                             echo '<span style="color: gray">Brak rezerwacji na tym koncie</span>';
                         }
-                        
+
                         else
                         {
                             echo '<span style="font-weight: 500;">Ile rezerwacji: '.$ilosc_filmow.'</span>';
@@ -129,7 +128,7 @@
                     $polaczenie->close();
                 }
             }
-                    
+
             catch(Eeception $e)
             {
                 echo '<span style="color: red">Błąd serwera. Spróbuj zarejestrować się później</span>';
@@ -138,7 +137,7 @@
 ?>
             </section>
         </article>
-        
+
         <article class="dane-konta">
             <header>
                 <b>POPRZEDNIE REZERWACJE</b>
@@ -148,32 +147,32 @@
             //Wyłączenie worningów i włączenie wyświetlania wyjątków
             mysqli_report(MYSQLI_REPORT_STRICT);
             require_once "connect.php";
-                    
+
             try
             {
                 $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
-            
+
                 if($polaczenie->connect_errno != 0)
                     throw new Exception(mysqli_connect_errno());
-                
+
                 else
                 {
                     // Kodowanie polskich znaków
                     $polaczenie->query("SET NAMES utf8");
                     $rezultat = $polaczenie->query("SELECT * FROM rezerwacje INNER JOIN klienci ON rezerwacje.id_klienta=klienci.id_klienta INNER JOIN repertuar ON rezerwacje.id_repertuaru=repertuar.id_repertuaru INNER JOIN filmy ON repertuar.id_filmu=filmy.id_filmu INNER JOIN sale ON repertuar.id_sali=sale.id_sali WHERE rezerwacje.id_klienta='$id_klienta' AND repertuar.czas_rozpoczecia < CAST(CONCAT(CURDATE(),' ',CURTIME()) as DATETIME) ORDER BY repertuar.czas_rozpoczecia ASC");
-                    
+
                     if(!$rezultat)
                         throw new Exception($polaczenie->error);
-                    
+
                     else
                     {
                         $ilosc_filmow = $rezultat->num_rows;
-                        
+
                         if($ilosc_filmow == 0)
                         {
                             echo '<span style="color: gray">Brak wcześniejszych rezerwacji na tym koncie</span>';
                         }
-                        
+
                         else
                         {
                             echo '<span style="font-weight: 500;">Ile rezerwacji: '.$ilosc_filmow.'</span>';
@@ -194,7 +193,7 @@
                     $polaczenie->close();
                 }
             }
-                    
+
             catch(Eeception $e)
             {
                 echo '<span style="color: red">Błąd serwera. Spróbuj zarejestrować się później</span>';
