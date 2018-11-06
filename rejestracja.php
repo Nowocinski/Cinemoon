@@ -16,14 +16,14 @@
         $email = $_POST['email'];
         $numertelefonu = $_POST['numertelefonu'];
         $typ = $_POST['typ'];
-        
+
         //Walidacja imienia
         if(strlen($_POST['imie']) < 3 || strlen($_POST['imie']) > 20)
         {
             $poprawna_walidacja = false;
             $_SESSION['blad_imie'] = '<span style="color: red;">Imię musi składać się od 3 do 20 znaków</span>';
         }
-        
+
         if(!preg_match('/^[a-zA-Z\ą\ć\ę\ł\ń\ó\ś\ź\ż\Ą\Ć\Ę\Ł\Ń\Ó\Ś\Ź\Ż]+$/',$_POST['imie']))
         {
             $poprawna_walidacja = false;
@@ -36,7 +36,7 @@
             $poprawna_walidacja = false;
             $_SESSION['blad_nazwisko'] = '<span style="color: red;">Nazwisko musi składać się od 2 do 30 znaków</span>';
         }
-        
+
         if(!preg_match('/^[a-zA-Z\ą\ć\ę\ł\ń\ó\ś\ź\ż\Ą\Ć\Ę\Ł\Ń\Ó\Ś\Ź\Ż]+$/',$_POST['nazwisko']))
         {
             $poprawna_walidacja = false;
@@ -56,13 +56,13 @@
             $poprawna_walidacja = false;
             $_SESSION['blad_haslo1'] = '<span style="color: red;">Hasło musi składać się od 6 do 30 znaków</span>';
         }
-        
+
         if($_POST['haslo1'] != $_POST['haslo2'] || $_POST['haslo1'] == '' || $_POST['haslo2'] == '')
         {
             $poprawna_walidacja = false;
             $_SESSION['blad_haslo2'] = '<span style="color: red;">Hasła nie pasują do siebie</span>';
         }
-        
+
         $zahasowane_haslo = password_hash($_POST['haslo1'], PASSWORD_DEFAULT);
 //----------------------------------------------------------------------------------------------------------------------------------
         //Walidacja numeru telefonu
@@ -81,11 +81,11 @@
 //----------------------------------------------------------------------------------------------------------------------------------
         //Walidacja reCAPTCHA
         $sekret = '6Lc9CnYUAAAAAA_OnZwj8N_I7bElYFivqNxvmLHT';
-        
+
         $sprawdz = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$sekret.'&response='.$_POST['g-recaptcha-response']);
-        
+
         $odpowiedz = json_decode($sprawdz);
-        
+
         if(!($odpowiedz->success))
         {
             $poprawna_walidacja = false;
@@ -93,14 +93,14 @@
         }
 //----------------------------------------------------------------------------------------------------------------------------------
         //Sprawdzenie poprawności danych z bazą
-        
+
         //Wyłączenie worningów i włączenie wyświetlania wyjątków
         mysqli_report(MYSQLI_REPORT_STRICT);
         try
         {
             require_once "connect.php";
             $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
-            
+
             if($polaczenie->connect_errno != 0)
                     throw new Exception(mysqli_connect_errno());
             else
@@ -129,7 +129,7 @@
                     }
 
                     $rezultat2 = $polaczenie->query("SELECT id_klienta FROM klienci WHERE nr_telefonu='$numertelefonu' AND nr_telefonu!=''");
-                    
+
                     if(!$rezultat2)
                         throw new Exception($polaczenie->error);
                     else
@@ -140,24 +140,24 @@
                             $_SESSION['blad_numertelefonu'] = '<span style="color: red;">Podany numer jest już przypisany do innego konta</span>';
                         }
                     }
-                    
+
                     if($poprawna_walidacja)
                     {
                         if($polaczenie->query("INSERT INTO klienci VALUES (NULL, '$imie', '$nazwisko', '$email', '$zahasowane_haslo', '$numertelefonu', '$typ')"))
                         {
                             $_SESSION['zalogowany'] = true;
                             $_SESSION['pierwszewejscie'] = true;
-                            
+
                             $_SESSION['imie'] = $imie;
                             $_SESSION['nazwisko'] = $nazwisko;
                             $_SESSION['email'] = $email;
                             $_SESSION['nr_telefonu'] = $numertelefonu;
                             $_SESSION['typ'] = $typ;
-                            
+
                             header('Location: konto.php');
                             exit();
                         }
-                        
+
                         else
                         throw new Exception($polaczenie->error);
                     }
@@ -173,7 +173,7 @@
             echo '<span style="color: red;">Błąd serwera. Spróbuj zarejestrować się później</span>';
             //echo '<br>Informacja deweloperska: '.$e;
         }
-        
+
     }
 //----------------------------------------------------------------------------------------------------------------------------------
     $title = "Rejestracja";
@@ -181,7 +181,7 @@
     include "side_part/gora.php";
     include "side_part/nav.php";
 
-    
+
 ?>
 <div class="dane-konta2">
     <header>
@@ -271,7 +271,7 @@
                 <option>studencki</option>
             </select>
         </div>
-        
+
         <div class="form-group">
             <label><input type="checkbox" name="regulamin"> Przeczytałem i akceptuję regulamin</label>
             <?php
@@ -282,7 +282,7 @@
                 }
             ?>
         </div>
-        
+
         <div class="form-group">
             <div class="g-recaptcha" data-sitekey="6Lc9CnYUAAAAALY-tIpqd_uNVTjOBjnkJZX18seq"></div>
             <?php

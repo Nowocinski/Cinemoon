@@ -16,10 +16,10 @@
     {
         require_once "connect.php";
         $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
-            
+
         if($polaczenie->connect_errno != 0)
             throw new Exception(mysqli_connect_errno());
-        
+
         else
         {
             // Kodowanie polskich znaków
@@ -27,7 +27,7 @@
             $rezultat = $polaczenie->query("SELECT * FROM filmy INNER JOIN repertuar ON filmy.id_filmu=repertuar.id_filmu GROUP BY filmy.id_filmu ORDER BY filmy.id_filmu DESC");
             if(!$rezultat)
                 throw new Exception($polaczenie->error);
-            
+
             else
             {
                while($wiersz = $rezultat->fetch_assoc())
@@ -47,12 +47,12 @@
                    echo '</div>'; /* Zamknięcie col-10 otwarcie */
                    echo '</div>'; /* Zamknięcie - Row na zdjęcie i opis wilmu */
                    echo '</div>'; /* Zamknięcie - Contener na zdjęcie i opis wilmu */
-                   
+
                    $rezultat2 = $polaczenie->query("SELECT * FROM repertuar INNER JOIN sale ON repertuar.id_sali=sale.id_sali INNER JOIN filmy ON repertuar.id_filmu=filmy.id_filmu WHERE filmy.tytul='$tytul' AND repertuar.czas_rozpoczecia > CAST(CONCAT(CURDATE(),' ',CURTIME()) as DATETIME) ORDER BY repertuar.czas_rozpoczecia ASC");
-                   
+
                    if(!$rezultat2)
                         throw new Exception($polaczenie->error);
-                   
+
                    else
                    {
                        while($wiersz2 = $rezultat2->fetch_assoc())
@@ -60,14 +60,14 @@
                            echo '<div class="container">'; /* Otwarcie contenera */
                            echo '<div class="row">'; /* Otwarcie diva na liste repertuarów */
                            echo '<div class="col-12 dane-konta">'; /* Otwarcie diva na liste repertuarów */
-                           
+
                            echo '<div class="container">';
                            echo '<div class="row">';
-                           
+
                            echo '<div class="col-3"><b>Nr sali: </b>'.$wiersz2['nr_sali'].'</div>';
                            echo '<div class="col-3"><b>Termin: </b>'.$wiersz2['czas_rozpoczecia'].'</div>';
                            echo '<div class="col-3"><b>Cena biletu: </b>'.$wiersz2['cena_biletu'].' zł</div>';
-                           
+
                            $ilosc_miejsc_w_sali = $wiersz2['ilosc_rzedow'] * $wiersz2['ilosc_miejsc'];
                            $id_repertuaru = $wiersz2['id_repertuaru'];
 //------------------------------------------------------------------------------------------------------------------------
@@ -89,12 +89,12 @@ echo<<<END
         </div>
 END;
                            }
-                                
+
                            else
                             echo '<div class="col-3"><button type="button" class="btn btn-danger btn-md">Bilety wyprzedane</button></div>';
                            echo '</div>';
                            echo '</div>';
-                           
+
                            echo '</div>'; /* zamkniecie col-12 */
                            echo '</div>'; /* zamkniecie row */
                            echo '</div>'; /* zamkniecie Containera */
@@ -102,7 +102,7 @@ END;
                    }
                }
             }
-            
+
             $polaczenie->close();
         }
     }
