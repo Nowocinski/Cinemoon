@@ -7,6 +7,7 @@
     }
     $title = "Logowanie";
     include "side_part/gora.php";
+    include "side_part/nav.php";
 ?>
 
 <div class="dane-konta2">
@@ -22,12 +23,12 @@
         <label>Login</label><br>
         <input type="text" name="login" class="form-control" placeholder="Twój adres e-mail" />
     </div>
-    
+
     <div class="form-group">
         <label>Haslo</label><br>
         <input type="password" name="haslo" class="form-control" placeholder="Twoje hasło" />
     </div>
-    
+
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Zaloguj</button>
         <button type="reset" class="btn btn-default">Wyczyść</button>

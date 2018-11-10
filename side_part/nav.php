@@ -8,11 +8,12 @@
           $nazwisko = $_SESSION['nazwisko'];
         }
 ?>
+
 <header>
      <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
          <a class="navbar-brand" href="index.php"><img src="img/logo.png" width="142" height="30" alt="Cinemoon" class="d-inline-block align-bottom"></a>
 
-         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainmenu" aria-controls="mainmenu" aria-expended="false" aria-label="Przełącznik nawigacji">
+     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainmenu" aria-controls="mainmenu" aria-expended="false" aria-label="Przełącznik nawigacji">
 			<span class="navbar-toggler-icon"></span>
 		 </button>
 
