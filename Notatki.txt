@@ -1,5 +1,0 @@
-1. Logowanie - jest
-2. Rejestracja
-3. Wczytywanie danych o repertuarach
-4. System rezerwacji
-
