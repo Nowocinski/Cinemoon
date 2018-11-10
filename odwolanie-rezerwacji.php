@@ -48,6 +48,6 @@
     }
     catch (Exception $e)
     {
-      echo '<br>Informacja deweloperska: '.$e;
+      //echo '<br>Informacja deweloperska: '.$e;
     }
 ?>

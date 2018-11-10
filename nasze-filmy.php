@@ -49,7 +49,7 @@
     catch(Exception $e)
     {
         echo '<span style="color: red">Błąd serwera. Spróbuj zarejestrować się później</span>';
-        echo '<br>Informacja deweloperska: '.$e;
+        //echo '<br>Informacja deweloperska: '.$e;
     }
 
     require_once "side_part/gora.php";
