@@ -7,6 +7,67 @@ if (session_status() == PHP_SESSION_NONE)
       header('Location: index.php');
       exit();
     }
+
+    //echo 'Id filmu: '.$_POST['film'].'<br>';
+    //echo 'Id sali: '.$_POST['sala'].'<br>';
+    //echo 'Data: '.$_POST['data'].'<br>';
+    //echo 'Czas: '.$_POST['czas'].'<br>';
+    //echo 'Cena biletu: '.$_POST['cena'].'<br>';
+
+    //---------------------------------------------------------------------------------------------
+        if(isset($_POST['film']))
+        {
+          try {
+            $poprawna_walidacja = true;
+            $film = $_POST['film'];
+            $sala = $_POST['sala'];
+            $data = $_POST['data'];
+            $czas = $_POST['czas'];
+            $cena = $_POST['cena'];
+
+            require_once "connect.php";
+            $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+
+            if($polaczenie->connect_errno != 0)
+                    throw new Exception(mysqli_connect_errno());
+            else {
+              // Kodowanie polskich znaków
+              $polaczenie->query("SET NAMES utf8");
+              $rezultat = $polaczenie->query("SELECT repertuar.czas_rozpoczecia, filmy.min_trwania FROM repertuar INNER JOIN sale ON repertuar.id_sali=sale.id_sali INNER JOIN filmy ON repertuar.id_filmu=filmy.id_filmu WHERE sale.id_sali='$sala' AND repertuar.czas_rozpoczecia > CAST(CONCAT(CURDATE(),' ',CURTIME()) as DATETIME)");
+
+              if(!$rezultat)
+                  throw new Exception($polaczenie->error);
+              else {
+                while($wiersz = mysqli_fetch_assoc($rezultat))
+                {
+                  $datapremiery = $wiersz['czas_rozpoczecia'];
+                  $jakdlugotrwa = $wiersz['min_trwania'];
+                  $bufor = (string)floor($wiersz['min_trwania']/60);
+                  $bufor .= ':'.(string)$wiersz['min_trwania']%60;
+                  $rezultat2 = $polaczenie->query("SELECT id_repertuaru FROM repertuar WHERE id_sali='$sala' AND CAST(CONCAT('$data',' ','$czas') as DATETIME) >= CAST('$datapremiery' as DATETIME) AND CAST(CONCAT('$data',' ','$czas') as DATETIME) <= CAST(CAST('$datapremiery' AS DATETIME) + CAST('$bufor' AS TIME) AS DATETIME) AND repertuar.czas_rozpoczecia > CAST(CONCAT(CURDATE(),' ',CURTIME()) as DATETIME)");
+                  if(!$rezultat)
+                      throw new Exception($polaczenie->error);
+                  else
+                  {
+                    while($wiersz2 = mysqli_fetch_assoc($rezultat2))
+                    {
+                      $_SESSION['blad_rezerwacji'] = '<p><span style="color: red;">W podanym czasie sala jest zajęta</span></p>';
+                      $poprawna_walidacja = false;
+                    }
+                  }
+                }
+              }
+              $rezultat2->free_result();
+              $rezultat->free_result();
+              $polaczenie->close();
+            }
+          } catch (Exception $e) {
+            echo '<span style="color: red;">Błąd serwera. Spróbuj zarejestrować się później</span>';
+            echo '<br>Informacja deweloperska: '.$e;
+          }
+
+        }
+    //---------------------------------------------------------------------------------------------
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -44,13 +105,13 @@ if (session_status() == PHP_SESSION_NONE)
                 <a class="navbar-brand" href="adminIT-info.php">Powróć do strony startowej</a>
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
+                <!--ul class="nav navbar-nav side-nav">
                   <li><a href="adminIT-info.php"><i class="fa fa-area-chart"></i> Strona startowa</a></li>
                   <li><a href="bootstrap-grid.html"><i class="fa fa-film"></i> Repertuar</a></li>
                   <li class="selected"><a href="dodaj-seans.php"><i class="fa fa-tasks"></i> Nowy seans</a></li>
                   <li><a href="dodaj-film.php"><i class="fa fa-video-camera"></i> Dodaj film</a></li>
                   <li><a href="dodaj-sale.php"><i class="fa fa-university"></i> Dodaj sale</a></li>
-                </ul>
+                </ul-->
                 <ul class="nav navbar-nav navbar-right navbar-user">
                     <li class="dropdown messages-dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Powiadomienia <span class="badge">2</span> <b class="caret"></b></a>
@@ -85,9 +146,16 @@ if (session_status() == PHP_SESSION_NONE)
                 </ul>
             </div>
         </nav>
-
+<form action="dodaj-seans.php" method="post" id="forma">
        <div>
         <div class="row text-center">
+          <?php
+            if(isset($_SESSION['blad_rezerwacji']))
+            {
+              echo $_SESSION['blad_rezerwacji'];
+              unset($_SESSION['blad_rezerwacji']);
+            }
+          ?>
             <h2>Nowy seans</h2>
         </div>
         <div class="mb-1">
@@ -95,11 +163,39 @@ if (session_status() == PHP_SESSION_NONE)
                 Tytuł filmu:
             </label>
             <div class="col-md-9">
-                  <select name="film" class="form-control" id="film" class="form-control">
-                    <option>Tytuł filmu 1</option>
-                    <option>Tytuł filmu 2</option>
-                    <option>Tytuł filmu 3</option>
-                    <option>Tytuł filmu 4</option>
+                  <select name="film" class="form-control" class="form-control" style="color: black;">
+<?php
+//Wyłączenie worningów i włączenie wyświetlania wyjątków
+mysqli_report(MYSQLI_REPORT_STRICT);
+try
+{
+  require_once "connect.php";
+  $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+
+  if($polaczenie->connect_errno != 0)
+          throw new Exception(mysqli_connect_errno());
+  else
+  {
+    $polaczenie->query("SET NAMES utf8");
+    $rezultat = $polaczenie->query("SELECT tytul, id_filmu FROM filmy");
+    if(!$rezultat)
+        throw new Exception($polaczenie->error);
+    else {
+      while($wiersz = $rezultat->fetch_assoc())
+        echo '<option value="'.$wiersz['id_filmu'].'">'.$wiersz['tytul'].'</option>';
+    }
+
+    $rezultat->free_result();
+    $polaczenie->close();
+  }
+}
+catch (Exception $e)
+{
+  echo '<span style="color: red;">Błąd serwera. Spróbuj zarejestrować się później</span>';
+  echo '<br>Informacja deweloperska: '.$e;
+}
+
+?>
                   </select>
             </div>
         </div>
@@ -108,11 +204,39 @@ if (session_status() == PHP_SESSION_NONE)
                 Numer sali:
             </label>
             <div class="col-md-9">
-                <select name="sala" class="form-control" class="form-control">
-                  <option>Numer sali 1</option>
-                  <option>Numer sali 2</option>
-                  <option>Numer sali 3</option>
-                  <option>Numer sali 4</option>
+                <select name="sala" class="form-control" class="form-control" style="color: black;">
+                  <?php
+                  //Wyłączenie worningów i włączenie wyświetlania wyjątków
+                  mysqli_report(MYSQLI_REPORT_STRICT);
+                  try
+                  {
+                    require_once "connect.php";
+                    $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+
+                    if($polaczenie->connect_errno != 0)
+                            throw new Exception(mysqli_connect_errno());
+                    else
+                    {
+                      $polaczenie->query("SET NAMES utf8");
+                      $rezultat = $polaczenie->query("SELECT nr_sali, id_sali FROM sale");
+                      if(!$rezultat)
+                          throw new Exception($polaczenie->error);
+                      else {
+                        while($wiersz = $rezultat->fetch_assoc())
+                          echo '<option value="'.$wiersz['id_sali'].'">'.$wiersz['nr_sali'].'</option>';
+                      }
+
+                      $rezultat->free_result();
+                      $polaczenie->close();
+                    }
+                  }
+                  catch (Exception $e)
+                  {
+                    echo '<span style="color: red;">Błąd serwera. Spróbuj zarejestrować się później</span>';
+                    echo '<br>Informacja deweloperska: '.$e;
+                  }
+
+                  ?>
                 </select>
             </div>
         </div>
@@ -121,7 +245,7 @@ if (session_status() == PHP_SESSION_NONE)
                 Data:
             </label>
             <div class="col-md-9">
-                <input type="date" class="form-control" id="data">
+                <input type="date" class="form-control" name="data" style="color: black;" min="<?php echo date("Y-m-d", strtotime("tomorrow")); ?>" required>
                 <p class="help-block">
                     Uwaga: Data seansu musi być późniejsza od daty dzisiejszej
                 </p>
@@ -132,7 +256,7 @@ if (session_status() == PHP_SESSION_NONE)
                 Czas:
             </label>
             <div class="col-md-9">
-                <input type="time" class="form-control" id="czas">
+                <input type="time" class="form-control" name="czas" style="color: black;" required>
             </div>
         </div>
         <div>
@@ -140,7 +264,7 @@ if (session_status() == PHP_SESSION_NONE)
                 Cena biletu:
             </label>
             <div class="col-md-9">
-                <input type="number" class="form-control" id="emailaddress" placeholder="Cena biletu w zł" step="0.01">
+                <input type="number" class="form-control" name="cena" placeholder="Cena biletu w zł" step="0.01" min="0" style="color: black;" required>
             </div>
         </div>
         <div>
@@ -148,7 +272,7 @@ if (session_status() == PHP_SESSION_NONE)
             </div>
             <div class="col-md-10">
                 <label>
-                    <input type="checkbox"> Tak, chcę dodać nowy seans</label>
+                    <input type="checkbox" required> Tak, chcę dodać nowy seans</label>
             </div>
         </div>
         <div>
@@ -160,6 +284,7 @@ if (session_status() == PHP_SESSION_NONE)
             </div>
         </div>
     </div>
+  </form>
     </div>
 
 </body>
