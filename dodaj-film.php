@@ -247,7 +247,7 @@ if (session_status() == PHP_SESSION_NONE)
                 Tytuł:
             </label>
             <div class="col-md-9">
-              <input type="text" class="form-control" name="tytul" placeholder="Nazwa filmu" required>
+              <input type="text" class="form-control" name="tytul" placeholder="Nazwa filmu" style="color: black;" required>
             </div>
         </div>
         <div>
@@ -255,7 +255,7 @@ if (session_status() == PHP_SESSION_NONE)
                 Opis:
             </label>
             <div class="col-md-9">
-              <textarea class="form-control" rows="5" name="opis" placeholder="Opis filmu" required></textarea>
+              <textarea class="form-control" rows="5" name="opis" placeholder="Opis filmu" style="color: black;" required></textarea>
               <p class="help-block">
                   Uwaga: W celu dodania akapitów prosimy umieścić odpowiednie fragmęty tekstu między znaczniki &lt;p&gt; i &lt;/p&gt;
               </p>
@@ -302,7 +302,7 @@ if (session_status() == PHP_SESSION_NONE)
                 Czas trwania:
             </label>
             <div class="col-md-9">
-                <input type="number" class="form-control" placeholder="Czas filmu w minutach" min="1" name="czastrwania" required>
+                <input type="number" class="form-control" placeholder="Czas filmu w minutach" min="1" name="czastrwania" style="color: black;" required>
             </div>
         </div>
         <div class="mb-1">

@@ -156,7 +156,7 @@ if (session_status() == PHP_SESSION_NONE)
                 Oznaczene sali:
             </label>
             <div class="col-md-9">
-              <input type="text" class="form-control" name="oznaczeniesali" placeholder="Numer/Kod sali" required>
+              <input type="text" class="form-control" name="oznaczeniesali" placeholder="Numer/Kod sali" style="color: black;" required>
               <?php
               if(isset($_SESSION['blad_oznaczeniasali']))
               {
@@ -171,7 +171,7 @@ if (session_status() == PHP_SESSION_NONE)
                 Ilość rzędów:
             </label>
             <div class="col-md-9">
-              <input type="number" class="form-control" name="iloscrzedow" placeholder="Rzędy" min="1" required>
+              <input type="number" class="form-control" name="iloscrzedow" placeholder="Rzędy" min="1" style="color: black;" required>
             </div>
         </div>
         <div class="mb-1">
@@ -179,7 +179,7 @@ if (session_status() == PHP_SESSION_NONE)
                 Ilość miejsc:
             </label>
             <div class="col-md-9">
-              <input type="number" class="form-control" name="iloscmiejsc" placeholder="Miejsca" min="1" required>
+              <input type="number" class="form-control" name="iloscmiejsc" placeholder="Miejsca" min="1" style="color: black;" required>
             </div>
         </div>
         <div>
