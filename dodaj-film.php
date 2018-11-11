@@ -7,6 +7,34 @@ if (session_status() == PHP_SESSION_NONE)
       header('Location: index.php');
       exit();
     }
+
+    $iloscchecboxow = 0; $gatunek = '';
+    if(isset($_POST['komedia'])) {$iloscchecboxow++; $gatunek .= 'Komedia';}
+    if(isset($_POST['dramat'])) {$iloscchecboxow++; if(strlen($gatunek) > 0) $gatunek .= ', dramat'; else $gatunek .='Dramat';}
+    if(isset($_POST['melodramat'])) {$iloscchecboxow++; if(strlen($gatunek) > 0) $gatunek .= ', melodramat'; else $gatunek .='Melodramat';}
+    if(isset($_POST['western'])) {$iloscchecboxow++; if(strlen($gatunek) > 0) $gatunek .= ', western'; else $gatunek .='Western';}
+    if(isset($_POST['horror'])) {$iloscchecboxow++; if(strlen($gatunek) > 0) $gatunek .= ', horror'; else $gatunek .='Horror';}
+    if(isset($_POST['musical'])) {$iloscchecboxow++; if(strlen($gatunek) > 0) $gatunek .= ', musical'; else $gatunek .='Musical';}
+    if(isset($_POST['thrille'])) {$iloscchecboxow++; if(strlen($gatunek) > 0) $gatunek .= ', thrille'; else $gatunek .='Thrille';}
+    if(isset($_POST['kryminal'])) {$iloscchecboxow++; if(strlen($gatunek) > 0) $gatunek .= ', kryminał'; else $gatunek .='Kryminał';}
+    if(isset($_POST['gangsterski'])) {$iloscchecboxow++; if(strlen($gatunek) > 0) $gatunek .= ', gangsterski'; else $gatunek .='Gangsterski';}
+    if(isset($_POST['sf'])) {$iloscchecboxow++; if(strlen($gatunek) > 0) $gatunek .= ', science fiction'; else $gatunek .='Science fiction';}
+    if(isset($_POST['fantasy'])) {$iloscchecboxow++; if(strlen($gatunek) > 0) $gatunek .= ', fantasy'; else $gatunek .='Fantasy';}
+    if(isset($_POST['historyczny'])) {$iloscchecboxow++; if(strlen($gatunek) > 0) $gatunek .= ', historyczny'; else $gatunek .='Historyczny';}
+    if(isset($_POST['komediaromantyczna'])) {if(strlen($gatunek) > 0) $gatunek .= ', komedia romantyczna'; else $gatunek .='Komedia romantyczna';}
+    if(isset($_POST['psychologiczny'])) {if(strlen($gatunek) > 0) $gatunek .= ', psychologiczny'; else $gatunek .='Psychologiczny';}
+    if(isset($_POST['szpiegowski'])) {if(strlen($gatunek) > 0) $gatunek .= ', szpiegowski'; else $gatunek .='Szpiegowski';}
+    if(isset($_POST['familijny'])) {if(strlen($gatunek) > 0) $gatunek .= ', familijny'; else $gatunek .='Familijny';}
+    if(isset($_POST['wojenny'])) {if(strlen($gatunek) > 0) $gatunek .= ', wojenny'; else $gatunek .='Wojenny';}
+    if(isset($_POST['sportowy'])) {if(strlen($gatunek) > 0) $gatunek .= ', sportowy'; else $gatunek .='Sportowy';}
+    if(isset($_POST['kostiumowy'])) {if(strlen($gatunek) > 0) $gatunek .= ', kostiumowy'; else $gatunek .='Kostiumowy';}
+    if(isset($_POST['animowany'])) {if(strlen($gatunek) > 0) $gatunek .= ', animowany'; else $gatunek .='Animowany';}
+
+    echo $gatunek;
+
+    if($iloscchecboxow == 0)
+      $_SESSION['blad_chacbox'] = '<span style="color: rad;">Przynajmniej jeden gatunek powinien zostać wybrany</span>';
+
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -44,13 +72,13 @@ if (session_status() == PHP_SESSION_NONE)
                 <a class="navbar-brand" href="adminIT-info.php">Powróć do strony startowej</a>
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
+                <!--ul class="nav navbar-nav side-nav">
                   <li><a href="adminIT-info.php"><i class="fa fa-area-chart"></i> Strona startowa</a></li>
                   <li><a href="bootstrap-grid.html"><i class="fa fa-film"></i> Repertuar</a></li>
                   <li><a href="dodaj-seans.php"><i class="fa fa-tasks"></i> Nowy seans</a></li>
                   <li class="selected"><a href="dodaj-film.php"><i class="fa fa-video-camera"></i> Dodaj film</a></li>
                   <li><a href="dodaj-sale.php"><i class="fa fa-university"></i> Dodaj sale</a></li>
-                </ul>
+                </ul-->
                 <ul class="nav navbar-nav navbar-right navbar-user">
                     <li class="dropdown messages-dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Powiadomienia <span class="badge">2</span> <b class="caret"></b></a>
@@ -87,6 +115,7 @@ if (session_status() == PHP_SESSION_NONE)
         </nav>
 
        <div>
+         <form action="dodaj-film.php" method="post">
         <div class="row text-center">
             <h2>Nowy film</h2>
         </div>
@@ -95,7 +124,7 @@ if (session_status() == PHP_SESSION_NONE)
                 Tytuł:
             </label>
             <div class="col-md-9">
-              <input type="text" class="form-control" id="firstname" placeholder="Nazwa filmu">
+              <input type="text" class="form-control" name="tytul" placeholder="Nazwa filmu" required>
             </div>
         </div>
         <div>
@@ -103,7 +132,7 @@ if (session_status() == PHP_SESSION_NONE)
                 Opis:
             </label>
             <div class="col-md-9">
-              <textarea class="form-control" rows="5" id="comment" placeholder="Opis filmu"></textarea>
+              <textarea class="form-control" rows="5" name="opis" placeholder="Opis filmu" required></textarea>
               <p class="help-block">
                   Uwaga: W celu dodania akapitów prosimy umieścić odpowiednie fragmęty tekstu między znaczniki &lt;p&gt; i &lt;/p&gt;
               </p>
@@ -115,26 +144,33 @@ if (session_status() == PHP_SESSION_NONE)
             </label>
             <div class="checkbox">
             <div class="col-md-9">
-                    <div><label><input type="checkbox" value="">Komedia</label></div>
-                    <div><label><input type="checkbox" value="">Dramat</label></div>
-                    <div><label><input type="checkbox" value="">Melodramat</label></div>
-                    <div><label><input type="checkbox" value="">Western</label></div>
-                    <div><label><input type="checkbox" value="">Horror</label></div>
-                    <div><label><input type="checkbox" value="">Musical</label></div>
-                    <div><label><input type="checkbox" value="">Thriller</label></div>
-                    <div><label><input type="checkbox" value="">Kryminał</label></div>
-                    <div><label><input type="checkbox" value="">Gangsterski</label></div>
-                    <div><label><input type="checkbox" value="">Science fiction</label></div>
-                    <div><label><input type="checkbox" value="">Fantasy</label></div>
-                    <div><label><input type="checkbox" value="">Historyczny</label></div>
-                    <div><label><input type="checkbox" value="">Komedia romantyczna</label></div>
-                    <div><label><input type="checkbox" value="">Psychologiczny</label></div>
-                    <div><label><input type="checkbox" value="">Szpiegowski</label></div>
-                    <div><label><input type="checkbox" value="">Familijny</label></div>
-                    <div><label><input type="checkbox" value="">Wojenny</label></div>
-                    <div><label><input type="checkbox" value="">Sportowy</label></div>
-                    <div><label><input type="checkbox" value="">Kostiumowy</label></div>
-                    <div><label><input type="checkbox" value="">Animowany</label></div>
+                    <div><label><input type="checkbox" name="komedia">Komedia</label></div>
+                    <div><label><input type="checkbox" name="dramat">Dramat</label></div>
+                    <div><label><input type="checkbox" name="melodramat">Melodramat</label></div>
+                    <div><label><input type="checkbox" name="western">Western</label></div>
+                    <div><label><input type="checkbox" name="horror">Horror</label></div>
+                    <div><label><input type="checkbox" name="musical">Musical</label></div>
+                    <div><label><input type="checkbox" name="thrille">Thriller</label></div>
+                    <div><label><input type="checkbox" name="kryminal">Kryminał</label></div>
+                    <div><label><input type="checkbox" name="gangsterski">Gangsterski</label></div>
+                    <div><label><input type="checkbox" name="sf">Science fiction</label></div>
+                    <div><label><input type="checkbox" name="fantasy">Fantasy</label></div>
+                    <div><label><input type="checkbox" name="historyczny">Historyczny</label></div>
+                    <div><label><input type="checkbox" name="komediaromantyczna">Komedia romantyczna</label></div>
+                    <div><label><input type="checkbox" name="psychologiczny">Psychologiczny</label></div>
+                    <div><label><input type="checkbox" name="szpiegowski">Szpiegowski</label></div>
+                    <div><label><input type="checkbox" name="familijny">Familijny</label></div>
+                    <div><label><input type="checkbox" name="wojenny">Wojenny</label></div>
+                    <div><label><input type="checkbox" name="sportowy">Sportowy</label></div>
+                    <div><label><input type="checkbox" name="kostiumowy">Kostiumowy</label></div>
+                    <div><label><input type="checkbox" name="animowany">Animowany</label></div>
+                    <?php
+                      if(isset($_SESSION['blad_chacbox']))
+                      {
+                        echo $_SESSION['blad_chacbox'];
+                        unset($_SESSION['blad_chacbox']);
+                      }
+                    ?>
               </div>
             </div>
           </div>
@@ -143,7 +179,7 @@ if (session_status() == PHP_SESSION_NONE)
                 Czas trwania:
             </label>
             <div class="col-md-9">
-                <input type="number" class="form-control" placeholder="Czas filmu w minutach">
+                <input type="number" class="form-control" placeholder="Czas filmu w minutach" min="1" required>
                 <p class="help-block">
                     Uwaga: Data seansu musi być poźniejsza od daty dzisiejszej
                 </p>
@@ -154,7 +190,7 @@ if (session_status() == PHP_SESSION_NONE)
                 Produkcja:
             </label>
             <div class="col-md-9">
-              <input type="text" class="form-control" id="firstname" placeholder="Producenci, którzy stworzyli film">
+              <input type="text" class="form-control" id="firstname" placeholder="Producenci, którzy stworzyli film" required>
             </div>
         </div>
         <div class="mb-1">
@@ -162,7 +198,7 @@ if (session_status() == PHP_SESSION_NONE)
                 Reżyser:
             </label>
             <div class="col-md-9">
-              <input type="text" class="form-control" id="firstname" placeholder="Reżyser filmu">
+              <input type="text" class="form-control" id="firstname" placeholder="Reżyser filmu" required>
             </div>
         </div>
         <div>
@@ -170,7 +206,7 @@ if (session_status() == PHP_SESSION_NONE)
                 Plakat:
             </label>
             <div class="col-md-10">
-                <input type="file" name="uploadimage" id="uploadimage">
+                <input type="file" name="uploadimage" id="uploadimage" required>
                 <p class="help-block">
                     Obsługiwane formaty: jpeg, jpg, gif, png
                 </p>
@@ -181,7 +217,7 @@ if (session_status() == PHP_SESSION_NONE)
             </div>
             <div class="col-md-10">
                 <label>
-                    <input type="checkbox"> Tak, chcę dodać nowy film</label>
+                    <input type="checkbox" required> Tak, chcę dodać nowy film</label>
             </div>
         </div>
         <div>
@@ -192,6 +228,7 @@ if (session_status() == PHP_SESSION_NONE)
                 </button>
             </div>
         </div>
+      </form>
     </div>
     </div>
 
