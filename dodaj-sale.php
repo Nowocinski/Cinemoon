@@ -10,7 +10,7 @@ if (session_status() == PHP_SESSION_NONE)
 
     if(isset($_POST['oznaczeniesali']))
     {
-      $oznaczeniesali = $_POST['oznaczeniesali'];
+      $oznaczeniesali = htmlentities($_POST['oznaczeniesali'], ENT_QUOTES, "UTF-8");;
       $iloscrzedow = $_POST['iloscrzedow'];
       $iloscmiejsc = $_POST['iloscmiejsc'];
 
