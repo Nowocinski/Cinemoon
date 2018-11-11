@@ -84,7 +84,7 @@ if (session_status() == PHP_SESSION_NONE)
 
     } catch (Exception $e) {
       echo '<span style="color: red;">Błąd serwera. Spróbuj zarejestrować się później</span>';
-      echo '<br>Informacja deweloperska: '.$e;
+      //echo '<br>Informacja deweloperska: '.$e;
     }
 
 
@@ -143,7 +143,7 @@ if (session_status() == PHP_SESSION_NONE)
             }
           } catch (Exception $e) {
             echo '<span style="color: red;">Błąd serwera. Spróbuj zarejestrować się później</span>';
-            echo '<br>Informacja deweloperska: '.$e;
+            //echo '<br>Informacja deweloperska: '.$e;
           }
 
         }
