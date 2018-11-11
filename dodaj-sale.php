@@ -7,6 +7,57 @@ if (session_status() == PHP_SESSION_NONE)
       header('Location: index.php');
       exit();
     }
+
+    if(isset($_POST['oznaczeniesali']))
+    {
+      $oznaczeniesali = $_POST['oznaczeniesali'];
+      $iloscrzedow = $_POST['iloscrzedow'];
+      $iloscmiejsc = $_POST['iloscmiejsc'];
+
+      //Wyłączenie worningów i włączenie wyświetlania wyjątków
+      mysqli_report(MYSQLI_REPORT_STRICT);
+
+      try
+      {
+        require_once "connect.php";
+        $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+
+        if($polaczenie->connect_errno != 0)
+                throw new Exception(mysqli_connect_errno());
+        else
+        {
+          // Kodowanie polskich znaków
+          $polaczenie->query("SET NAMES utf8");
+          $rezultat = $polaczenie->query("SELECT nr_sali FROM sale WHERE nr_sali='$oznaczeniesali' AND nr_sali!=''");
+          if(!$rezultat)
+              throw new Exception($polaczenie->error);
+          else
+          {
+            if($rezultat->num_rows > 0)
+            {
+                $poprawna_walidacja = false;
+                $_SESSION['blad_oznaczeniasali'] = '<span style="color: red;">Sala o podanej nazwie jest już w bazie</span>';
+            }
+            else
+            {
+              if($polaczenie->query("INSERT INTO sale VALUES ('','$iloscrzedow','$iloscmiejsc','$oznaczeniesali')"))
+              {
+                $_SESSION['sukces'] = '<span style="color: green;">Pomyślnie dodano nową sale</span>';
+                unset($_POST['oznaczeniesali']);
+                unset($_POST['iloscrzedow']);
+                unset($_POST['iloscmiejsc']);
+              }
+            }
+          }
+        }
+      }
+      catch(Exception $e)
+      {
+        echo '<span style="color: red;">Błąd serwera. Spróbuj zarejestrować się później</span>';
+        //echo '<br>Informacja deweloperska: '.$e;
+      }
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -33,6 +84,7 @@ if (session_status() == PHP_SESSION_NONE)
 <body>
 
     <div id="wrapper">
+      <form action="dodaj-sale.php" method="post">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -88,6 +140,13 @@ if (session_status() == PHP_SESSION_NONE)
 
        <div>
         <div class="row text-center">
+          <?php
+            if(isset($_SESSION['sukces']))
+            {
+              echo '<h5>'.$_SESSION['sukces'].'</h5>';
+              unset($_SESSION['sukces']);
+            }
+          ?>
             <h2>Nowa sala</h2>
         </div>
         <div class="mb-1">
@@ -95,7 +154,14 @@ if (session_status() == PHP_SESSION_NONE)
                 Oznaczene sali:
             </label>
             <div class="col-md-9">
-              <input type="text" class="form-control" id="firstname" placeholder="Numer/Kod sali">
+              <input type="text" class="form-control" name="oznaczeniesali" placeholder="Numer/Kod sali" required>
+              <?php
+              if(isset($_SESSION['blad_oznaczeniasali']))
+              {
+                echo $_SESSION['blad_oznaczeniasali'];
+                unset($_SESSION['blad_oznaczeniasali']);
+              }
+              ?>
             </div>
         </div>
         <div class="mb-1">
@@ -103,7 +169,7 @@ if (session_status() == PHP_SESSION_NONE)
                 Ilość rzędów:
             </label>
             <div class="col-md-9">
-              <input type="number" class="form-control" id="firstname" placeholder="Rzędy" min="1">
+              <input type="number" class="form-control" name="iloscrzedow" placeholder="Rzędy" min="1" required>
             </div>
         </div>
         <div class="mb-1">
@@ -111,7 +177,7 @@ if (session_status() == PHP_SESSION_NONE)
                 Ilość miejsc:
             </label>
             <div class="col-md-9">
-              <input type="number" class="form-control" id="firstname" placeholder="Miejsca" min="1">
+              <input type="number" class="form-control" name="iloscmiejsc" placeholder="Miejsca" min="1" required>
             </div>
         </div>
         <div>
@@ -119,7 +185,7 @@ if (session_status() == PHP_SESSION_NONE)
             </div>
             <div class="col-md-10">
                 <label>
-                    <input type="checkbox"> Tak, chcę dodać nową sale</label>
+                    <input type="checkbox" required> Tak, chcę dodać nową sale</label>
             </div>
         </div>
         <div>
@@ -131,6 +197,7 @@ if (session_status() == PHP_SESSION_NONE)
             </div>
         </div>
     </div>
+    </form>
     </div>
 
 </body>
