@@ -49,6 +49,8 @@ if (session_status() == PHP_SESSION_NONE)
               }
             }
           }
+          $rezultat->free_result();
+          $polaczenie->close();
         }
       }
       catch(Exception $e)
