@@ -8,6 +8,11 @@ if (session_status() == PHP_SESSION_NONE)
       exit();
     }
 
+    $tytul = htmlentities($_POST['tytul'], ENT_QUOTES, "UTF-8");
+    $opis = htmlentities($_POST['opis'], ENT_QUOTES, "UTF-8");
+    $producent = htmlentities($_POST['producent'], ENT_QUOTES, "UTF-8");
+    $rezyser = htmlentities($_POST['rezyser'], ENT_QUOTES, "UTF-8");
+
     $iloscchecboxow = 0; $gatunek = '';
     if(isset($_POST['komedia'])) {$iloscchecboxow++; $gatunek .= 'Komedia';}
     if(isset($_POST['dramat'])) {$iloscchecboxow++; if(strlen($gatunek) > 0) $gatunek .= ', dramat'; else $gatunek .='Dramat';}
@@ -190,7 +195,7 @@ if (session_status() == PHP_SESSION_NONE)
                 Produkcja:
             </label>
             <div class="col-md-9">
-              <input type="text" class="form-control" id="firstname" placeholder="Producenci, którzy stworzyli film" required>
+              <input type="text" class="form-control" name="producent" placeholder="Producenci, którzy stworzyli film" required>
             </div>
         </div>
         <div class="mb-1">
@@ -198,7 +203,7 @@ if (session_status() == PHP_SESSION_NONE)
                 Reżyser:
             </label>
             <div class="col-md-9">
-              <input type="text" class="form-control" id="firstname" placeholder="Reżyser filmu" required>
+              <input type="text" class="form-control" name="rezyser" placeholder="Reżyser filmu" required>
             </div>
         </div>
         <div>
