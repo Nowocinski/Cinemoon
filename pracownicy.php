@@ -8,11 +8,11 @@
         exit();
     }
 
-    //if(isset($_SESSION['typ_konta']) && $_SESSION['typ_konta'] == 'administratorIT')
-    //{
-        //header('Location: costam.php');
-        //exit();
-    //}
+    if(isset($_SESSION['typ_konta']) && $_SESSION['typ_konta'] == 'administratorIT')
+    {
+        header('Location: adminIT-info.php');
+        exit();
+    }
 
     $title = "Pracownicy";
     $pracownik = true;
