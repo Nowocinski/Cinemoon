@@ -8,17 +8,10 @@ if (session_status() == PHP_SESSION_NONE)
       exit();
     }
 
-    //echo 'Id filmu: '.$_POST['film'].'<br>';
-    //echo 'Id sali: '.$_POST['sala'].'<br>';
-    //echo 'Data: '.$_POST['data'].'<br>';
-    //echo 'Czas: '.$_POST['czas'].'<br>';
-    //echo 'Cena biletu: '.$_POST['cena'].'<br>';
-
     //---------------------------------------------------------------------------------------------
         if(isset($_POST['film']))
         {
           try {
-            $poprawna_walidacja = true;
             $film = $_POST['film'];
             $sala = $_POST['sala'];
             $data = $_POST['data'];
@@ -49,10 +42,20 @@ if (session_status() == PHP_SESSION_NONE)
                       throw new Exception($polaczenie->error);
                   else
                   {
-                    while($wiersz2 = mysqli_fetch_assoc($rezultat2))
+                    if($rezultat2->num_rows > 0)
                     {
                       $_SESSION['blad_rezerwacji'] = '<p><span style="color: red;">W podanym czasie sala jest zajęta</span></p>';
-                      $poprawna_walidacja = false;
+                    }
+                    else
+                    {
+                      $data_i_czas = (string)$data.' 00:0'.(string)$bufor;
+                      if($polaczenie->query("INSERT INTO repertuar VALUES ('','$sala','$film','$data_i_czas','$cena')"))
+                      {
+                        unset($_POST['film']);
+                        $_SESSION['sukces'] = '<p><span style="color: green;">Pomyślnie dodano nowy seans</span></p>';
+                      }
+                      else
+                        throw new Exception($polaczenie->error);
                     }
                   }
                 }
@@ -105,13 +108,13 @@ if (session_status() == PHP_SESSION_NONE)
                 <a class="navbar-brand" href="adminIT-info.php">Powróć do strony startowej</a>
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <!--ul class="nav navbar-nav side-nav">
+                <ul class="nav navbar-nav side-nav">
                   <li><a href="adminIT-info.php"><i class="fa fa-area-chart"></i> Strona startowa</a></li>
                   <li><a href="bootstrap-grid.html"><i class="fa fa-film"></i> Repertuar</a></li>
                   <li class="selected"><a href="dodaj-seans.php"><i class="fa fa-tasks"></i> Nowy seans</a></li>
                   <li><a href="dodaj-film.php"><i class="fa fa-video-camera"></i> Dodaj film</a></li>
                   <li><a href="dodaj-sale.php"><i class="fa fa-university"></i> Dodaj sale</a></li>
-                </ul-->
+                </ul>
                 <ul class="nav navbar-nav navbar-right navbar-user">
                     <li class="dropdown messages-dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Powiadomienia <span class="badge">2</span> <b class="caret"></b></a>
@@ -154,6 +157,12 @@ if (session_status() == PHP_SESSION_NONE)
             {
               echo $_SESSION['blad_rezerwacji'];
               unset($_SESSION['blad_rezerwacji']);
+            }
+
+            if(isset($_SESSION['sukces']))
+            {
+              echo $_SESSION['sukces'];
+              unset($_SESSION['sukces']);
             }
           ?>
             <h2>Nowy seans</h2>
