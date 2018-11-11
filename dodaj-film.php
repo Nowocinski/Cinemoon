@@ -8,10 +8,14 @@ if (session_status() == PHP_SESSION_NONE)
       exit();
     }
 
+    if(isset($_POST['tytul']))
+    {
+    $poprawna_walidacja = true;
     $tytul = htmlentities($_POST['tytul'], ENT_QUOTES, "UTF-8");
-    $opis = htmlentities($_POST['opis'], ENT_QUOTES, "UTF-8");
+    $opis = $_POST['opis'];
     $producent = htmlentities($_POST['producent'], ENT_QUOTES, "UTF-8");
     $rezyser = htmlentities($_POST['rezyser'], ENT_QUOTES, "UTF-8");
+    $czastrwanie = $_POST['czastrwania'];
 
     $iloscchecboxow = 0; $gatunek = '';
     if(isset($_POST['komedia'])) {$iloscchecboxow++; $gatunek .= 'Komedia';}
@@ -35,10 +39,117 @@ if (session_status() == PHP_SESSION_NONE)
     if(isset($_POST['kostiumowy'])) {if(strlen($gatunek) > 0) $gatunek .= ', kostiumowy'; else $gatunek .='Kostiumowy';}
     if(isset($_POST['animowany'])) {if(strlen($gatunek) > 0) $gatunek .= ', animowany'; else $gatunek .='Animowany';}
 
-    echo $gatunek;
-
     if($iloscchecboxow == 0)
+    {
+      $poprawna_walidacja = false;
       $_SESSION['blad_chacbox'] = '<span style="color: rad;">Przynajmniej jeden gatunek powinien zostać wybrany</span>';
+    }
+
+    //Pobieranie plakatu
+    $file = $_FILES['file'];
+    $fileName = $_FILES['file']['name'];
+    $fileTmpName = $_FILES['file']['tmp_name'];
+    $fileSize = $_FILES['file']['size'];
+    $fileError = $_FILES['file']['error'];
+    $fileType = $_FILES['file']['type'];
+
+    $fileExt = explode('.', $fileName);
+    $fileActualExt = strtolower(end($fileExt));
+
+    $allowed = array('jpg', 'jpeg', 'png', 'gif');
+
+    //Wyłączenie worningów i włączenie wyświetlania wyjątków
+    mysqli_report(MYSQLI_REPORT_STRICT);
+    try {
+      require_once "connect.php";
+      $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+
+      if($polaczenie->connect_errno != 0)
+              throw new Exception(mysqli_connect_errno());
+      else {
+              $polaczenie->query("SET NAMES utf8");
+              $rezultat = $polaczenie->query("SELECT grafika FROM filmy WHERE grafika='$fileName' AND grafika!=''");
+              if(!$rezultat)
+                  throw new Exception($polaczenie->error);
+              else {
+                if($rezultat->num_rows > 0)
+                {
+                  $poprawna_walidacja = false;
+                  $_SESSION['blad_plakat'] = '<span style="color: red;">W bazie istnieje już plik o tej samej nazwie</span>';
+                }
+              }
+        $rezultat->free_result();
+        $polaczenie->close();
+      }
+
+    } catch (Exception $e) {
+      echo '<span style="color: red;">Błąd serwera. Spróbuj zarejestrować się później</span>';
+      echo '<br>Informacja deweloperska: '.$e;
+    }
+
+
+    if(in_array($fileActualExt, $allowed))
+    {
+      if($fileError === 0)
+      {
+        if($fileSize < 20000)
+        {
+          //$fileNameNew = uniqid('', true).".".$fileActualExt;
+          $fileDestination = 'side_part/filmy/'.$fileName;
+          move_uploaded_file($fileTmpName, $fileDestination);
+        }
+        else
+        {
+          $poprawna_walidacja = false;
+          $_SESSION['blad_plakat'] = '<span style="color: red;">Plik jest za duży</span>';
+        }
+      }
+      else
+      {
+        $poprawna_walidacja = false;
+        $_SESSION['blad_plakat'] = '<span style="color: red;">Błąd wysłania pliku</span>';
+      }
+    }
+
+    else
+    {
+      $poprawna_walidacja = false;
+      $_SESSION['blad_plakat'] = '<span style="color: red;">Nieobsługiwany typ pliku</span>';
+    }
+
+    //---------------------------------------------------------------------------------------------
+        if($poprawna_walidacja)
+        {
+          try {
+            require_once "connect.php";
+            $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+
+            if($polaczenie->connect_errno != 0)
+                    throw new Exception(mysqli_connect_errno());
+            else {
+              // Kodowanie polskich znaków
+              $polaczenie->query("SET NAMES utf8");
+              if($polaczenie->query("INSERT INTO filmy VALUES ('','$tytul','$opis','$gatunek','$czastrwanie','$producent','$rezyser','$fileName')"))
+              {
+                unset($poprawna_walidacja);
+                unset($_POST['tytul']);
+
+                $_SESSION['sukces'] = '<span style="color: green;">Pomyślnie dodano nowy film</span>';
+              }
+              else {
+                throw new Exception(mysqli_connect_errno());
+              }
+              $polaczenie->close();
+            }
+          } catch (Exception $e) {
+            echo '<span style="color: red;">Błąd serwera. Spróbuj zarejestrować się później</span>';
+            echo '<br>Informacja deweloperska: '.$e;
+          }
+
+        }
+    //---------------------------------------------------------------------------------------------
+
+    }
 
 ?>
 <!DOCTYPE html>
@@ -77,13 +188,13 @@ if (session_status() == PHP_SESSION_NONE)
                 <a class="navbar-brand" href="adminIT-info.php">Powróć do strony startowej</a>
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <!--ul class="nav navbar-nav side-nav">
+                <ul class="nav navbar-nav side-nav">
                   <li><a href="adminIT-info.php"><i class="fa fa-area-chart"></i> Strona startowa</a></li>
                   <li><a href="bootstrap-grid.html"><i class="fa fa-film"></i> Repertuar</a></li>
                   <li><a href="dodaj-seans.php"><i class="fa fa-tasks"></i> Nowy seans</a></li>
                   <li class="selected"><a href="dodaj-film.php"><i class="fa fa-video-camera"></i> Dodaj film</a></li>
                   <li><a href="dodaj-sale.php"><i class="fa fa-university"></i> Dodaj sale</a></li>
-                </ul-->
+                </ul>
                 <ul class="nav navbar-nav navbar-right navbar-user">
                     <li class="dropdown messages-dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Powiadomienia <span class="badge">2</span> <b class="caret"></b></a>
@@ -120,8 +231,15 @@ if (session_status() == PHP_SESSION_NONE)
         </nav>
 
        <div>
-         <form action="dodaj-film.php" method="post">
+         <form action="dodaj-film.php" method="post" enctype="multipart/form-data">
         <div class="row text-center">
+            <?php
+              if(isset($_SESSION['sukces']))
+              {
+                  echo $_SESSION['sukces'];
+                  unset($_SESSION['sukces']);
+              }
+            ?>
             <h2>Nowy film</h2>
         </div>
         <div class="mb-1">
@@ -184,10 +302,7 @@ if (session_status() == PHP_SESSION_NONE)
                 Czas trwania:
             </label>
             <div class="col-md-9">
-                <input type="number" class="form-control" placeholder="Czas filmu w minutach" min="1" required>
-                <p class="help-block">
-                    Uwaga: Data seansu musi być poźniejsza od daty dzisiejszej
-                </p>
+                <input type="number" class="form-control" placeholder="Czas filmu w minutach" min="1" name="czastrwania" required>
             </div>
         </div>
         <div class="mb-1">
@@ -211,9 +326,16 @@ if (session_status() == PHP_SESSION_NONE)
                 Plakat:
             </label>
             <div class="col-md-10">
-                <input type="file" name="uploadimage" id="uploadimage" required>
+                <input type="file" name="file" required>
                 <p class="help-block">
                     Obsługiwane formaty: jpeg, jpg, gif, png
+                    <?php
+                      if(isset($_SESSION['blad_plakat']))
+                      {
+                        echo '<br>'.$_SESSION['blad_plakat'];
+                        unset($_SESSION['blad_plakat']);
+                      }
+                    ?>
                 </p>
             </div>
         </div>
