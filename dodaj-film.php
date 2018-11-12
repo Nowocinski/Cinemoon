@@ -92,7 +92,7 @@ if (session_status() == PHP_SESSION_NONE)
     {
       if($fileError === 0)
       {
-        if($fileSize < 20000)
+        if($fileSize < 40000000)
         {
           //$fileNameNew = uniqid('', true).".".$fileActualExt;
           $fileDestination = 'side_part/filmy/'.$fileName;
@@ -134,7 +134,7 @@ if (session_status() == PHP_SESSION_NONE)
                 unset($poprawna_walidacja);
                 unset($_POST['tytul']);
 
-                $_SESSION['sukces'] = '<span style="color: green;">Pomyślnie dodano nowy film</span>';
+                $_SESSION['sukces'] = true;
               }
               else {
                 throw new Exception(mysqli_connect_errno());
@@ -233,13 +233,20 @@ if (session_status() == PHP_SESSION_NONE)
        <div>
          <form action="dodaj-film.php" method="post" enctype="multipart/form-data">
         <div class="row text-center">
-            <?php
+<?php
               if(isset($_SESSION['sukces']))
               {
-                  echo $_SESSION['sukces'];
+echo<<<END
+        <div class="col-lg-12">
+            <div class="alert alert-dismissable alert-success">
+                <button data-dismiss="alert" class="close" type="button">&times;</button>
+                Pomyślnie dodano nową sale
+            </div>
+        </div>
+END;
                   unset($_SESSION['sukces']);
-              }
-            ?>
+                }
+?>
             <h2>Nowy film</h2>
         </div>
         <div class="mb-1">
