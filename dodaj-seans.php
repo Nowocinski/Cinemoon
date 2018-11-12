@@ -9,7 +9,7 @@ if (session_status() == PHP_SESSION_NONE)
     }
 
     //---------------------------------------------------------------------------------------------
-        if(isset($_POST['film']))
+        if(isset($_POST['cena']))
         {
           try {
             $film = $_POST['film'];
@@ -44,7 +44,7 @@ if (session_status() == PHP_SESSION_NONE)
                   {
                     if($rezultat2->num_rows > 0)
                     {
-                      $_SESSION['blad_rezerwacji'] = '<p><span style="color: red;">W podanym czasie sala jest zajęta</span></p>';
+                      $_SESSION['blad_rezerwacji'] = true;
                     }
                     else
                     {
@@ -52,7 +52,7 @@ if (session_status() == PHP_SESSION_NONE)
                       if($polaczenie->query("INSERT INTO repertuar VALUES ('','$sala','$film','$data_i_czas','$cena')"))
                       {
                         unset($_POST['film']);
-                        $_SESSION['sukces'] = '<p><span style="color: green;">Pomyślnie dodano nowy seans</span></p>';
+                        $_SESSION['sukces'] = true;
                       }
                       else
                         throw new Exception($polaczenie->error);
@@ -155,13 +155,26 @@ if (session_status() == PHP_SESSION_NONE)
           <?php
             if(isset($_SESSION['blad_rezerwacji']))
             {
-              echo $_SESSION['blad_rezerwacji'];
+echo<<<END
+     <div class="col-lg-12">
+        <div class="alert alert-dismissable alert-danger">
+            <button data-dismiss="alert" class="close" type="button">&times;</button>
+            W podanym czasie sala jest zajęta
+        </div>
+      </div>
+END;
               unset($_SESSION['blad_rezerwacji']);
             }
-
             if(isset($_SESSION['sukces']))
             {
-              echo $_SESSION['sukces'];
+echo<<<END
+    <div class="col-lg-12">
+        <div class="alert alert-dismissable alert-success">
+            <button data-dismiss="alert" class="close" type="button">&times;</button>
+            Pomyślnie dodano nowy seans
+        </div>
+    </div>
+END;
               unset($_SESSION['sukces']);
             }
           ?>
