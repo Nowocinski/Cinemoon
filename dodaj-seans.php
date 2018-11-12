@@ -110,7 +110,7 @@ if (session_status() == PHP_SESSION_NONE)
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                   <li><a href="adminIT-info.php"><i class="fa fa-area-chart"></i> Strona startowa</a></li>
-                  <li><a href="bootstrap-grid.html"><i class="fa fa-film"></i> Repertuar</a></li>
+                  <li><a href="adminIT-repertuar.php"><i class="fa fa-film"></i> Repertuar</a></li>
                   <li class="selected"><a href="dodaj-seans.php"><i class="fa fa-tasks"></i> Nowy seans</a></li>
                   <li><a href="dodaj-film.php"><i class="fa fa-video-camera"></i> Dodaj film</a></li>
                   <li><a href="dodaj-sale.php"><i class="fa fa-university"></i> Dodaj sale</a></li>
