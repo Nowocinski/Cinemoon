@@ -8,7 +8,7 @@ if (session_status() == PHP_SESSION_NONE)
       exit();
     }
 
-    if(isset($_POST['oznaczeniesali']))
+    if(isset($_POST['iloscrzedow']))
     {
       $oznaczeniesali = htmlentities($_POST['oznaczeniesali'], ENT_QUOTES, "UTF-8");;
       $iloscrzedow = $_POST['iloscrzedow'];
@@ -36,13 +36,13 @@ if (session_status() == PHP_SESSION_NONE)
             if($rezultat->num_rows > 0)
             {
                 $poprawna_walidacja = false;
-                $_SESSION['blad_oznaczeniasali'] = '<span style="color: red;">Sala o podanej nazwie jest już w bazie</span>';
+                $_SESSION['blad_oznaczeniasali'] = true;
             }
             else
             {
               if($polaczenie->query("INSERT INTO sale VALUES ('','$iloscrzedow','$iloscmiejsc','$oznaczeniesali')"))
               {
-                $_SESSION['sukces'] = '<span style="color: green;">Pomyślnie dodano nową sale</span>';
+                $_SESSION['sukces'] = true;
                 unset($_POST['oznaczeniesali']);
                 unset($_POST['iloscrzedow']);
                 unset($_POST['iloscmiejsc']);
@@ -142,13 +142,32 @@ if (session_status() == PHP_SESSION_NONE)
 
        <div>
         <div class="row text-center">
-          <?php
-            if(isset($_SESSION['sukces']))
-            {
-              echo '<h5>'.$_SESSION['sukces'].'</h5>';
-              unset($_SESSION['sukces']);
-            }
-          ?>
+<?php
+          if(isset($_SESSION['blad_oznaczeniasali']))
+          {
+echo<<<END
+   <div class="col-lg-12">
+      <div class="alert alert-dismissable alert-danger">
+          <button data-dismiss="alert" class="close" type="button">&times;</button>
+          Sala o podanej nazwie jest już w bazie
+      </div>
+    </div>
+END;
+            unset($_SESSION['blad_oznaczeniasali']);
+          }
+          if(isset($_SESSION['sukces']))
+          {
+echo<<<END
+  <div class="col-lg-12">
+      <div class="alert alert-dismissable alert-success">
+          <button data-dismiss="alert" class="close" type="button">&times;</button>
+          Pomyślnie dodano nową sale
+      </div>
+  </div>
+END;
+            unset($_SESSION['sukces']);
+          }
+?>
             <h2>Nowa sala</h2>
         </div>
         <div class="mb-1">
@@ -157,13 +176,6 @@ if (session_status() == PHP_SESSION_NONE)
             </label>
             <div class="col-md-9">
               <input type="text" class="form-control" name="oznaczeniesali" placeholder="Numer/Kod sali" style="color: black;" required>
-              <?php
-              if(isset($_SESSION['blad_oznaczeniasali']))
-              {
-                echo $_SESSION['blad_oznaczeniasali'];
-                unset($_SESSION['blad_oznaczeniasali']);
-              }
-              ?>
             </div>
         </div>
         <div class="mb-1">
