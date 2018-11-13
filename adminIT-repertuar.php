@@ -28,6 +28,18 @@ if (session_status() == PHP_SESSION_NONE)
 
     <script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
     <script type="text/javascript" src="http://www.prepbootstrap.com/Content/js/gridData.js"></script>
+	<script type="text/javascript">
+		function przeslanie(zmienna)
+		{
+			var str1 = '<button type="submit" class="btn btn-danger" name="pole" value="';
+			var str2 = zmienna.toString();
+			var str3 = '">Tak, chcę</button><button type="button" class="btn btn-default" data-dismiss="modal">Nie chcę</button>';
+			
+			var bufor = str1.concat(str2, str3);
+			
+			document.getElementById("zmianadiva").innerHTML = bufor;
+		}
+	</script>
 </head>
 <body>
     <div id="wrapper">
@@ -116,6 +128,28 @@ END;
         </div>
     </div>
     <!-- /#wrapper -->
+	
+	<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Ostrzeżenie</h4>
+      </div>
+      <div class="modal-body">
+        <p>Czy na pewno chcesz usunąć ten seans z repertuaru?</p>
+      </div>
+	  <form action="usun-seans.php" method="get">
+		<div class="modal-footer" id="zmianadiva"></div>
+	  </form>
+    </div>
+
+  </div>
+</div>
+	
 
     <script type="text/javascript">
         jQuery(function ($) {
@@ -155,7 +189,7 @@ echo<<<END
           Target: "$czas_rozpoczecia",
           Cena: "$cena_biletu",
           Edycja: "<form action='edytuj-seans.php' method='post'><button class='btn-warning btn' name='edycja' value='$id_repertuaru'>Edytuj</button></form>",
-          Usuniecie: "<form action='usun-seans.php' method='post'><button class='btn-danger btn' name='usun' value='$id_repertuaru'>Usuń</button></form>"},
+          Usuniecie: "<button onclick='przeslanie($id_repertuaru)' data-toggle='modal' data-target='#myModal' class='btn-info btn-danger btn' typ='submit' name='usun'>Usuń</button>"},
 END;
       }
       $rezultat->free_result();
