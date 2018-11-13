@@ -86,6 +86,19 @@ if (session_status() == PHP_SESSION_NONE)
         </nav>
 
         <div id="page-wrapper">
+<?php if(isset($_SESSION['sukces_edycji']))
+            {
+echo<<<END
+    <div class="col-lg-12">
+        <div class="alert alert-dismissable alert-success">
+            <button data-dismiss="alert" class="close" type="button">&times;</button>
+            Seans został pomyślnie zedytowany
+        </div>
+    </div>
+END;
+              unset($_SESSION['sukces_edycji']);
+            }
+?>
             <div class="row">
             </div>
             <div class="row">

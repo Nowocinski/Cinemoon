@@ -101,8 +101,6 @@ if (session_status() == PHP_SESSION_NONE)
                   else
                   {
 					$wiersz = $rezultat2->fetch_assoc();
-					echo 'Wiersz: '.$wiersz['id_repertuaru'].'<br>';
-					echo '$edycja: '.$edycja;
                     if($rezultat2->num_rows > 0)
                     {
                       $_SESSION['blad_rezerwacji'] = true;
@@ -116,7 +114,7 @@ if (session_status() == PHP_SESSION_NONE)
                         unset($_SESSION['blad_rezerwacji']);
                         unset($_POST['film']);
                         $_SESSION['sukces_edycji'] = true;
-						echo 'Zaktualizowano!';
+						header('Location: adminIT-repertuar.php');
                       }
 					  
                       else
@@ -175,13 +173,13 @@ if (session_status() == PHP_SESSION_NONE)
                 <a class="navbar-brand" href="adminIT-info.php">Powróć do strony startowej</a>
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <!--ul class="nav navbar-nav side-nav">
+                <ul class="nav navbar-nav side-nav">
                   <li><a href="adminIT-info.php"><i class="fa fa-area-chart"></i> Strona startowa</a></li>
-                  <li><a href="adminIT-repertuar.php"><i class="fa fa-film"></i> Repertuar</a></li>
+                  <li class="selected"><a href="adminIT-repertuar.php"><i class="fa fa-film"></i> Repertuar</a></li>
                   <li><a href="dodaj-seans.php"><i class="fa fa-tasks"></i> Nowy seans</a></li>
                   <li><a href="dodaj-film.php"><i class="fa fa-video-camera"></i> Dodaj film</a></li>
                   <li><a href="dodaj-sale.php"><i class="fa fa-university"></i> Dodaj sale</a></li>
-                </ul-->
+                </ul>
                 <ul class="nav navbar-nav navbar-right navbar-user">
                     <li class="dropdown messages-dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Powiadomienia <span class="badge">2</span> <b class="caret"></b></a>
