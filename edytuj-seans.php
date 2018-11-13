@@ -8,7 +8,7 @@ if (session_status() == PHP_SESSION_NONE)
       exit();
     }
 
-    if(!isset($_POST['edycja']))
+    if(!isset($_POST['edycja']) && !isset($_SESSION['edycja']))
     {
       header('Location: adminIT-info.php');
       exit();
@@ -21,7 +21,17 @@ if (session_status() == PHP_SESSION_NONE)
     mysqli_report(MYSQLI_REPORT_STRICT);
     try
     {
-        $edycja = $_POST['edycja'];
+		if(isset($_POST['edycja']))
+		{
+			$edycja = $_POST['edycja'];
+			$_SESSION['edycja'] = $_POST['edycja'];
+		}
+		
+		if(isset($_SESSION['edycja']) && !isset($_POST['edycja']))
+		{
+			$edycja = $_SESSION['edycja'];
+		}
+		
         require_once "connect.php";
 
         $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
@@ -31,26 +41,101 @@ if (session_status() == PHP_SESSION_NONE)
         {
           // Kodowanie polskich znaków
           $polaczenie->query("SET NAMES utf8");
-          $rezultat = $polaczenie->query("SELECT filmy.tytul, sale.nr_sali, repertuar.czas_rozpoczecia, repertuar.cena_biletu FROM repertuar INNER JOIN filmy ON repertuar.id_filmu=filmy.id_filmu INNER JOIN sale ON repertuar.id_sali=sale.id_sali WHERE repertuar.id_repertuaru='$edycja'");
+          $rezultat = $polaczenie->query("SELECT sale.id_sali ,filmy.tytul, sale.nr_sali, repertuar.czas_rozpoczecia, repertuar.cena_biletu FROM repertuar INNER JOIN filmy ON repertuar.id_filmu=filmy.id_filmu INNER JOIN sale ON repertuar.id_sali=sale.id_sali WHERE repertuar.id_repertuaru='$edycja'");
           if(!$rezultat)
               throw new Exception($polaczenie->error);
           else
           {
             $wiersz = $rezultat->fetch_assoc();
-            $formularz_tytul = $wiersz['tytul'];
-            $formularz_nr_sali = $wiersz['nr_sali'];
-            $formularz_czas_rozpoczecia = $wiersz['czas_rozpoczecia'];
-            $formularz_cena_biletu = $wiersz['cena_biletu'];
+            $_SESSION['formularz_tytul'] = $wiersz['tytul'];
+            $_SESSION['formularz_nr_sali'] = $wiersz['nr_sali'];
+			$_SESSION['formularz_czas_rozpoczecia'] = substr($wiersz['czas_rozpoczecia'], 0, 10);
+			$_SESSION['formularz_czas'] = substr($wiersz['czas_rozpoczecia'], 11, 8);
+            $_SESSION['formularz_cena_biletu'] = $wiersz['cena_biletu'];
           }
           $rezultat->free_result();
           $polaczenie->close();
         }
     }
+	
     catch(Exception $e)
     {
         echo '<span style="color: red">Błąd serwera. Spróbuj zarejestrować się później</span>';
         echo '<br>Informacja deweloperska: '.$e;
     }
+  }
+  
+  if(isset($_POST['cena']))
+  {
+	$data = $_POST['data'];
+	$czas = $_POST['czas'];
+	$film = $_POST['film'];
+	  
+	try
+	{
+		mysqli_report(MYSQLI_REPORT_STRICT);
+		require_once "connect.php";
+
+        $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+        if($polaczenie->connect_errno != 0)
+            throw new Exception(mysqli_connect_errno());
+		else {
+			  $sala = $_POST['sala'];
+              // Kodowanie polskich znaków
+              $polaczenie->query("SET NAMES utf8");
+              $rezultat = $polaczenie->query("SELECT repertuar.czas_rozpoczecia, filmy.min_trwania FROM repertuar INNER JOIN sale ON repertuar.id_sali=sale.id_sali INNER JOIN filmy ON repertuar.id_filmu=filmy.id_filmu WHERE sale.id_sali='$sala' AND repertuar.czas_rozpoczecia > CAST(CONCAT(CURDATE(),' ',CURTIME()) as DATETIME)");
+
+              if(!$rezultat)
+                  throw new Exception($polaczenie->error);
+              else {
+                while($wiersz = mysqli_fetch_assoc($rezultat))
+                {
+                  $datapremiery = $wiersz['czas_rozpoczecia'];
+                  $jakdlugotrwa = $wiersz['min_trwania'];
+                  $bufor = (string)floor($wiersz['min_trwania']/60);
+                  $bufor .= ':'.(string)$wiersz['min_trwania']%60;
+				  
+                  $rezultat2 = $polaczenie->query("SELECT id_repertuaru FROM repertuar WHERE id_sali='$sala' AND id_repertuaru!='$edycja' AND CAST(CONCAT('$data',' ','$czas') as DATETIME) >= CAST('$datapremiery' as DATETIME) AND CAST(CONCAT('$data',' ','$czas') as DATETIME) <= CAST(CAST('$datapremiery' AS DATETIME) + CAST('$bufor' AS TIME) AS DATETIME) AND repertuar.czas_rozpoczecia > CAST(CONCAT(CURDATE(),' ',CURTIME()) as DATETIME)");
+                  if(!$rezultat)
+                      throw new Exception($polaczenie->error);
+                  else
+                  {
+					$wiersz = $rezultat2->fetch_assoc();
+					echo 'Wiersz: '.$wiersz['id_repertuaru'].'<br>';
+					echo '$edycja: '.$edycja;
+                    if($rezultat2->num_rows > 0)
+                    {
+                      $_SESSION['blad_rezerwacji'] = true;
+                    }
+                    else
+                    {
+					  $cena = $_POST['cena'];
+                      $data_i_czas = $data.' '.$czas;
+                      if($polaczenie->query("UPDATE repertuar SET id_sali='$sala', id_filmu='$film', czas_rozpoczecia='$data_i_czas', cena_biletu='$cena' WHERE id_repertuaru='$edycja'"))
+                      {
+                        unset($_SESSION['blad_rezerwacji']);
+                        unset($_POST['film']);
+                        $_SESSION['sukces_edycji'] = true;
+						echo 'Zaktualizowano!';
+                      }
+					  
+                      else
+                        throw new Exception($polaczenie->error);
+                    }
+					$rezultat2->free_result();
+                  }
+                }
+              }
+              $rezultat->free_result();
+              $polaczenie->close();
+            }
+	}
+	
+	catch(Exception $f)
+	{
+		echo '<span style="color: red">Błąd serwera. Spróbuj zarejestrować się później</span>';
+        echo '<br>Informacja deweloperska: '.$f;
+	}
   }
     //---------------------------------------------------------------------------------------------
 ?>
@@ -131,7 +216,7 @@ if (session_status() == PHP_SESSION_NONE)
                 </ul>
             </div>
         </nav>
-<form action="dodaj-seans.php" method="post" id="forma">
+<form action="edytuj-seans.php" method="post" id="forma">
        <div>
         <div class="row text-center">
           <?php
@@ -186,7 +271,15 @@ try
         throw new Exception($polaczenie->error);
     else {
       while($wiersz = $rezultat->fetch_assoc())
-        echo '<option value="'.$wiersz['id_filmu'].'">'.$wiersz['tytul'].'</option>';
+	  {
+		echo '<option value="'.$wiersz['id_filmu'].'"';
+		if(isset($_SESSION['formularz_tytul']) && $_SESSION['formularz_tytul'] == $wiersz['tytul'])
+		{
+			echo ' selected="selected"';
+			unset($_SESSION['formularz_tytul']);
+		}
+		echo '>'.$wiersz['tytul'].'</option>';
+	  }
     }
 
     $rezultat->free_result();
@@ -227,7 +320,15 @@ catch (Exception $e)
                           throw new Exception($polaczenie->error);
                       else {
                         while($wiersz = $rezultat->fetch_assoc())
-                          echo '<option value="'.$wiersz['id_sali'].'">'.$wiersz['nr_sali'].'</option>';
+						{
+							echo '<option value="'.$wiersz['id_sali'].'"';
+							if(isset($_SESSION['formularz_nr_sali']) && $_SESSION['formularz_nr_sali'] == $wiersz['nr_sali'])
+							{
+								echo ' selected="selected"';
+								unset($_SESSION['formularz_nr_sali']);
+							}
+							echo '>'.$wiersz['nr_sali'].'</option>';
+						}
                       }
 
                       $rezultat->free_result();
@@ -249,7 +350,7 @@ catch (Exception $e)
                 Data:
             </label>
             <div class="col-md-9">
-                <input type="date" class="form-control" name="data" style="color: black;" min="<?php echo date("Y-m-d", strtotime("tomorrow")); ?>" required>
+                <input type="date" class="form-control" name="data" style="color: black;" min="<?php echo date("Y-m-d", strtotime("tomorrow")); ?>" value="<?php echo $_SESSION['formularz_czas_rozpoczecia']; unset($_SESSION['formularz_czas_rozpoczecia']); ?>" required>
                 <p class="help-block">
                     Uwaga: Data seansu musi być późniejsza od daty dzisiejszej
                 </p>
@@ -260,7 +361,7 @@ catch (Exception $e)
                 Czas:
             </label>
             <div class="col-md-9">
-                <input type="time" class="form-control" name="czas" style="color: black;" required>
+                <input type="time" class="form-control" name="czas" style="color: black;" value="<?php echo $_SESSION['formularz_czas']; unset($_SESSION['formularz_czas']); ?>" required>
             </div>
         </div>
         <div>
@@ -268,7 +369,7 @@ catch (Exception $e)
                 Cena biletu:
             </label>
             <div class="col-md-9">
-                <input type="number" class="form-control" name="cena" placeholder="Cena biletu w zł" step="0.01" min="0" style="color: black;" required>
+                <input type="number" class="form-control" name="cena" placeholder="Cena biletu w zł" step="0.01" min="0" style="color: black;" value="<?php echo $_SESSION['formularz_cena_biletu']; unset($_SESSION['formularz_cena_biletu']); ?>"required>
             </div>
         </div>
         <div>
