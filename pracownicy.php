@@ -64,8 +64,10 @@
 
                 unset($_SESSION['blad']);
                 $rezultat->free_result();
-                //if ( 'administratorIT' == $_SESSION['typ_konta'])
-                header('Location: adminIT-info.php');
+				if ( 'administratorIT' == $_SESSION['typ_konta'])
+					header('Location: adminIT-info.php');
+				if ( 'pracownik' == $_SESSION['typ_konta'])
+					header('Location: pracownik.php');
                 //else ...
               }
               else {
