@@ -21,17 +21,30 @@
 
         else
         {
-            if($polaczenie->query(""))
-			{
-				//...
-			}
+            $rezultat = $polaczenie->query("DELETE FROM repertuar WHERE repertuar.id_repertuaru='$id'");
+			if(!$rezultat)
+                throw new Exception($polaczenie->error);
+			else
+            {				
+				$rezultat = $polaczenie->query("DELETE FROM rezerwacje WHERE rezerwacje.id_repertuaru='$id'");
+				if(!$rezultat)
+					throw new Exception($polaczenie->error);
+				else
+				{
+					$polaczenie->close();
+					$_SESSION['seans_usuniety'] = true;
+					header('Location: adminIT-repertuar.php');
+					exit();
+				}
+            }
+			$rezultat->free_result();
+			$polaczenie->close();
         }
-        $polaczenie->close();
     }
 
     catch(Exception $e)
     {
-        echo '<span style="color: red">Błąd serwera. Spróbuj zarejestrować się później</span>';
+        echo '<span style="color: red">Błąd serwera.</span>';
         echo '<br>Informacja deweloperska: '.$e;
     }
 ?>
