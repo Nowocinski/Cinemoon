@@ -1,5 +1,5 @@
 <?php
-    if(!isset($_POST['miejsce']))
+    if(!isset($_GET['miejsce']))
     {
         header('Location: index.php');
         exit(0);
@@ -19,7 +19,7 @@ echo<<<END
     <div class="dane-konta mt-3">
         <div class="row text-center">
 END;
-    $przechwycenie = $_POST['miejsce'];
+    $przechwycenie = $_GET['miejsce'];
     
     $i=0; $id_repertuaru = '';
     while($przechwycenie[$i] != ' ')

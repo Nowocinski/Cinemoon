@@ -1,5 +1,5 @@
 <?php
-    if(!isset($_POST['id_repertuaru']))
+    if(!isset($_GET['id_repertuaru']))
     {
         header('Location: index.php');
         exit();
@@ -8,7 +8,7 @@
     if (session_status() == PHP_SESSION_NONE)
         session_start();
 
-    $id_repertuaru = $_POST['id_repertuaru'];
+    $id_repertuaru = $_GET['id_repertuaru'];
 
     $title = "Wybór miejsca";
     include "side_part/gora.php";
@@ -81,7 +81,7 @@ END;
 echo<<<END
 <div class="col-12 "><div style="color: white; background-color: blue; width: 30%; min-width: 300px; margin-left: auto; margin-right: auto;">EKRAN</div></div>
 <div class="col-12 mt-3">
-<form action="potwierdzenie.php" method="post">
+<form action="potwierdzenie.php" method="get">
 END;
       for($i=1; $i<=$ilosc_rzedow; $i++)
       {
@@ -96,7 +96,7 @@ if(!$rezultat4)
     throw new Exception($polaczenie->error);
 //---------------------------------------------------------------------------------------------------------------------------------
               if($czy_zajete == 0)
-                  echo '<name="adam" value="adam1"><button type="submit" class="btn btn-success btn-md m-1" name="miejsce" value="'.$id_repertuaru.' '.$i.' '.$j.'" formtarget="_blank">'.$j.'</button>';
+                  echo '<name="adam" value="adam1"><button type="submit" class="btn btn-success btn-md m-1" name="miejsce" value="'.$id_repertuaru.' '.$i.' '.$j.'">'.$j.'</button>';
               else
                   echo '<button type="button" class="btn btn-danger btn-md m-1">'.$j.'</button>';
           }

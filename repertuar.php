@@ -81,8 +81,8 @@
                            //{
 echo<<<END
         <div class="col-12 col-sm-6 col-md-3 text-center">
-        <form action="wybor-miejsca.php" method="post">
-                <button type="submit" class="btn btn-warning btn-md" name="id_repertuaru" value="$id_repertuaru" formtarget="_blank">
+        <form action="wybor-miejsca.php" method="get">
+                <button type="submit" class="btn btn-warning btn-md" name="id_repertuaru" value="$id_repertuaru">
                     Zapisz się
                 </button>
             </form>
