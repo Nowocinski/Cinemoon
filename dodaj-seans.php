@@ -56,11 +56,13 @@ if (session_status() == PHP_SESSION_NONE)
                       }
                       else
                         throw new Exception($polaczenie->error);
+					
+					$rezultat2->free_result();
                     }
                   }
                 }
               }
-              $rezultat2->free_result();
+              
               $rezultat->free_result();
               $polaczenie->close();
             }
