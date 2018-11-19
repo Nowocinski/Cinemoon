@@ -13,6 +13,12 @@
         header('Location: adminIT-info.php');
         exit();
     }
+	
+	if(isset($_SESSION['typ_konta']) && $_SESSION['typ_konta'] == 'menadzerPracownikow')
+    {
+        header('Location: menadzer-pracownikow.php');
+        exit();
+    }
 
     $title = "Pracownicy";
     $pracownik = true;
@@ -66,8 +72,10 @@
                 $rezultat->free_result();
 				if ( 'administratorIT' == $_SESSION['typ_konta'])
 					header('Location: adminIT-info.php');
-				if ( 'pracownik' == $_SESSION['typ_konta'])
+				elseif ( 'pracownik' == $_SESSION['typ_konta'])
 					header('Location: pracownik.php');
+				elseif ( 'menadzerPracownikow' == $_SESSION['typ_konta'])
+					header('Location: menadzer-pracownikow.php');
                 //else ...
               }
               else {
