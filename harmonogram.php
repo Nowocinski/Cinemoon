@@ -19,7 +19,7 @@ if (session_status() == PHP_SESSION_NONE)
 		echo "Nie można nazwiązać połączenia z bazą danych";
 	}
 	
-	$zapytanie = $polaczenie->prepare('SELECT * FROM pracownicy');
+	$zapytanie = $polaczenie->prepare("SELECT * FROM pracownicy");
 	$zapytanie->execute();
 ?>
 <!DOCTYPE html>
@@ -27,7 +27,7 @@ if (session_status() == PHP_SESSION_NONE)
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Konto pracownika</title>
+    <title>Menadżer pracowników</title>
 
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
@@ -113,7 +113,7 @@ if (session_status() == PHP_SESSION_NONE)
 <?php
 while($obj = $zapytanie->fetch(PDO::FETCH_OBJ))
 {
-$zapytanie2 = $polaczenie->prepare('SELECT * FROM harmonogram_prac WHERE id_prac=:id ORDER BY dzien ASC');
+$zapytanie2 = $polaczenie->prepare("SELECT * FROM harmonogram_prac WHERE id_prac=:id AND CAST(CONCAT(dzien,' ',czas_od) as DATETIME) >= CAST(CONCAT(CURDATE(),' ',CURTIME()) as DATETIME) ORDER BY dzien ASC");
 $zapytanie2->bindValue(':id', $obj->id_pracownika, PDO::PARAM_INT);
 $zapytanie2->execute();
 
