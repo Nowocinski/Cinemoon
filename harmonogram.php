@@ -42,8 +42,76 @@ if (session_status() == PHP_SESSION_NONE)
 
     <script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
     <script type="text/javascript" src="http://www.prepbootstrap.com/Content/js/gridData.js"></script>
+	<script>
+		function przeslanie(num)
+		{
+			document.getElementById("form-usuwania").innerHTML = '<button name="element" type="submit" class="btn btn-danger" value="' + num + '">Tak, chce usunąć</button>';
+		}
+		
+		function przeslanie2(num)
+		{
+			//document.write("Działą!");
+		}
+	</script>
 </head>
 <body>
+
+
+
+<!-- Modal do usuwania -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Usuwanie zdarzenie</h4>
+      </div>
+      <div class="modal-body">
+        <p>Czy na pewno chcesz usunąć to wydarzenie z harmonogramu?</p>
+      </div>
+      <div class="modal-footer">
+		<form id="form-usuwania" action="usun-z-harmonogramu.php" method="post"></form>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Nie chce</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+<!-- Modal do edycji -->
+<div id="modelEdycji" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edycja harmonogramu</h4>
+      </div>
+      <div class="modal-body">
+        <form id="form-edycji">
+			<label>Tytuł</label>
+			<input type="text" class="form-control" name="tytul" value="" style="color: black;" required>
+		</form>
+      </div>
+      <div class="modal-footer">
+		<form id="form-usuwania" action="usun-z-harmonogramu.php" method="post"></form>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
     <div id="wrapper">
           <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="navbar-header">
@@ -126,7 +194,7 @@ else
 	echo '<thead><tr style="width: 10%; text-align: center;"><th style="width: 10%; text-align: center;">Dzień</th><th style="width: 10%; text-align: center;">Od kiedy</th><th style="width: 10%; text-align: center;">Do kiedy</th><th style="width: 50%; text-align: center;">Opis</th><th style="width: 10%; text-align: center;">Edycja</th><th style="width: 10%; text-align: center;">Usunięcie</th></tr></thead>';
 	while($obj2 = $zapytanie2->fetch(PDO::FETCH_OBJ))
 	{
-		echo '<tr><td style="width: 10%; text-align: center;">'.$obj2->dzien.'</td><td style="width: 10%; text-align: center;">'.$obj2->czas_od.'</td><td style="width: 10%; text-align: center;">'.$obj2->czas_do.'</td><td style="width: 50%; text-align: center;">'.$obj2->info_o_pracy.'</td><td style="width: 10%; text-align: center;"><button type="button" class="btn btn-primary">Edytuj</button></td><td style="width: 10%; text-align: center;"><button type="button" class="btn btn-danger">Usuń</button></td></tr>';
+		echo '<tr><td style="width: 10%; text-align: center;">'.$obj2->dzien.'</td><td style="width: 10%; text-align: center;">'.$obj2->czas_od.'</td><td style="width: 10%; text-align: center;">'.$obj2->czas_do.'</td><td style="width: 50%; text-align: center;">'.$obj2->info_o_pracy.'</td><td style="width: 10%; text-align: center;"><button type="button" data-toggle="modal" data-target="#modelEdycji" class="btn btn-primary" onclick="przeslanie2('.$obj2->id.')">Edytuj</button></td><td style="width: 10%; text-align: center;"><button onclick="przeslanie('.$obj2->id.')" data-target="#myModal" data-toggle="modal" name="usun" type="button" class="btn btn-danger">Usuń</button></td></tr>';
 	}
 }
 
