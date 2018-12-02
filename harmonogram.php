@@ -48,9 +48,26 @@ if (session_status() == PHP_SESSION_NONE)
 			document.getElementById("form-usuwania").innerHTML = '<button name="element" type="submit" class="btn btn-danger" value="' + num + '">Tak, chce usunąć</button>';
 		}
 		
-		function przeslanie2(num)
+		function przeslanie2(num, rok, miesiac, dzien, min, sek, min_do, sek_do, opis)
 		{
-			//document.write("Działą!");
+			//document.write(opis);
+			var data = rok + '-' + miesiac + '-' + dzien;
+			var od = min + ':' + sek;
+			var _do = min_do + ':' + sek_do;
+
+			var str1 = '<label>Dzień</label><input type="date" min="<?php echo date("Y-m-d", strtotime("tomorrow")); ?>" class="form-control" name="dzien" value="'+data+'" style="color: black;" required>'
+			var str2 = '<label>Od kiedy</label><input type="time" class="form-control" style="color: black;" name="czas_od" value="'+od+'" required>';
+			var str3 = '<label>Do kiedy</label><input type="time" class="form-control" style="color: black;" name="czas_do" value="'+_do+'" required>';
+			var str4 = '<label>Opis</label><input type="text" class="form-control" style="color: black;" name="opis" value="'+opis+'" required>';
+
+			document.getElementById("form-edycji").innerHTML = str1 + str2 + str3 + str4;
+
+			document.getElementById("dopodmiany").innerHTML = '<button type="submit" class="btn btn-primary" form="form-edycji" name="id" value="'+num+'">Edytuj</button>';
+		}
+		
+		function wyslij(num)
+		{
+			document.getElementById("podmiento").innerHTML = '<button type="submit" class="btn btn-warning" form="dodaj" name="id" value="'+num+'">Dodaj</button>';
 		}
 	</script>
 </head>
@@ -94,19 +111,51 @@ if (session_status() == PHP_SESSION_NONE)
         <h4 class="modal-title">Edycja harmonogramu</h4>
       </div>
       <div class="modal-body">
-        <form id="form-edycji">
-			<label>Tytuł</label>
-			<input type="text" class="form-control" name="tytul" value="" style="color: black;" required>
-		</form>
+        <form id="form-edycji" action="edycja-harmonogramu.php" method="post"></form>
       </div>
       <div class="modal-footer">
-		<form id="form-usuwania" action="usun-z-harmonogramu.php" method="post"></form>
+		<div id="dopodmiany"></div>
         <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
       </div>
     </div>
 
   </div>
 </div>
+
+
+
+
+<!-- Formularz dodawania zdarzenia -->
+<div id="formularz" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Dodaj zdarzenie</h4>
+      </div>
+      <div class="modal-body">
+	  <form id="dodaj" action="dodaj-do-harmonogramu.php" method="post">
+			<label>Dzień</label>
+			<input type="date" min="<?php echo date("Y-m-d", strtotime("tomorrow")); ?>" class="form-control" name="dzien" style="color: black;" required>
+			<label>Od kiedy</label>
+			<input type="time" class="form-control" style="color: black;" name="czas_od" required>
+			<label>Do kiedy</label>
+			<input type="time" class="form-control" style="color: black;" name="czas_do" required>
+			<label>Opis</label>
+			<input type="text" class="form-control" style="color: black;" name="opis" required>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <div id="podmiento"></div>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 
 
 
@@ -186,7 +235,7 @@ $zapytanie2->bindValue(':id', $obj->id_pracownika, PDO::PARAM_INT);
 $zapytanie2->execute();
 
 	echo '<table class="table">';
-	echo '<caption style="font-size: 20px;">'.$obj->imie.' '.$obj->nazwisko.' <span style="color: white; font-size: 15px;">('.$obj->typ_konta.')</span><caption>';
+	echo '<caption style="font-size: 20px;">'.$obj->imie.' '.$obj->nazwisko.' <span style="color: white; font-size: 15px;">('.$obj->typ_konta.') <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" onclick="wyslij('.$obj->id_pracownika.')" data-target="#formularz">Dodaj zdarzenie</button></span><caption>';
 if($zapytanie2->rowCount() == 0)
 	echo '<tr><td style="color: gray;">Ta osoba nie ma przydzielonych żadnych obowiązków</td></tr>';
 else
@@ -194,7 +243,7 @@ else
 	echo '<thead><tr style="width: 10%; text-align: center;"><th style="width: 10%; text-align: center;">Dzień</th><th style="width: 10%; text-align: center;">Od kiedy</th><th style="width: 10%; text-align: center;">Do kiedy</th><th style="width: 50%; text-align: center;">Opis</th><th style="width: 10%; text-align: center;">Edycja</th><th style="width: 10%; text-align: center;">Usunięcie</th></tr></thead>';
 	while($obj2 = $zapytanie2->fetch(PDO::FETCH_OBJ))
 	{
-		echo '<tr><td style="width: 10%; text-align: center;">'.$obj2->dzien.'</td><td style="width: 10%; text-align: center;">'.$obj2->czas_od.'</td><td style="width: 10%; text-align: center;">'.$obj2->czas_do.'</td><td style="width: 50%; text-align: center;">'.$obj2->info_o_pracy.'</td><td style="width: 10%; text-align: center;"><button type="button" data-toggle="modal" data-target="#modelEdycji" class="btn btn-primary" onclick="przeslanie2('.$obj2->id.')">Edytuj</button></td><td style="width: 10%; text-align: center;"><button onclick="przeslanie('.$obj2->id.')" data-target="#myModal" data-toggle="modal" name="usun" type="button" class="btn btn-danger">Usuń</button></td></tr>';
+		echo '<tr><td style="width: 10%; text-align: center;">'.$obj2->dzien.'</td><td style="width: 10%; text-align: center;">'.$obj2->czas_od.'</td><td style="width: 10%; text-align: center;">'.$obj2->czas_do.'</td><td style="width: 50%; text-align: center;">'.$obj2->info_o_pracy.'</td><td style="width: 10%; text-align: center;"><button type="button" data-toggle="modal" data-target="#modelEdycji" class="btn btn-primary" onclick="przeslanie2('.$obj2->id.','.$obj2->dzien[0].$obj2->dzien[1].$obj2->dzien[2].$obj2->dzien[3].','.$obj2->dzien[5].$obj2->dzien[6].','.$obj2->dzien[8].$obj2->dzien[9].','.$obj2->czas_od[0].$obj2->czas_od[1].','.$obj2->czas_od[3].$obj2->czas_od[4].','.$obj2->czas_do[0].$obj2->czas_do[1].','.$obj2->czas_do[3].$obj2->czas_do[4].',\''.$obj2->info_o_pracy.'\')">Edytuj</button></td><td style="width: 10%; text-align: center;"><button onclick="przeslanie('.$obj2->id.')" data-target="#myModal" data-toggle="modal" name="usun" type="button" class="btn btn-danger">Usuń</button></td></tr>';
 	}
 }
 
