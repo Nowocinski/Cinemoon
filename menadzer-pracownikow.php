@@ -115,8 +115,10 @@ if (session_status() == PHP_SESSION_NONE)
 $dzien_tygodnia = '';
 $dzien = '';
 $pierwszy = true;
+$i = true;
 while($obj = $zapytanie->fetch(PDO::FETCH_OBJ))
 {
+	$i = false;
 	if($dzien != $obj->dzien)
 	{
 		$dzien = $obj->dzien;
@@ -166,6 +168,11 @@ echo<<<END
 			</tr>
 END;
 	}
+}
+
+if ($i == true)
+{
+	echo '<span style="color: gray;">Nie masz aktualnie przypisanej żadnej pracy</span>';
 }
 ?>
 		</tbody></table>
