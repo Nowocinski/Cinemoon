@@ -19,6 +19,12 @@
         header('Location: menadzer-pracownikow.php');
         exit();
     }
+	
+	if(isset($_SESSION['typ_konta']) && $_SESSION['typ_konta'] == 'pracownik')
+    {
+        header('Location: pracownik.php');
+        exit();
+    }
 
     $title = "Pracownicy";
     $pracownik = true;
