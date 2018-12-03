@@ -69,6 +69,29 @@ if (session_status() == PHP_SESSION_NONE)
   </div>
 </div>
 
+
+<!-- Zmiana nazwiska -->
+<div id="zmienNazwisko" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-warning">Zmiana nazwisko</h4>
+      </div>
+      <div class="modal-body">
+        <form action="nazwisko.php" method="post" id="zNazwisko">
+			<label>Podaj nowe nazwisko</label>
+			<input type="text" class="form-control" placeholder="Nowe nazwisko" name="nazwisko" style="color: black;" required>
+			<input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić nazwisko<br>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-warning" form="zNazwisko">Zmień</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+      </div>
+    </div>
+  </div>
+</div>
     <div id="wrapper">
           <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="navbar-header">
@@ -78,7 +101,7 @@ if (session_status() == PHP_SESSION_NONE)
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="adminIT-info.php">Zarządzanie danymi konta</a>
+                <a class="navbar-brand" href="pracownik.php">Zarządzanie danymi konta</a>
             </div>
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav navbar-right navbar-user">
@@ -178,7 +201,7 @@ if (session_status() == PHP_SESSION_NONE)
 									</tr>
 									<tr>
 										<th class="text-center">Nazwisko</th>
-										<td><button type="submit" class="btn btn-warning">Edytuj</button></td>
+										<td><button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#zmienNazwisko">Edytuj</button></td>
 									</tr>
 									<tr>
 										<th class="text-center">Numer telefonu</th>
