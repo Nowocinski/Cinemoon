@@ -92,6 +92,76 @@ if (session_status() == PHP_SESSION_NONE)
     </div>
   </div>
 </div>
+
+<!-- Zmiana miejscowości -->
+<div id="zmienMiejscowosc" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-warning">Zmiana miejscowość</h4>
+      </div>
+      <div class="modal-body">
+        <form action="miejscowosc.php" method="post" id="zMiejscowosc">
+			<label>Podaj nową miejscowość</label>
+			<input type="text" class="form-control" placeholder="Nowa miejscowość" name="miejscowosc" style="color: black;" required>
+			<input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić miejscowość<br>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-warning" form="zMiejscowosc">Zmień</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Zmiana adresu -->
+<div id="zmienAdres" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-warning">Zmiana adresu</h4>
+      </div>
+      <div class="modal-body">
+        <form action="adres.php" method="post" id="zAdres">
+			<label>Podaj nowy adres</label>
+			<input type="text" class="form-control" placeholder="Nowy adres" name="adres" style="color: black;" required>
+			<input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić adres<br>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-warning" form="zAdres">Zmień</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Zmiana numeru -->
+<div id="zmienNumer" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-warning">Zmiana numer</h4>
+      </div>
+      <div class="modal-body">
+        <form action="numer.php" method="post" id="zNumer">
+			<label>Podaj nowy numer telefonu</label>
+			<input type="number" step="1" class="form-control" placeholder="Nowy numer telefonu" name="numer" style="color: black;" min="100000000" max="999999999" required>
+			<input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić nuumer telefonubr>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-warning" form="zNumer">Zmień</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+      </div>
+    </div>
+  </div>
+</div>
+
     <div id="wrapper">
           <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="navbar-header">
@@ -205,15 +275,15 @@ if (session_status() == PHP_SESSION_NONE)
 									</tr>
 									<tr>
 										<th class="text-center">Numer telefonu</th>
-										<td><button type="submit" class="btn btn-warning">Edytuj</button></td>
+										<td><button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#zmienNumer">Edytuj</button></td>
 									</tr>
 									<tr>
 										<th class="text-center">Miejscowość</th>
-										<td><button type="submit" class="btn btn-warning">Edytuj</button></td>
+										<td><button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#zmienMiejscowosc">Edytuj</button></td>
 									</tr>
 									<tr>
 										<th class="text-center">Adres</th>
-										<td><button type="submit" class="btn btn-warning">Edytuj</button></td>
+										<td><button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#zmienAdres">Edytuj</button></td>
 									</tr>
 							  </table>
 							</div>
@@ -244,3 +314,4 @@ if (session_status() == PHP_SESSION_NONE)
     </div>
 </body>
 </html>
+

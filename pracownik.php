@@ -54,11 +54,11 @@ if (session_status() == PHP_SESSION_NONE)
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="adminIT-info.php">Panel pracownika</a>
+                <a class="navbar-brand" href="pracownik.php">Panel pracownika</a>
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul id="active" class="nav navbar-nav side-nav">
-                    <li class="selected"><a href="adminIT-info.php"><i class="fa fa-area-chart"></i> Harmonogram prac</a></li>
+                    <li class="selected"><a href="pracownik.php"><i class="fa fa-area-chart"></i> Harmonogram prac</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right navbar-user">
                     <li class="dropdown messages-dropdown">
