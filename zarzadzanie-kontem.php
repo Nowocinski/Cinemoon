@@ -58,7 +58,7 @@ if (session_status() == PHP_SESSION_NONE)
         <form action="imie.php" method="post" id="zImie">
 			<label>Podaj nowe imię</label>
 			<input type="text" class="form-control" placeholder="Nowe imię" name="imie" style="color: black;" required>
-			<input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić imię<br>
+			<label><input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić imię</label><br>
 		</form>
       </div>
       <div class="modal-footer">
@@ -82,7 +82,7 @@ if (session_status() == PHP_SESSION_NONE)
         <form action="nazwisko.php" method="post" id="zNazwisko">
 			<label>Podaj nowe nazwisko</label>
 			<input type="text" class="form-control" placeholder="Nowe nazwisko" name="nazwisko" style="color: black;" required>
-			<input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić nazwisko<br>
+			<label><input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić nazwisko</label><br>
 		</form>
       </div>
       <div class="modal-footer">
@@ -105,7 +105,7 @@ if (session_status() == PHP_SESSION_NONE)
         <form action="miejscowosc.php" method="post" id="zMiejscowosc">
 			<label>Podaj nową miejscowość</label>
 			<input type="text" class="form-control" placeholder="Nowa miejscowość" name="miejscowosc" style="color: black;" required>
-			<input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić miejscowość<br>
+			<label><input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić miejscowość</label><br>
 		</form>
       </div>
       <div class="modal-footer">
@@ -128,7 +128,7 @@ if (session_status() == PHP_SESSION_NONE)
         <form action="adres.php" method="post" id="zAdres">
 			<label>Podaj nowy adres</label>
 			<input type="text" class="form-control" placeholder="Nowy adres" name="adres" style="color: black;" required>
-			<input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić adres<br>
+			<label><input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić adres</label><br>
 		</form>
       </div>
       <div class="modal-footer">
@@ -151,11 +151,42 @@ if (session_status() == PHP_SESSION_NONE)
         <form action="numer.php" method="post" id="zNumer">
 			<label>Podaj nowy numer telefonu</label>
 			<input type="number" step="1" class="form-control" placeholder="Nowy numer telefonu" name="numer" style="color: black;" min="100000000" max="999999999" required>
-			<input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić nuumer telefonubr>
+			<label><input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić numer telefonu</label><br>
 		</form>
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-warning" form="zNumer">Zmień</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Usunięcie konta -->
+<div id="usuniecieKonta" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-danger">Usunięcie konta</h4>
+      </div>
+      <div class="modal-body">
+        <form action="usuwanie.php" method="post" id="uKonto">
+			<p>
+				Usunięcie konta spowoduj bezpowrotne utracenie wszystkich zgromadzonych danych takich jak:
+				<ul>
+					<li>harmonogram prac</li>
+					<li>dane osobowe</li>
+					<li>login</li>
+					<li>hasło</li>
+				</ul>
+				Jesteś pewien, żę chcesz tego dokonać?
+			</p>
+			<label><input type="checkbox" name="potwierdzenie" value="tak" required> Tak, chcę usunąć konto<br></label>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-danger" form="uKonto">Usuń konto</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
       </div>
     </div>
@@ -301,7 +332,7 @@ if (session_status() == PHP_SESSION_NONE)
 							  <table class="table">
 									<tr>
 										<th class="text-center">Ta opcja spowoduje usunięcie konta</th>
-										<td><button type="submit" class="btn btn-danger">Usuń konto</button></td>
+										<td><button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#usuniecieKonta">Usuń konto</button></td>
 									</tr>
 							  </table>
 							</div>
