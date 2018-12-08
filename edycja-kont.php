@@ -20,7 +20,7 @@ if (session_status() == PHP_SESSION_NONE)
 	}
 	
 	//Do pracownika
-	$zapytanie = $polaczenie->prepare("SELECT * FROM pracownicy");
+	$zapytanie = $polaczenie->prepare("SELECT * FROM pracownicy WHERE typ_konta!='administratorIT'");
 	$zapytanie->execute();
 	
 	//Do klienta
@@ -80,6 +80,28 @@ if (session_status() == PHP_SESSION_NONE)
 			document.getElementById("dPracownika").innerHTML = start + str1 + str2 + str3 + str4 + str5 + str6 + str7 + str8 + str9 + str10 + str11 + koniec;
 			document.getElementById("podmiento").innerHTML = '<button type="submit" class="btn btn-primary" form="fP" name="id" value="'+id+'">Edytuj</button><button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>';
 		}
+		
+		function edytujKlie(id, imie, nazwisko, email, telefon, typ)
+		{
+			var start = '<form id="fK" method="post" action="edycja-klienci.php">';
+			var str1 = '<label>Imię</label><input type="text" class="form-control" value='+imie+' style="color: black;" name="imie" required>';
+			var str2 = '<label>Nazwisko</label><input type="text" class="form-control" value='+nazwisko+' style="color: black;" name="nazwisko" required>';
+			var str3 = '<label>Adres e-mail</label><input type="text" class="form-control" value='+email+' style="color: black;" name="email" required>';
+			
+			if(telefon != '')
+				var str4 = '<label>Numer telefonu</label><input type="text" class="form-control" value='+telefon+' style="color: black;" name="tele">';
+			else
+				var str4 = '<label>Numer telefonu</label><input type="text" class="form-control" name="tele" style="color: black;">';
+			var str5 = '<label>Typ konta</label><select class="form-control" style="color: black;" name="typ">';
+			if(typ == 'studencki')
+				var str6 = '<option value="studencki" selected>studencki</option><option value="normalny">normalny</option></select>';
+			else
+				var str6 = '<option value="normalny" selected>normalny</option><option value="studencki">studencki</option></select>';
+			var koniec = '</form>';
+			
+			document.getElementById("dKlie").innerHTML = start + str1 + str2 + str3 + str4 + str5 + str6 + koniec;
+			document.getElementById("podmientodlakienta").innerHTML = '<button type="submit" class="btn btn-primary" form="fK" name="id" value="'+id+'">Edytuj</button><button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>';
+		}
 	</script>
 </head>
 <body>
@@ -109,7 +131,26 @@ if (session_status() == PHP_SESSION_NONE)
 </div>
 
 
+<!-- Klienci -->
+<div id="eKlie" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edycja danych konta klienta</h4>
+      </div>
+      <div id="dKlie" class="modal-body">
+        <!-- Do podmiany -->
+      </div>
+      <div class="modal-footer">
+        <div id="podmientodlakienta"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 
 
@@ -171,6 +212,7 @@ if (session_status() == PHP_SESSION_NONE)
 									<th>Numer telefonu</th>
 									<th>Dane konta</th>
 									<th>Hasło</th>
+									<th>Status</th>
 								</tr>
 <?php
 while($obj = $zapytanie->fetch(PDO::FETCH_OBJ))
@@ -183,7 +225,8 @@ echo<<<END
 									<td>{$obj->typ_konta}</td>
 									<td>{$obj->nr_telefonu}</td>
 									<td><button type="button" class="btn btn-primary" onclick="edytujPrac({$obj->id_pracownika},'{$obj->imie}','{$obj->nazwisko}','{$obj->email}',{$obj->nr_telefonu},'{$obj->typ_konta}','{$obj->miejscowosc}','{$obj->adres}')" data-toggle="modal" data-target="#ePrac">Edytuj</button></td>
-									<td><button type="button" class="btn btn-warning">Edytuj</button></td>
+									<td><button type="button" class="btn btn-warning">Zmień</button></td>
+									<td><button type="button" class="btn btn-danger">Usuń</button></td>
 								</tr>
 END;
 }
@@ -210,6 +253,7 @@ END;
 									<th>Numer telefonu</th>
 									<th>Dane konta</th>
 									<th>Hasło</th>
+									<th>Status</th>
 								</tr>
 <?php
 while($obj = $zapytanie2->fetch(PDO::FETCH_OBJ))
@@ -226,8 +270,9 @@ END;
 	else echo $obj->nr_telefonu;
 echo<<<END
 									</td>
-									<td><button type="submit" class="btn btn-primary">Edytuj</button></td>
-									<td><button type="button" class="btn btn-warning">Edytuj</button></td>
+									<td><button type="submit" class="btn btn-primary" onclick="edytujKlie({$obj->id_klienta},'{$obj->imie}','{$obj->nazwisko}','{$obj->email}', '{$obj->nr_telefonu}', '{$obj->typ}')" data-toggle="modal" data-target="#eKlie">Edytuj</button></td>
+									<td><button type="button" class="btn btn-warning">Zmień</button></td>
+									<td><button type="button" class="btn btn-danger">Usuń</button></td>
 								</tr>
 END;
 }
