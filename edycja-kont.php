@@ -32,7 +32,7 @@ if (session_status() == PHP_SESSION_NONE)
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menadżer pracowników</title>
+    <title>Edycja kont</title>
 
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
@@ -126,7 +126,12 @@ if (session_status() == PHP_SESSION_NONE)
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul id="active" class="nav navbar-nav side-nav">
-                    <li class="selected"><a href="#"><i class="fa fa-briefcase" aria-hidden="true"></i> Edycja kont</a></li>
+                  <li><a href="adminIT-info.php"><i class="fa fa-area-chart"></i> Strona startowa</a></li>
+                  <li><a href="adminIT-repertuar.php"><i class="fa fa-film"></i> Repertuar</a></li>
+                  <li><a href="dodaj-seans.php"><i class="fa fa-tasks"></i> Nowy seans</a></li>
+                  <li><a href="dodaj-film.php"><i class="fa fa-video-camera"></i> Dodaj film</a></li>
+                  <li><a href="dodaj-sale.php"><i class="fa fa-university"></i> Dodaj sale</a></li>
+				  <li class="selected"><a href="edycja-kont.php"><i class="fa fa-id-card" aria-hidden="true"></i> Edycja kont</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right navbar-user">
                     <li class="dropdown user-dropdown">
@@ -164,7 +169,8 @@ if (session_status() == PHP_SESSION_NONE)
 									<th>Nazwisko</th>
 									<th>Typ konta</th>
 									<th>Numer telefonu</th>
-									<th>Edycja</th>
+									<th>Dane konta</th>
+									<th>Hasło</th>
 								</tr>
 <?php
 while($obj = $zapytanie->fetch(PDO::FETCH_OBJ))
@@ -177,6 +183,7 @@ echo<<<END
 									<td>{$obj->typ_konta}</td>
 									<td>{$obj->nr_telefonu}</td>
 									<td><button type="button" class="btn btn-primary" onclick="edytujPrac({$obj->id_pracownika},'{$obj->imie}','{$obj->nazwisko}','{$obj->email}',{$obj->nr_telefonu},'{$obj->typ_konta}','{$obj->miejscowosc}','{$obj->adres}')" data-toggle="modal" data-target="#ePrac">Edytuj</button></td>
+									<td><button type="button" class="btn btn-warning">Edytuj</button></td>
 								</tr>
 END;
 }
@@ -201,7 +208,8 @@ END;
 									<th>Nazwisko</th>
 									<th>Typ konta</th>
 									<th>Numer telefonu</th>
-									<th>Edycja</th>
+									<th>Dane konta</th>
+									<th>Hasło</th>
 								</tr>
 <?php
 while($obj = $zapytanie2->fetch(PDO::FETCH_OBJ))
@@ -219,6 +227,7 @@ END;
 echo<<<END
 									</td>
 									<td><button type="submit" class="btn btn-primary">Edytuj</button></td>
+									<td><button type="button" class="btn btn-warning">Edytuj</button></td>
 								</tr>
 END;
 }
