@@ -102,6 +102,30 @@ if (session_status() == PHP_SESSION_NONE)
 			document.getElementById("dKlie").innerHTML = start + str1 + str2 + str3 + str4 + str5 + str6 + koniec;
 			document.getElementById("podmientodlakienta").innerHTML = '<button type="submit" class="btn btn-primary" form="fK" name="id" value="'+id+'">Edytuj</button><button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>';
 		}
+
+		function zmienPrac(id)
+		{
+			document.getElementById("xPrac").innerHTML = '<form id="zP" method="post" action="zmien-haslo-prac.php"><label>Podaj nowe hasło:</label><input type="password" class="form-control" style="color: black; ::placeholder {color: gray;}" placeholder="Nowe hasło" name="haslo" minlength="6" maxlength="30" required><label><input type="checkbox" required> Tak, chce zmienić hasło na tym koncie</label></form>';
+			document.getElementById("zamiana1").innerHTML = '<button type="submit" class="btn btn-warning" form="zP" name="id" value="'+id+'">Zmień</button><button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>';
+		}
+		
+		function zmienKlie(id)
+		{
+			document.getElementById("xKlie").innerHTML = '<form id="zK" method="post" action="zmien-haslo-klie.php"><label>Podaj nowe hasło:</label><input type="password" class="form-control" style="color: black; ::placeholder {color: gray;}" placeholder="Nowe hasło" name="haslo" minlength="6" maxlength="30" required><label><input type="checkbox" required> Tak, chce zmienić hasło na tym koncie</label></form>';
+			document.getElementById("zamiana2").innerHTML = '<button type="submit" class="btn btn-warning" form="zK" name="id" value="'+id+'">Zmień</button><button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>';
+		}
+		
+		function usunPrac(id)
+		{
+			document.getElementById("yPrac").innerHTML = '<form id="uP" method="post" action="usun-prac.php"><p>Usunięcie tego konta spowoduj bezpowrotne utracenie wszystkich zgromadzonych danych takich jak:</p><ul><li>harmonogram prac</li><li>dane osobowe</li><li>login</li><li>hasło</li></ul><p>Jesteś pewien, żę chcesz tego dokonać?</p><label><input type="checkbox" required> Tak, chcę usunąć konto pracownika</label></form>';
+			document.getElementById("zamiana3").innerHTML = '<button type="submit" class="btn btn-danger" form="uP" name="id" value="'+id+'">Zmień</button><button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>';
+		}
+		
+		function usunKlie(id)
+		{
+			document.getElementById("yKlie").innerHTML = '<form id="uK" method="post" action="usun-klie.php"><p>Usunięcie tego konta spowoduj bezpowrotne utracenie wszystkich zgromadzonych danych takich jak:</p><ul><li>harmonogram rezerwacji</li><li>dane osobowe</li><li>login</li><li>hasło</li></ul><p>Jesteś pewien, żę chcesz tego dokonać?</p><label><input type="checkbox" required> Tak, chcę usunąć konto pracownika</label></form>';
+			document.getElementById("zamiana4").innerHTML = '<button type="submit" class="btn btn-danger" form="uK" name="id" value="'+id+'">Zmień</button><button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>';
+		}
 	</script>
 </head>
 <body>
@@ -109,7 +133,7 @@ if (session_status() == PHP_SESSION_NONE)
 
 
 
-<!-- Pracownik -->
+<!-- Pracownik - edycja -->
 <div id="ePrac" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -117,7 +141,7 @@ if (session_status() == PHP_SESSION_NONE)
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Edycja danych konta pracownika</h4>
+        <h4 class="modal-title text-primary">Edycja danych konta pracownika</h4>
       </div>
       <div id="dPracownika" class="modal-body">
         <!-- Do podmiany -->
@@ -126,12 +150,11 @@ if (session_status() == PHP_SESSION_NONE)
         <div id="podmiento"></div>
       </div>
     </div>
-
   </div>
 </div>
 
 
-<!-- Klienci -->
+<!-- Klienci - edycja -->
 <div id="eKlie" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -139,7 +162,7 @@ if (session_status() == PHP_SESSION_NONE)
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Edycja danych konta klienta</h4>
+        <h4 class="modal-title text-primary">Edycja danych konta klienta</h4>
       </div>
       <div id="dKlie" class="modal-body">
         <!-- Do podmiany -->
@@ -148,11 +171,88 @@ if (session_status() == PHP_SESSION_NONE)
         <div id="podmientodlakienta"></div>
       </div>
     </div>
-
   </div>
 </div>
 
+<!-- Pracownik - zmiana hasła -->
+<div id="zPrac" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-warning">Zamiana hasła pracownika</h4>
+      </div>
+      <div id="xPrac" class="modal-body">
+        <!-- Do podmiany -->
+      </div>
+      <div class="modal-footer">
+        <div id="zamiana1"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Klient - zmiana hasła -->
+<div id="zKlie" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-warning">Zamiana hasła klienta</h4>
+      </div>
+      <div id="xKlie" class="modal-body">
+        <!-- Do podmiany -->
+      </div>
+      <div class="modal-footer">
+        <div id="zamiana2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Pracownik - usuń -->
+<div id="uPrac" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-danger">Usunięcie konta pracownika</h4>
+      </div>
+      <div id="yPrac" class="modal-body">
+        <!-- Do podmiany -->
+      </div>
+      <div class="modal-footer">
+        <div id="zamiana3"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Klient - usuń -->
+<div id="uKlie" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-danger">Usunięcie konta klienta</h4>
+      </div>
+      <div id="yKlie" class="modal-body">
+        <!-- Do podmiany -->
+      </div>
+      <div class="modal-footer">
+        <div id="zamiana4"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
     <div id="wrapper">
           <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -173,6 +273,7 @@ if (session_status() == PHP_SESSION_NONE)
                   <li><a href="dodaj-film.php"><i class="fa fa-video-camera"></i> Dodaj film</a></li>
                   <li><a href="dodaj-sale.php"><i class="fa fa-university"></i> Dodaj sale</a></li>
 				  <li class="selected"><a href="edycja-kont.php"><i class="fa fa-id-card" aria-hidden="true"></i> Edycja kont</a></li>
+				  <li><a href="dodaj-pracownika.php"><i class="fa fa-handshake-o" aria-hidden="true"></i> Dodaj pracownika</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right navbar-user">
                     <li class="dropdown user-dropdown">
@@ -225,8 +326,8 @@ echo<<<END
 									<td>{$obj->typ_konta}</td>
 									<td>{$obj->nr_telefonu}</td>
 									<td><button type="button" class="btn btn-primary" onclick="edytujPrac({$obj->id_pracownika},'{$obj->imie}','{$obj->nazwisko}','{$obj->email}',{$obj->nr_telefonu},'{$obj->typ_konta}','{$obj->miejscowosc}','{$obj->adres}')" data-toggle="modal" data-target="#ePrac">Edytuj</button></td>
-									<td><button type="button" class="btn btn-warning">Zmień</button></td>
-									<td><button type="button" class="btn btn-danger">Usuń</button></td>
+									<td><button type="button" onclick="zmienPrac({$obj->id_pracownika})" class="btn btn-warning" data-toggle="modal" data-target="#zPrac">Zmień</button></td>
+									<td><button type="button" class="btn btn-danger" onclick="usunPrac({$obj->id_pracownika})" class="btn btn-warning" data-toggle="modal" data-target="#uPrac">Usuń</button></td>
 								</tr>
 END;
 }
@@ -271,8 +372,8 @@ END;
 echo<<<END
 									</td>
 									<td><button type="submit" class="btn btn-primary" onclick="edytujKlie({$obj->id_klienta},'{$obj->imie}','{$obj->nazwisko}','{$obj->email}', '{$obj->nr_telefonu}', '{$obj->typ}')" data-toggle="modal" data-target="#eKlie">Edytuj</button></td>
-									<td><button type="button" class="btn btn-warning">Zmień</button></td>
-									<td><button type="button" class="btn btn-danger">Usuń</button></td>
+									<td><button type="button" onclick="zmienKlie({$obj->id_klienta})" class="btn btn-warning" data-toggle="modal" data-target="#zKlie">Zmień</button></td>
+									<td><button type="button" class="btn btn-danger" onclick="usunKlie({$obj->id_klienta})" class="btn btn-warning" data-toggle="modal" data-target="#uKlie">Usuń</button></td>
 								</tr>
 END;
 }
