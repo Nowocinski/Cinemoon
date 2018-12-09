@@ -36,7 +36,7 @@ if (session_status() == PHP_SESSION_NONE)
 <body>
 
     <div id="wrapper">
-      <form action="# method="post">
+      <form action="dodawanie-pracownika.php" method="post">
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -149,7 +149,7 @@ END;
                 Miejscowość:
             </label>
             <div class="col-md-9">
-              <input type="text" class="form-control" name="miejscowosc" placeholder="Podaj miejscowość" style="color: black;" required>
+              <input type="text" class="form-control" name="miejscowosc" placeholder="Podaj miejscowosc" style="color: black;" required>
             </div>
         </div>
 		<div class="mb-1">
