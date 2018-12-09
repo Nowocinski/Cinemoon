@@ -78,6 +78,34 @@
     }
 ?>
 
+<script>
+	function odwolaj(num)
+	{
+		document.getElementById("doPodmiany").innerHTML = '<form id="formularz" method="post" action="odwolanie-rezerwacji.php"><p>Czy chcesz odwołać rezerwacje na film?</p><label><input type="checkbox" required> Tak, chcę odwołać rezerwacje</label></form>';
+		
+		document.getElementById("przyciskiDoPodmiany").innerHTML = '<button type="submit" class="btn btn-warning" form="formularz" name="przycisk" value="'+num+'">Odwołaj</button><button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>';
+	}
+</script>
+
+<!-- Odwołanie rezerwacji -->
+<div id="okno" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+		<h4 class="modal-title text-warning">Odwołanie rezerwacji</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div id="doPodmiany" class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <div id="przyciskiDoPodmiany"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
     <div class="container">
       <div class="row">
 <?php
@@ -157,7 +185,7 @@
                                 echo '<th><span style="font-weight: 400;">'.$wiersz['miejsce'].'</span></th>';
                                 echo '<th><span style="font-weight: 400;">'.$wiersz['koszt'].' zł</span></th>';
                                 //echo 'id rezerwacji: '.$wiersz['id_rezerwacji'];
-                                echo '<th><span style="font-weight: 400;"><form action="odwolanie-rezerwacji.php" method="post"><button name="przycisk" value="'.$wiersz['id_rezerwacji'].'" class="btn btn-warning" role="button">Odwołaj</button></form></span></th></tr>';
+                                echo '<th><span style="font-weight: 400;"><button type="button" class="btn btn-warning" onclick="odwolaj('.$wiersz['id_rezerwacji'].')" class="btn btn-warning" data-toggle="modal" data-target="#okno">Odwołaj</button></span></th></tr>';
                             }
                             echo '</table></div>';
                         }
