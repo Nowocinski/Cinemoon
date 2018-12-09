@@ -244,7 +244,7 @@ END;
             <div class="col-md-9">
               <textarea class="form-control" rows="5" name="opis" placeholder="Opis filmu" style="color: black;" required></textarea>
               <p class="help-block">
-                  Uwaga: W celu dodania akapitów prosimy umieścić odpowiednie fragmęty tekstu między znaczniki &lt;p&gt; i &lt;/p&gt;
+                  Uwaga: W celu dodania akapitów prosimy umieścić odpowiednie fragmenty tekstu między znaczniki &lt;p&gt; i &lt;/p&gt;
               </p>
             </div>
         </div>
