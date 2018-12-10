@@ -22,9 +22,6 @@
                  <li class="nav-item active btn btn-default">
                      <a class="nav-link" href="repertuar.php">REPERTUAR</a>
                  </li>
-                 <li class="nav-item active btn btn-default" href="bilety.php">
-                     <a class="nav-link" href="cennik.php">CENNIK</a>
-                 </li>
                  <li class="nav-item active btn btn-default">
                     <a class="nav-link active" href="kontakt.php">KONTAKT</a>
                  </li>
