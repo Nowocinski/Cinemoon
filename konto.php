@@ -115,17 +115,20 @@
             unset($_SESSION['pierwszewejscie']);
         }
 ?>
-        <article class="dane-konta2 mt-3 col-12 col-sm-6 text-center">
+
+
+<div class="dane-konta mt-3 col-12 col-lg-2 text-center">
+        <article class="mb-3">
             <header>
                 <h5 class="text-center">DANE KONTA</h5>
             </header>
                 <b>Imię</b><br><?php echo $_SESSION['imie']; ?><br>
-                <b>Nazwisko:</b><br><?php echo $_SESSION['nazwisko']; ?><br>
-                <b>E-mail:</b><br><?php echo $_SESSION['email']; ?><br>
+                <b>Nazwisko</b><br><?php echo $_SESSION['nazwisko']; ?><br>
+                <b>E-mail</b><br><?php echo $_SESSION['email']; ?><br>
 
-                <b>Numer telefonu:</b><br><?php if($_SESSION['nr_telefonu'] != '') echo $_SESSION['nr_telefonu']; else echo '<span style="color: gray">(nie podano)</span><br>';?>
+                <b>Numer telefonu</b><br><?php if($_SESSION['nr_telefonu'] != '') echo $_SESSION['nr_telefonu']; else echo '<span style="color: gray">(nie podano)</span><br>';?>
         </article>
-        <article class="dane-konta2 mt-3 col-12 col-sm-6 text-center">
+        <article>
             <header>
                 <b>USTAWIENIA KONTA</b>
             </header>
@@ -136,8 +139,9 @@
                 <div class="mb-1"><a class="text-danger" href="zmien-numer.php">Zmień numer telefonu</a></div>
                 <div><a class="text-danger" href="usun-konto.php">Usuń konto</a></div>
         </article>
-
-        <article class="dane-konta col-12">
+</div>
+		<div class="col-12 col-lg-10">
+        <article class="dane-konta col-12 mt-3">
             <header>
                 <b>TWOJE REZERWACJE</b>
             </header>
@@ -266,6 +270,7 @@
 ?>
             </section>
         </article>
+		</div>
       </div>
     </div>
 
