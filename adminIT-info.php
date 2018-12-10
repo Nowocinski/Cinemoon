@@ -7,6 +7,21 @@ if (session_status() == PHP_SESSION_NONE)
       header('Location: index.php');
       exit();
     }
+	
+	require_once 'connect.php';
+	
+	try
+	{
+		$polaczenie = new PDO('mysql:host='.$host.';dbname='.$db_name.';charset=utf8', $db_user, $db_password);
+	}
+	catch(PDOException $e)
+	{
+		echo "Nie można nazwiązać połączenia z bazą danych";
+	}
+	
+	$zapytanie = $polaczenie->prepare('SELECT dzien, czas_od, czas_do, info_o_pracy, DAYOFWEEK(dzien) as dtyg FROM harmonogram_prac WHERE id_prac=:id AND dzien >= CURDATE() ORDER BY dzien ASC');
+	$zapytanie->bindValue(':id', $_SESSION['id_pracownika'], PDO::PARAM_INT);
+	$zapytanie->execute();
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -77,7 +92,7 @@ if (session_status() == PHP_SESSION_NONE)
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-8">
+                <!--div class="col-md-8">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Visits Based on a 10 days data</h3>
@@ -86,8 +101,82 @@ if (session_status() == PHP_SESSION_NONE)
                             <div id="shieldui-chart1"></div>
                         </div>
                     </div>
+                </div-->
+				<div class="col-lg-9">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Harmonogram prac</h3>
+                        </div>
+                        <div class="panel-body">
+<?php
+$dzien_tygodnia = '';
+$dzien = '';
+$pierwszy = true;
+$i = true;
+while($obj = $zapytanie->fetch(PDO::FETCH_OBJ))
+{
+	$i = false;
+	if($dzien != $obj->dzien)
+	{
+		$dzien = $obj->dzien;
+		
+		if($pierwszy == true)
+		{
+echo<<<END
+		</tbody>
+	</table>
+END;
+		}
+		
+		if($obj->dtyg == 1) $dzien_tygodnia = 'Niedziela';
+		elseif($obj->dtyg == 2) $dzien_tygodnia = 'Poniedziałek';
+		elseif($obj->dtyg == 3) $dzien_tygodnia = 'Wtorek';
+		elseif($obj->dtyg == 4) $dzien_tygodnia = 'Środa';
+		elseif($obj->dtyg == 5) $dzien_tygodnia = 'Czwartek';
+		elseif($obj->dtyg == 6) $dzien_tygodnia = 'Piątek';
+		elseif($obj->dtyg == 7) $dzien_tygodnia = 'Sobota';
+		
+echo<<<END
+	<table class="table">
+		<caption style="font-size: 20px;">{$dzien_tygodnia} <span style="color: white; font-size: 15px;">({$obj->dzien})</span></caption>
+		<thead>
+			<tr>
+				<th style="width:25%">Od kiedy</th>
+				<th style="width:25%">Do kiedy</th>
+				<th style="width:50%">Opis</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{$obj->czas_od}</td>
+				<td>{$obj->czas_do}</td>
+				<td>{$obj->info_o_pracy}</td>
+			</tr>
+END;
+	}
+	
+	else
+	{
+echo<<<END
+			<tr>
+				<td>{$obj->czas_od}</td>
+				<td>{$obj->czas_do}</td>
+				<td>{$obj->info_o_pracy}</td>
+			</tr>
+END;
+	}
+}
+
+if ($i == true)
+{
+	echo '<span style="color: gray;">Nie masz aktualnie przypisanej żadnej pracy</span>';
+}
+?>
+		</tbody></table>
+                    </div>
                 </div>
-                <div class="col-md-4">
+            </div>
+                <div class="col-md-3">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-rss"></i> Twoje dane</h3>
@@ -157,144 +246,8 @@ if (session_status() == PHP_SESSION_NONE)
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Najbardziej dochodowe filmy </h3>
-                        </div>
-                        <div class="panel-body">
-                            <div id="shieldui-grid1"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Logins per week</h3>
-                        </div>
-                        <div class="panel-body">
-                            <div id="shieldui-chart2"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-magnet"></i> Stan serwera</h3>
-                        </div>
-                        <div class="panel-body">
-                            <ul class="server-stats">
-                                <li>
-                                    <div class="key pull-right">Procesor</div>
-                                    <div class="stat">
-                                        <div class="info">60% / 37°C / 3.3 Ghz</div>
-                                        <div class="progress progress-small">
-                                            <div style="width: 70%;" class="progress-bar progress-bar-danger"></div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="key pull-right">Pamięć</div>
-                                    <div class="stat">
-                                        <div class="info">29% / 4GB (16 GB)</div>
-                                        <div class="progress progress-small">
-                                            <div style="width: 29%;" class="progress-bar"></div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="key pull-right">Internet</div>
-                                    <div class="stat">
-                                        <div class="info">6 Mb/s <i class="fa fa-caret-down"></i>&nbsp; 3 Mb/s <i class="fa fa-caret-up"></i></div>
-                                        <div class="progress progress-small">
-                                            <div style="width: 48%;" class="progress-bar progress-bar-inverse"></div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <!-- /#wrapper -->
-
-    <script type="text/javascript">
-        jQuery(function ($) {
-            var performance = [12, 43, 34, 22, 12, 33, 4, 17, 22, 34, 54, 67],
-                visits = [123, 323, 443, 32],
-                traffic = [
-                {
-                    Film: "Direct", Amount: 323, Change: 53, Percent: 23, Target: 600
-                },
-                {
-                    Film: "Refer", Amount: 345, Change: 34, Percent: 45, Target: 567
-                },
-                {
-                    Film: "Social", Amount: 567, Change: 67, Percent: 23, Target: 456
-                },
-                {
-                    Film: "Search", Amount: 234, Change: 23, Percent: 56, Target: 890
-                },
-                {
-                    Film: "Internal", Amount: 111, Change: 78, Percent: 12, Target: 345
-                }];
-
-
-            $("#shieldui-chart1").shieldChart({
-                theme: "dark",
-
-                primaryHeader: {
-                    text: "Visitors"
-                },
-                exportOptions: {
-                    image: false,
-                    print: false
-                },
-                dataSeries: [{
-                    seriesType: "area",
-                    collectionAlias: "Q Data",
-                    data: performance
-                }]
-            });
-
-            $("#shieldui-chart2").shieldChart({
-                theme: "dark",
-                primaryHeader: {
-                    text: "Traffic Per week"
-                },
-                exportOptions: {
-                    image: false,
-                    print: false
-                },
-                dataSeries: [{
-                    seriesType: "pie",
-                    collectionAlias: "traffic",
-                    data: visits
-                }]
-            });
-
-            $("#shieldui-grid1").shieldGrid({
-                dataSource: {
-                    data: traffic
-                },
-                sorting: {
-                    multiple: true
-                },
-                rowHover: false,
-                paging: false,
-                columns: [
-                { field: "Film", width: "170px", title: "Film" },
-                { field: "Amount", title: "Ilość widzów" },
-                { field: "Percent", title: "Procent wszystkich widzów", format: "{0} %" },
-                { field: "Target", title: "Przychód", format: "{0} zł" },
-                ]
-            });
-        });
-    </script>
 </body>
 </html>
