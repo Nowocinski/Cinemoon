@@ -25,6 +25,12 @@
         header('Location: pracownik.php');
         exit();
     }
+	
+	if(isset($_SESSION['typ_konta']) && $_SESSION['typ_konta'] == 'specjalistaDSObslugi')
+    {
+        header('Location: specjalista-ds-obslugi.php');
+        exit();
+    }
 
     $title = "Pracownicy";
     $pracownik = true;
@@ -82,6 +88,8 @@
 					header('Location: pracownik.php');
 				elseif ( 'menadzerPracownikow' == $_SESSION['typ_konta'])
 					header('Location: menadzer-pracownikow.php');
+				elseif ( 'specjalistaDSObslugi' == $_SESSION['typ_konta'])
+					header('Location: specjalista-ds-obslugi.php');
                 //else ...
               }
               else {
