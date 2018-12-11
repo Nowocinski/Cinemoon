@@ -4,38 +4,43 @@
 
     include "side_part/gora.php";
     include "side_part/nav.php";
-	
+
 	if(isset($_POST['imie']))
 	{
 		if(!preg_match('/^[a-zA-Z0-9]+(-[a-zA-Z0-9]+)*@([a-zA-Z0-9]+.)+(com|pl)$/', $_POST['email']))
 		{
 			$blad_email = 'Składnia e-maila nie jest poprawna';
 		}
-		
-		$imie = $_POST['imie'];
-		$nazwisko = $_POST['nazwisko'];
-		$tresc = $_POST['tresc'];
-		$temat = $_POST['temat'];
-		
-		/*
-		require_once 'connect.php';
 
-		try
+		else
 		{
-			$polaczenie = new PDO('mysql:host='.$host.';dbname='.$db_name.';charset=utf8', $db_user, $db_password);
+			$imie = $_POST['imie'];
+			$nazwisko = $_POST['nazwisko'];
+			$tresc = $_POST['tresc'];
+			$temat = $_POST['temat'];
+
+			require_once 'connect.php';
+
+			try
+			{
+				$polaczenie = new PDO('mysql:host='.$host.';dbname='.$db_name.';charset=utf8', $db_user, $db_password);
+			}
+			catch(PDOException $e)
+			{
+				echo "Nie można nazwiązać połączenia z bazą danych";
+			}
+
+			$zapytanie = $polaczenie->prepare("INSERT INTO wiadomosci VALUES('',:im,:na,:em,:te,:tr,:dt)");
+			$zapytanie->bindValue(':im', $_POST['imie'], PDO::PARAM_STR);
+			$zapytanie->bindValue(':na', $_POST['nazwisko'], PDO::PARAM_STR);
+			$zapytanie->bindValue(':em', $_POST['email'], PDO::PARAM_STR);
+			$zapytanie->bindValue(':te', $_POST['temat'], PDO::PARAM_STR);
+			$zapytanie->bindValue(':tr', $_POST['tresc'], PDO::PARAM_STR);
+			$zapytanie->bindValue(':dt', date('Y-m-d H:i:s'), PDO::PARAM_STR);
+			$zapytanie->execute();
+
+			$imie = $nazwisko = $tresc = $temat = '';
 		}
-		catch(PDOException $e)
-		{
-			echo "Nie można nazwiązać połączenia z bazą danych";
-		}
-		
-		$zapytanie = $polaczenie->prepare('SELECT ');
-		$zapytanie->bindValue(':var1', $_POST['imie'], PDO::PARAM_STR);
-		$zapytanie->bindValue(':var2', $_SESSION['id_pracownika'], PDO::PARAM_INT);
-		$zapytanie->execute();
-		*/
-		
-		//Na końcu "wyzeruj" zmienne
 	}
 ?>
 
@@ -72,11 +77,11 @@
 				<span class="input-group-text" style="width: 90px;">Temat</span>
 			  </div>
 			  <select class="custom-select" name="temat">
-				<option value="1" <?php if(isset($temat) && $temat==1) echo 'selected'; ?>>Pytanie</option>
-				<option value="2" <?php if(isset($temat) && $temat==2) echo 'selected'; ?>>Organizacja wydarzeń</option>
-				<option value="3" <?php if(isset($temat) && $temat==3) echo 'selected'; ?>>Zatrudnienie</option>
-				<option value="4" <?php if(isset($temat) && $temat==4) echo 'selected'; ?>>Współpraca</option>
-				<option value="5" <?php if(isset($temat) && $temat==5) echo 'selected'; ?>>Inne</option>
+				<option value="Pytanie" <?php if(isset($temat) && $temat==1) echo 'selected'; ?>>Pytanie</option>
+				<option value="Organizacja wydarzeń" <?php if(isset($temat) && $temat==2) echo 'selected'; ?>>Organizacja wydarzeń</option>
+				<option value="Zatrudnienie" <?php if(isset($temat) && $temat==3) echo 'selected'; ?>>Zatrudnienie</option>
+				<option value="Współpraca" <?php if(isset($temat) && $temat==4) echo 'selected'; ?>>Współpraca</option>
+				<option value="Inne" <?php if(isset($temat) && $temat==5) echo 'selected'; ?>>Inne</option>
 			  </select>
 			</div>
 
