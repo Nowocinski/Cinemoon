@@ -202,7 +202,7 @@ if (session_status() == PHP_SESSION_NONE)
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="pracownik.php">Zarządzanie danymi konta</a>
+                <a class="navbar-brand" href="pracownicy.php">Zarządzanie danymi konta</a>
             </div>
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav navbar-right navbar-user">
