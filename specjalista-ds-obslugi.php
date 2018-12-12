@@ -59,6 +59,7 @@ if (session_status() == PHP_SESSION_NONE)
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul id="active" class="nav navbar-nav side-nav">
                     <li class="selected"><a href="specjalista-ds-obslugi.php"><i class="fa fa-area-chart"></i> Strona startowa</a></li>
+                    <li><a href="wiadomosci.php"><i class="fa fa-envelope" aria-hidden="true"></i> Wiadomości</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right navbar-user">
                     <li class="dropdown messages-dropdown">
@@ -78,7 +79,7 @@ if (session_status() == PHP_SESSION_NONE)
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1><small>Konto specjalista ds. obsługi</small></h1>
+                    <h1><small>Konto specjalisty ds. obsługi</small></h1>
                 </div>
             </div>
             <div class="row">
