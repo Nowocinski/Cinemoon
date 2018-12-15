@@ -79,19 +79,49 @@
 ?>
 
 <script>
-	function odwolaj(num)
+	var str = '';
+	var ile_rezerwacji = 0;
+
+	function odwolaj()
 	{
-		document.getElementById("doPodmiany").innerHTML = '<form id="formularz" method="post" action="odwolanie-rezerwacji.php"><p>Czy chcesz odwołać rezerwacje na film?</p><label><input type="checkbox" required> Tak, chcę odwołać rezerwacje</label></form>';
+		if(ile_rezerwacji==0)
+		{
+			document.getElementById("doPodmiany").innerHTML = '<p>Nie wybrano żadnej rezerwacji do odwołania</p>';
 		
-		document.getElementById("przyciskiDoPodmiany").innerHTML = '<button type="submit" class="btn btn-warning" form="formularz" name="przycisk" value="'+num+'">Odwołaj</button><button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>';
+			document.getElementById("przyciskiDoPodmiany").innerHTML = '<button type="button" class="btn btn-default" data-dismiss="modal">Wyjdź</button>';
+		}
+		
+		else
+		{
+			document.getElementById("doPodmiany").innerHTML = '<form id="formularz" method="post" action="odwolanie-rezerwacji.php"><p>Czy chcesz odwołać rezerwacje?</p><label><input type="checkbox" required> Tak, chcę odwołać rezerwacje</label></form>';
+		
+			document.getElementById("przyciskiDoPodmiany").innerHTML = '<button type="submit" class="btn btn-warning" form="formularz" name="przycisk" value="'+str+'">Odwołaj</button><button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>';
+		}
+	}
+	
+	function podmien(element, num)
+	{
+		if(element.checked)
+		{
+			ile_rezerwacji++;
+			
+			if(str=='')
+				str += "id_rezerwacji='" + num.toString() + "'";
+			else
+				str += " OR id_rezerwacji='" + num.toString() + "'";
+		}
+		
+		else
+		{
+			ile_rezerwacji--;
+			str = str.replace("'" + num.toString() + "'", "''");
+		}
 	}
 </script>
 
 <!-- Odwołanie rezerwacji -->
 <div id="okno" class="modal fade" role="dialog">
   <div class="modal-dialog">
-
-    <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
 		<h4 class="modal-title text-warning">Odwołanie rezerwacji</h4>
@@ -179,7 +209,7 @@
                         else
                         {
                             echo '<span style="font-weight: 500;">Ile rezerwacji: '.$ilosc_filmow.'</span>';
-                            echo '<div class="table-responsive"><table class="table" style="text-align: center;"><tr><th style="width: 300px;">Film</th><th style="width: 200px;">Termin</th><th>Sala</th><th>Rząd</th><th>Miejsce</th><th>Cena</th><th>Zmiana status</th><tr>';
+                            echo '<div class="table-responsive"><table class="table" style="text-align: center;"><tr><th style="width: 300px;">Film</th><th style="width: 200px;">Termin</th><th>Sala</th><th>Rząd</th><th>Miejsce</th><th>Cena</th><th><button class="btn btn-warning" onclick="odwolaj()" data-toggle="modal" data-target="#okno">Odwołaj</button></th><tr>';
                             while($wiersz = $rezultat->fetch_assoc())
                             {
                                 echo '<tr><th><span style="font-weight: 400;">'.$wiersz['tytul'].'</span></th>';
@@ -189,7 +219,7 @@
                                 echo '<th><span style="font-weight: 400;">'.$wiersz['miejsce'].'</span></th>';
                                 echo '<th><span style="font-weight: 400;">'.$wiersz['koszt'].' zł</span></th>';
                                 //echo 'id rezerwacji: '.$wiersz['id_rezerwacji'];
-                                echo '<th><span style="font-weight: 400;"><button type="button" class="btn btn-warning" onclick="odwolaj('.$wiersz['id_rezerwacji'].')" class="btn btn-warning" data-toggle="modal" data-target="#okno">Odwołaj</button></span></th></tr>';
+                                echo '<th><div class="checkbox"><input onchange="podmien(this,'.$wiersz['id_rezerwacji'].')" type="checkbox" name="chackbox"></div></th></tr>';
                             }
                             echo '</table></div>';
                         }
