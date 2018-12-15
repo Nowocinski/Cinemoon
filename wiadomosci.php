@@ -20,12 +20,14 @@ if (session_status() == PHP_SESSION_NONE)
 	}
 	
 	$zapytanie = $polaczenie->prepare('SELECT * FROM wiadomosci ORDER BY id_wiadomosci ASC');
-	$zapytanie->bindValue(':id', $_SESSION['id_pracownika'], PDO::PARAM_INT);
 	$zapytanie->execute();
 	
-	//$zapytanie2 = $polaczenie->prepare('SELECT * FROM wiadomosci ORDER BY id_wiadomosci ASC');
-	//$zapytanie2->bindValue(':id', $_SESSION['id_pracownika'], PDO::PARAM_INT);
-	//$zapytanie2->execute();
+	$zapytanie2 = $polaczenie->prepare('SELECT id FROM usuniniete_konta');
+	$zapytanie2->execute();
+
+	$ile = $zapytanie2->rowCount();
+
+	$zapytanie3 = $polaczenie->prepare('SELECT id FROM usuniniete_konta WHERE powod_usuniecia=:pu');
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -97,7 +99,7 @@ if (session_status() == PHP_SESSION_NONE)
 				<div class="col-lg-12">
 					<div class="panel panel-primary">
 							<div class="panel-heading">
-								<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Harmonogram prac</h3>
+								<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Wiadkomości</h3>
 							</div>
 							<div class="panel-body">
 <?php
@@ -158,67 +160,62 @@ else
 
 
 <div class="col-lg-12">
-					<div class="panel panel-warning">
-							<div class="panel-heading">
-								<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Usunięte konta</h3>
-							</div>
-							<div class="panel-body">
+	<div class="panel panel-warning">
+		<div class="panel-heading">
+			<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Usunięte konta</h3>
+		</div>
+		<div class="panel-body">
+<!---------------------------------------------------------------------------------------------->
 <?php
-if($zapytanie->rowCount() != 0)
-{
-echo<<<END
-								<div class="table-responsive">
-								  <table class="table text-center">
-									<thead>
-										<tr>
-											<th class="text-center">ID</th>
-											<th class="text-center">Imię</th>
-											<th class="text-center">Nazwisko</th>
-											<th class="text-center">E-mail</th>
-											<th class="text-center">Temat</th>
-											<th class="text-center">Data wysłania</th>
-											<th class="text-center">Treść</th>
-											<th class="text-center">Usunięcie</th>
-										</tr>
-									</thead>
-									<tbody>
-END;
-while($obj = $zapytanie->fetch(PDO::FETCH_OBJ))
-{
-
-$tresc = nl2br( $obj->tresc );
-
-echo<<<END
-<tr>
-	<td>{$obj->id_wiadomosci}</td>
-	<td>{$obj->imie}</td>
-	<td>{$obj->nazwisko}</td>
-	<td>{$obj->email}</td>
-	<td>{$obj->temat}</td>
-	<td>{$obj->data_wyslania}</td>
-	<td><button class="btn btn-primary" onclick="wyswietl('{$obj->id_wiadomosci}','{$tresc}')" href="#div{$obj->id_wiadomosci}" data-toggle="collapse">Szczegóły</button></td>
-	<td><form action="usun-wiadomosc.php" method="post"><button class="btn btn-danger" name="id" value="{$obj->id_wiadomosci}">Usuń</button></form></td>
-</tr>
-<tr id="div{$obj->id_wiadomosci}">
-
-</tr>
-END;
-}
-echo<<<END
-</tbody>
-								  </table>
-								</div>
-END;
-}
-else
-{
-	echo '<span style="color: gray;">Brak wiadomości</span>';
-}
-?>			
-							</div>
-					</div>
-				</div>
-            </div>
+	$zapytanie3->bindValue(':pu', 'Nieintuicyjność działania konta', PDO::PARAM_STR);
+	$zapytanie3->execute();
+?>
+<div class="progress">
+  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow=<?php echo '"'.$zapytanie3->rowCount().'"';?>
+  aria-valuemin="0" aria-valuemax=<?php echo '"'.$ile.'" '; ?> style="width:<?php echo $zapytanie3->rowCount()*100/$ile;?>%">
+    Nieintuicyjność
+  </div>
+<?php
+	$zapytanie3->bindValue(':pu', 'Brak wspracia ze strony administracji', PDO::PARAM_STR);
+	$zapytanie3->execute();
+?>
+  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow=<?php echo '"'.$zapytanie3->rowCount().'"';?>
+  aria-valuemin="0" aria-valuemax=<?php echo '"'.$ile.'" '; ?> style="width:<?php echo $zapytanie3->rowCount()*100/$ile;?>%">
+    Brak wspracia
+  </div>
+<?php
+	$zapytanie3->bindValue(':pu', 'Duża ilość błędów podczas użytkowania konta', PDO::PARAM_STR);
+	$zapytanie3->execute();
+?>
+  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow=<?php echo '"'.$zapytanie3->rowCount().'"';?> aria-valuemin="0" aria-valuemax=<?php echo '"'.$ile.'" '; ?> style="width:<?php echo $zapytanie3->rowCount()*100/$ile;?>%">
+    Duża ilość błędów
+  </div>
+<?php
+	$zapytanie3->bindValue(':pu', 'Ciężko powiedzieć', PDO::PARAM_STR);
+	$zapytanie3->execute();
+?>
+  <div class="progress-bar progress-bar-danger" aria-valuenow=<?php echo '"'.$zapytanie3->rowCount().'"';?>
+  aria-valuemin="0" aria-valuemax=<?php echo '"'.$ile.'" '; ?> style="width:<?php echo $zapytanie3->rowCount()*100/$ile;?>%">
+    Ciężko powiedzieć
+  </div>
+</div>
+ <b>
+  <p>Łączna ilość usuniętych kont:  <?php echo $ile; ?></p>
+<?php
+	$zapytanie4 = $polaczenie->prepare('SELECT id FROM usuniniete_konta WHERE data between date_sub(now(),INTERVAL 1 MONTH) AND now()');
+	$zapytanie4->execute();
+?>
+  <p>Ilość usuniętych kont w ciągu miesiąca: <?php echo $zapytanie4->rowCount(); ?></p>
+<?php
+	$zapytanie4 = $polaczenie->prepare('SELECT id FROM usuniniete_konta WHERE data between date_sub(now(),INTERVAL 1 WEEK) AND now()');
+	$zapytanie4->execute();
+?>
+  <p>Ilość usuniętych kont w ciągu tygodnia: <?php echo $zapytanie4->rowCount(); ?></p>
+ </b>
+<!--------------------------------------------------------------------------------------------------->
+		</div>
+	</div>
+</div>
         </div>
     </div>
     <!-- /#wrapper -->
