@@ -22,6 +22,10 @@ if (session_status() == PHP_SESSION_NONE)
 	$zapytanie = $polaczenie->prepare('SELECT * FROM wiadomosci ORDER BY id_wiadomosci ASC');
 	$zapytanie->bindValue(':id', $_SESSION['id_pracownika'], PDO::PARAM_INT);
 	$zapytanie->execute();
+	
+	//$zapytanie2 = $polaczenie->prepare('SELECT * FROM wiadomosci ORDER BY id_wiadomosci ASC');
+	//$zapytanie2->bindValue(':id', $_SESSION['id_pracownika'], PDO::PARAM_INT);
+	//$zapytanie2->execute();
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -96,6 +100,10 @@ if (session_status() == PHP_SESSION_NONE)
 								<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Harmonogram prac</h3>
 							</div>
 							<div class="panel-body">
+<?php
+if($zapytanie->rowCount() != 0)
+{
+echo<<<END
 								<div class="table-responsive">
 								  <table class="table text-center">
 									<thead>
@@ -111,8 +119,7 @@ if (session_status() == PHP_SESSION_NONE)
 										</tr>
 									</thead>
 									<tbody>
-									<!-------------------------------------------------------------->
-<?php
+END;
 while($obj = $zapytanie->fetch(PDO::FETCH_OBJ))
 {
 
@@ -134,11 +141,80 @@ echo<<<END
 </tr>
 END;
 }
-?>
-									<!-------------------------------------------------------------->
-									</tbody>
+echo<<<END
+</tbody>
 								  </table>
 								</div>
+END;
+}
+else
+{
+	echo '<span style="color: gray;">Brak wiadomości</span>';
+}
+?>			
+							</div>
+					</div>
+				</div>
+
+
+<div class="col-lg-12">
+					<div class="panel panel-warning">
+							<div class="panel-heading">
+								<h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Usunięte konta</h3>
+							</div>
+							<div class="panel-body">
+<?php
+if($zapytanie->rowCount() != 0)
+{
+echo<<<END
+								<div class="table-responsive">
+								  <table class="table text-center">
+									<thead>
+										<tr>
+											<th class="text-center">ID</th>
+											<th class="text-center">Imię</th>
+											<th class="text-center">Nazwisko</th>
+											<th class="text-center">E-mail</th>
+											<th class="text-center">Temat</th>
+											<th class="text-center">Data wysłania</th>
+											<th class="text-center">Treść</th>
+											<th class="text-center">Usunięcie</th>
+										</tr>
+									</thead>
+									<tbody>
+END;
+while($obj = $zapytanie->fetch(PDO::FETCH_OBJ))
+{
+
+$tresc = nl2br( $obj->tresc );
+
+echo<<<END
+<tr>
+	<td>{$obj->id_wiadomosci}</td>
+	<td>{$obj->imie}</td>
+	<td>{$obj->nazwisko}</td>
+	<td>{$obj->email}</td>
+	<td>{$obj->temat}</td>
+	<td>{$obj->data_wyslania}</td>
+	<td><button class="btn btn-primary" onclick="wyswietl('{$obj->id_wiadomosci}','{$tresc}')" href="#div{$obj->id_wiadomosci}" data-toggle="collapse">Szczegóły</button></td>
+	<td><form action="usun-wiadomosc.php" method="post"><button class="btn btn-danger" name="id" value="{$obj->id_wiadomosci}">Usuń</button></form></td>
+</tr>
+<tr id="div{$obj->id_wiadomosci}">
+
+</tr>
+END;
+}
+echo<<<END
+</tbody>
+								  </table>
+								</div>
+END;
+}
+else
+{
+	echo '<span style="color: gray;">Brak wiadomości</span>';
+}
+?>			
 							</div>
 					</div>
 				</div>
