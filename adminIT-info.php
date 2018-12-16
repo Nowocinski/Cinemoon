@@ -87,7 +87,7 @@ if (session_status() == PHP_SESSION_NONE)
                     <h1><small>Statystyki i ustawienia</small></h1>
                     <div class="alert alert-dismissable alert-warning">
                         <button data-dismiss="alert" class="close" type="button">&times;</button>
-                        Witamy w panelu administratora! Zapraszam do przejrzenia wszystkich stron i modyfikacji układu pod kontem Twoich potrzeb.
+                        Witamy w panelu administratora! Zapraszam do przejrzenia wszystkich stron i modyfikacji układu pod kątem Twoich potrzeb.
                     </div>
                 </div>
             </div>

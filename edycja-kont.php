@@ -117,13 +117,13 @@ if (session_status() == PHP_SESSION_NONE)
 		
 		function usunPrac(id)
 		{
-			document.getElementById("yPrac").innerHTML = '<form id="uP" method="post" action="usun-prac.php"><p>Usunięcie tego konta spowoduj bezpowrotne utracenie wszystkich zgromadzonych danych takich jak:</p><ul><li>harmonogram prac</li><li>dane osobowe</li><li>login</li><li>hasło</li></ul><p>Jesteś pewien, żę chcesz tego dokonać?</p><label><input type="checkbox" required> Tak, chcę usunąć konto pracownika</label></form>';
+			document.getElementById("yPrac").innerHTML = '<form id="uP" method="post" action="usun-prac.php"><p>Usunięcie tego konta spowoduje bezpowrotne utracenie wszystkich zgromadzonych danych takich jak:</p><ul><li>harmonogram prac</li><li>dane osobowe</li><li>login</li><li>hasło</li></ul><p>Jesteś pewien, żę chcesz tego dokonać?</p><label><input type="checkbox" required> Tak, chcę usunąć konto pracownika</label></form>';
 			document.getElementById("zamiana3").innerHTML = '<button type="submit" class="btn btn-danger" form="uP" name="id" value="'+id+'">Usuń</button><button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>';
 		}
 		
 		function usunKlie(id)
 		{
-			document.getElementById("yKlie").innerHTML = '<form id="uK" method="post" action="usun-klie.php"><p>Usunięcie tego konta spowoduj bezpowrotne utracenie wszystkich zgromadzonych danych takich jak:</p><ul><li>harmonogram rezerwacji</li><li>dane osobowe</li><li>login</li><li>hasło</li></ul><p>Jesteś pewien, żę chcesz tego dokonać?</p><label><input type="checkbox" required> Tak, chcę usunąć konto pracownika</label></form>';
+			document.getElementById("yKlie").innerHTML = '<form id="uK" method="post" action="usun-klie.php"><p>Usunięcie tego konta spowoduje bezpowrotne utracenie wszystkich zgromadzonych danych takich jak:</p><ul><li>harmonogram rezerwacji</li><li>dane osobowe</li><li>login</li><li>hasło</li></ul><p>Jesteś pewien, żę chcesz tego dokonać?</p><label><input type="checkbox" required> Tak, chcę usunąć konto klienta</label></form>';
 			document.getElementById("zamiana4").innerHTML = '<button type="submit" class="btn btn-danger" form="uK" name="id" value="'+id+'">Usuń</button><button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>';
 		}
 	</script>
