@@ -13,7 +13,7 @@ catch(PDOException $e)
 	echo "Nie można nazwiązać połączenia z bazą danych";
 }
 
-$zapytanie = $polaczenie->prepare('SELECT temat, tresc, data FROM aktualnosci ORDER BY data DESC LIMIT 3');
+$zapytanie = $polaczenie->prepare('SELECT * FROM aktualnosci ORDER BY data DESC LIMIT 3');
 $zapytanie->execute();
 
 while($obj = $zapytanie->fetch(PDO::FETCH_OBJ))
@@ -22,9 +22,9 @@ $temat = substr($obj->tresc,0,600);
 if(strlen($obj->tresc) > 599) $temat.='...';
 echo<<<END
 <div class="mb-3" style="word-wrap: break-word; padding-left: 45px; padding-right: 45px;">
-	<h5 style="color: #A9A9A9;">{$obj->temat}</h5>
-	<h6 style="text-align: center;">{$obj->data}</h6>
-		<span style="color: gray;">{$temat}</span>
+	<h5 style="color: #A9A9A9;"><a href="aktualnosc.php?id={$obj->id}" style="text-decoration: none;">{$obj->temat}</a></h5>
+	<h6 style="text-align: center;"><a href="aktualnosc.php?id={$obj->id}" style="text-decoration: none; color: white;">{$obj->data}</a></h6>
+		<span style="color: gray;"><a href="aktualnosc.php?id={$obj->id}" style="text-decoration: none; color: gray;">{$temat}</a></span>
 </div>
 END;
 }
