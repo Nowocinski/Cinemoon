@@ -8,26 +8,25 @@ if (session_status() == PHP_SESSION_NONE)
       exit();
     }
 	
-	require_once 'connect.php';
-	
-	try
+	if(isset($_POST['temat']))
 	{
-		$polaczenie = new PDO('mysql:host='.$host.';dbname='.$db_name.';charset=utf8', $db_user, $db_password);
-	}
-	catch(PDOException $e)
-	{
-		echo "Nie można nazwiązać połączenia z bazą danych";
-	}
+		require_once 'connect.php';
 	
-	$zapytanie = $polaczenie->prepare('SELECT * FROM wiadomosci ORDER BY id_wiadomosci ASC');
-	$zapytanie->execute();
-	
-	$zapytanie2 = $polaczenie->prepare('SELECT id FROM usuniniete_konta');
-	$zapytanie2->execute();
-
-	$ile = $zapytanie2->rowCount();
-
-	$zapytanie3 = $polaczenie->prepare('SELECT id FROM usuniniete_konta WHERE powod_usuniecia=:pu');
+		try
+		{
+			$polaczenie = new PDO('mysql:host='.$host.';dbname='.$db_name.';charset=utf8', $db_user, $db_password);
+		}
+		catch(PDOException $e)
+		{
+			echo "Nie można nazwiązać połączenia z bazą danych";
+		}
+		
+		$zapytanie = $polaczenie->prepare("INSERT INTO aktualnosci VALUES ('', :tm, :tr, :dt)");
+		$zapytanie->bindValue(':tm', htmlentities($_POST['temat']), PDO::PARAM_STR);
+		$zapytanie->bindValue(':tr', nl2br(htmlentities($_POST['tresc'])), PDO::PARAM_STR);
+		$zapytanie->bindValue(':dt', date('Y-m-d H:i:s'), PDO::PARAM_STR);
+		$zapytanie->execute();
+	}
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -53,6 +52,10 @@ if (session_status() == PHP_SESSION_NONE)
 		function wyswietl(sekcja, tresc)
 		{
 			document.getElementById('div'+sekcja).innerHTML = '<td colspan="8">'+tresc+'</td>';
+		}
+		
+		if ( window.history.replaceState ) {
+		  window.history.replaceState( null, null, window.location.href );
 		}
 	</script>
 </head>
@@ -93,6 +96,20 @@ if (session_status() == PHP_SESSION_NONE)
         <div class="row">
             <div class="col-lg-12">
                 <h1><small>Dodanie aktualności</small></h1>
+				<form action="#" method="post">
+				  <div class="form-group">
+					<label>Temat</label>
+					<input placeholder="Maksymalnie 50 znaków" type="text" class="form-control" style="color: black;" name="temat" maxlength="50" required>
+				  </div>
+				  <div class="form-group">
+					<label>Treść</label>
+					<textarea placeholder="Podaj treść wiadomości" class="form-control" style="height: 150px; color: black;"  name="tresc" required></textarea>
+				  </div>
+				  <div class="form-group">
+					<label><input type="checkbox" required> Tak, chcę dodać wpis do sekcji aktualności</label>
+				  </div>
+				<button type="submit" class="btn btn-primary">Dodaj wpis</button>
+				</form>
             </div>
         </div>
     </div>
