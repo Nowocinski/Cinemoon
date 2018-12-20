@@ -27,7 +27,10 @@
                  </li>
                 <li class="nav-item <?php if(isset($_SESSION['zalogowany'])) echo 'disabled'; ?> btn btn-default">
                     <a class="nav-link active" <?php if(!isset($_SESSION['zalogowany'])) echo 'href="pracownicy.php"'; ?> <?php if(isset($_SESSION['zalogowany'])) echo 'style="cursor: default;"'; ?>>DLA PRACOWNIKÓW</a>
-                 </li>
+                </li>
+				<li class="nav-item active btn btn-default">
+                    <a class="nav-link active" href="aktualnosci.php">AKTUALNOŚCI</a>
+                </li>
              </ul>
 <?php
                     if(!isset($_SESSION['zalogowany']))
