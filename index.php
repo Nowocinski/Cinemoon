@@ -5,6 +5,7 @@
     include "side_part/gora.php";
     include "side_part/nav.php";
     include "side_part/naglowek.php";
+	include "side_part/aktualnosci.php";
 ?>
 <div class="container text-center mt-3">
     <div class="row">
