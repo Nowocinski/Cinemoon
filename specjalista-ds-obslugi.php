@@ -84,7 +84,7 @@ if (session_status() == PHP_SESSION_NONE)
                 </div>
             </div>
             <div class="row">
-				<div class="col-lg-9">
+				<div class="col-md-9">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Harmonogram prac</h3>
@@ -169,7 +169,7 @@ if ($i == true)
                                     <i class="fa fa-id-card-o"></i>
                                 </div>
                                 <div class="feed-item-body">
-                                    <div class="text">
+                                    <div class="text" style="word-wrap: break-word">
                                         <?php echo $_SESSION['imie'].' '.$_SESSION['nazwisko']; ?>
                                     </div>
                                 </div>
@@ -179,7 +179,7 @@ if ($i == true)
                                     <i class="fa fa-users"></i>
                                 </div>
                                 <div class="feed-item-body">
-                                    <div class="text">
+                                    <div class="text" style="word-wrap: break-word">
                                         Spracjalista ds. obsługi
                                     </div>
                                 </div>
@@ -189,7 +189,7 @@ if ($i == true)
                                     <i class="fa fa-envelope-o"></i>
                                 </div>
                                 <div class="feed-item-body">
-                                    <div class="text">
+                                    <div class="text" style="word-wrap: break-word">
                                         <?php echo $_SESSION['email'];?>
                                     </div>
                                 </div>
@@ -199,7 +199,7 @@ if ($i == true)
                                     <i class="fa fa-building-o"></i>
                                 </div>
                                 <div class="feed-item-body">
-                                    <div class="text">
+                                    <div class="text" style="word-wrap: break-word">
                                         <?php echo $_SESSION['miejscowosc']; ?>
                                     </div>
                                 </div>
@@ -209,7 +209,7 @@ if ($i == true)
                                     <i class="fa fa-map-marker"></i>
                                 </div>
                                 <div class="feed-item-body">
-                                    <div class="text">
+                                    <div class="text" style="word-wrap: break-word">
                                         <?php echo $_SESSION['adres']; ?>
                                     </div>
                                 </div>
@@ -219,7 +219,7 @@ if ($i == true)
                                     <i class="fa fa-phone"></i>
                                 </div>
                                 <div class="feed-item-body">
-                                    <div class="text">
+                                    <div class="text" style="word-wrap: break-word">
                                         <?php echo $_SESSION['nr_telefonu'];?>
                                     </div>
                                 </div>

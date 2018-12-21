@@ -152,11 +152,13 @@
             <header>
                 <h5 class="text-center">DANE KONTA</h5>
             </header>
+			<section style="word-wrap: break-word">
                 <b>Imię</b><br><?php echo $_SESSION['imie']; ?><br>
                 <b>Nazwisko</b><br><?php echo $_SESSION['nazwisko']; ?><br>
                 <b>E-mail</b><br><?php echo $_SESSION['email']; ?><br>
 
                 <b>Numer telefonu</b><br><?php if($_SESSION['nr_telefonu'] != '') echo $_SESSION['nr_telefonu']; else echo '<span style="color: gray">(nie podano)</span><br>';?>
+			</section>
         </article>
         <article>
             <header>
