@@ -24,7 +24,7 @@
         {
             // Kodowanie polskich znaków
             $polaczenie->query("SET NAMES utf8");
-            $rezultat = $polaczenie->query("SELECT * FROM filmy INNER JOIN repertuar ON filmy.id_filmu=repertuar.id_filmu WHERE repertuar.czas_rozpoczecia >= CAST(CONCAT(CURDATE(),' ',CURTIME()) as DATETIME) GROUP BY filmy.id_filmu ORDER BY repertuar.czas_rozpoczecia DESC");
+            $rezultat = $polaczenie->query("SELECT * FROM filmy INNER JOIN repertuar ON filmy.id_filmu=repertuar.id_filmu WHERE repertuar.czas_rozpoczecia >= CAST(CONCAT(CURDATE(),' ',CURTIME()) as DATETIME) GROUP BY filmy.id_filmu ORDER BY repertuar.czas_rozpoczecia ASC");
             if(!$rezultat)
                 throw new Exception($polaczenie->error);
 
