@@ -12,63 +12,21 @@ if (session_status() == PHP_SESSION_NONE)
         if(isset($_POST['cena']))
         {
           try {
-            $film = $_POST['film'];
-            $sala = $_POST['sala'];
-            $data = $_POST['data'];
-            $czas = $_POST['czas'];
-            $cena = $_POST['cena'];
-
             require_once "connect.php";
-            $polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+            
+			$polaczenie = new PDO('mysql:host='.$host.';dbname='.$db_name.';charset=utf8', $db_user, $db_password);
+			
+			$zapytanie = $polaczenie->prepare("INSERT INTO repertuar VALUES ('', :sa, :fi, :da, :ce)");
+			$zapytanie->bindValue(':sa', $_POST['sala'], PDO::PARAM_INT);
+			$zapytanie->bindValue(':fi', $_POST['film'], PDO::PARAM_INT);
+			$zapytanie->bindValue(':da', $_POST['data'].' '.$_POST['czas'], PDO::PARAM_STR);
+			$zapytanie->bindValue(':ce', $_POST['cena'], PDO::PARAM_INT);
+			$zapytanie->execute();
 
-            if($polaczenie->connect_errno != 0)
-                    throw new Exception(mysqli_connect_errno());
-            else {
-              // Kodowanie polskich znaków
-              $polaczenie->query("SET NAMES utf8");
-              $rezultat = $polaczenie->query("SELECT repertuar.czas_rozpoczecia, filmy.min_trwania FROM repertuar INNER JOIN sale ON repertuar.id_sali=sale.id_sali INNER JOIN filmy ON repertuar.id_filmu=filmy.id_filmu WHERE sale.id_sali='$sala' AND repertuar.czas_rozpoczecia > CAST(CONCAT(CURDATE(),' ',CURTIME()) as DATETIME)");
+			$_SESSION['sukces'] = true;
 
-              if(!$rezultat)
-                  throw new Exception($polaczenie->error);
-              else {
-                while($wiersz = mysqli_fetch_assoc($rezultat))
-                {
-                  $datapremiery = $wiersz['czas_rozpoczecia'];
-                  $jakdlugotrwa = $wiersz['min_trwania'];
-                  $bufor = (string)floor($wiersz['min_trwania']/60);
-                  $bufor .= ':'.(string)$wiersz['min_trwania']%60;
-                  $rezultat2 = $polaczenie->query("SELECT id_repertuaru FROM repertuar WHERE id_sali='$sala' AND CAST(CONCAT('$data',' ','$czas') as DATETIME) >= CAST('$datapremiery' as DATETIME) AND CAST(CONCAT('$data',' ','$czas') as DATETIME) <= CAST(CAST('$datapremiery' AS DATETIME) + CAST('$bufor' AS TIME) AS DATETIME) AND repertuar.czas_rozpoczecia > CAST(CONCAT(CURDATE(),' ',CURTIME()) as DATETIME)");
-                  if(!$rezultat)
-                      throw new Exception($polaczenie->error);
-                  else
-                  {
-                    if($rezultat2->num_rows > 0)
-                    {
-                      $_SESSION['blad_rezerwacji'] = true;
-                    }
-                    else
-                    {
-                      $data_i_czas = (string)$data.' 00:0'.(string)$bufor;
-                      if($polaczenie->query("INSERT INTO repertuar VALUES ('','$sala','$film','$data_i_czas','$cena')"))
-                      {
-                        unset($_POST['film']);
-                        $_SESSION['sukces'] = true;
-                      }
-                      else
-                        throw new Exception($polaczenie->error);
-					
-					$rezultat2->free_result();
-                    }
-                  }
-                }
-              }
-              
-              $rezultat->free_result();
-              $polaczenie->close();
-            }
           } catch (Exception $e) {
-            echo '<span style="color: red;">Błąd serwera. Spróbuj zarejestrować się później</span>';
-            echo '<br>Informacja deweloperska: '.$e;
+            $_SESSION['blad_rezerwacji'] = true;
           }
 
         }
