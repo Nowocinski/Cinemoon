@@ -1,5 +1,5 @@
 <div class="dane-konta2 pt-3 pb-3 text-center" style="background-color: #071418">
-	<h2>Aktualności</h2>
+	<h2><a href="aktualnosci.php" style="text-decoration:none; color: white;">Aktualności</a></h2>
 	
 <?php
 require_once 'connect.php';
