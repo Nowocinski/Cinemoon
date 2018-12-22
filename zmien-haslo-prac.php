@@ -6,9 +6,6 @@ if(!isset($_POST['haslo']))
     exit();
 }
 
-if (session_status() == PHP_SESSION_NONE)
-    session_start();
-
 require_once 'connect.php';
 
 $haslo_hash = password_hash($_POST['haslo'], PASSWORD_DEFAULT);
