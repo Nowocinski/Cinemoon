@@ -46,6 +46,29 @@ if (session_status() == PHP_SESSION_NONE)
 </head>
 <body>
 
+<!-- Zmiana hasła -->
+<div id="zmienHaslo" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-warning">Zmiana hasła</h4>
+      </div>
+      <div class="modal-body">
+        <form action="haslo.php" method="post" id="zHaslo">
+			<label>Podaj nowe hasło</label>
+			<input type="password" class="form-control" minlength="6" maxlength="30" placeholder="Nowe hasło" name="haslo" style="color: black;" required>
+			<label><input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić hasło</label><br>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-warning" form="zHaslo">Zmień</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Zmiana imienia -->
 <div id="zmienImie" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -293,6 +316,10 @@ if (session_status() == PHP_SESSION_NONE)
 									<tr>
 										<th class="text-center">Adres</th>
 										<td><button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#zmienAdres">Edytuj</button></td>
+									</tr>
+									<tr>
+										<th class="text-center">Hasło</th>
+										<td><button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#zmienHaslo">Zmień</button></td>
 									</tr>
 							  </table>
 							</div>
