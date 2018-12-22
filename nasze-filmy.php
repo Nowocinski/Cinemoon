@@ -1,7 +1,7 @@
 <?php
 	include "side_part/przekierowanie-pracownikow.php";
 
-    if(!isset($_POST['film']))
+    if(!isset($_GET['film']))
     {
         header('Location: index.php');
         exit();
@@ -11,7 +11,7 @@
         session_start();
 
     require_once "connect.php";
-    $grafika = $_POST['film'];
+    $grafika = $_GET['film'];
 
     //Wyłączenie worningów i włączenie wyświetlania wyjątków
     mysqli_report(MYSQLI_REPORT_STRICT);
@@ -138,8 +138,8 @@ echo<<<END
 END;
                     //if($ilosc_osob_ktore_poszly_na_repertuar < $ilosc_miejsc_w_sali)
                     //{
-                        echo '<form action="wybor-miejsca.php" method="post">';
-                        echo '<button formtarget="_blank" name="id_repertuaru" value="'.$id_repertuaru.'" type="submit" class="btn btn-warning btn-md">Zapisz się</button>';
+                        echo '<form action="wybor-miejsca.php" method="get">';
+                        echo '<button name="id_repertuaru" value="'.$id_repertuaru.'" type="submit" class="btn btn-warning btn-md">Zapisz się</button>';
                         echo '</form>';
                         //echo 'ilosc_osob_ktore_poszly_na_repertuar: '.$ilosc_osob_ktore_poszly_na_repertuar.'<br>ilosc_miejsc_w_sali: '.$ilosc_miejsc_w_sali;
                         //echo '<br>Id_repertuaru: '.$id_repertuaru;
