@@ -1,4 +1,6 @@
 <?php
+	include "side_part/przekierowanie-pracownikow.php";
+
     $title = "Aktualności";
 
     include "side_part/gora.php";

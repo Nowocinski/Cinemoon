@@ -1,4 +1,6 @@
 <?php
+	include "side_part/przekierowanie-pracownikow.php";
+
 	if(!isset($_GET['id']))
 	{
 		header('Location: index.php');

@@ -1,4 +1,5 @@
 <?php
+	include "side_part/przekierowanie-pracownikow.php";
 
 	$title = "Kontakt";
 

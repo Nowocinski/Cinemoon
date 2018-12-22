@@ -1,12 +1,14 @@
 <?php
-    if(isset($_SESSION['zalogowany']))
-    {
-        header('Location: logowanie.php');
-        exit();
-    }
+	include "side_part/przekierowanie-pracownikow.php";
 
     if (session_status() == PHP_SESSION_NONE)
         session_start();
+	
+	if(isset($_SESSION['zalogowany']))
+    {
+        header('Location: konto.php');
+        exit();
+    }
 
     if(isset($_POST['email']))
     {

@@ -1,4 +1,6 @@
 <?php
+	include "side_part/przekierowanie-pracownikow.php";
+
     if (session_status() == PHP_SESSION_NONE)
         session_start();
 
