@@ -304,7 +304,7 @@ END;
                 Produkcja:
             </label>
             <div class="col-md-9">
-              <input type="text" class="form-control" name="producent" placeholder="Producenci, którzy stworzyli film" required>
+              <input type="text" class="form-control" name="producent" placeholder="Producenci, którzy stworzyli film" style="color: black;" required>
             </div>
         </div>
         <div class="mb-1">
@@ -312,7 +312,7 @@ END;
                 Reżyser:
             </label>
             <div class="col-md-9">
-              <input type="text" class="form-control" name="rezyser" placeholder="Reżyser filmu" required>
+              <input type="text" class="form-control" name="rezyser" placeholder="Reżyser filmu" style="color: black;" required>
             </div>
         </div>
         <div>
