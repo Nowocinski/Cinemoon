@@ -129,9 +129,10 @@ END;
         </label>
 		<div class="col-md-9">
             <select class="form-control" style="color: black;" name="typ">
-				<option value="pracownik">pracownik</option>
-				<option value="administratorIT">administratorIT</option>
-				<option value="menadzerPracownikow">menadzerPracownikow</option>
+				<option value="pracownik">Pracownik</option>
+				<option value="administratorIT">Administrator IT</option>
+				<option value="menadzerPracownikow">Menadzer pracowników</option>
+				<option value="specjalistaDSObslugi">Specjalista ds. obsługi</option>
 			</select>
 		</div>
         </div>
