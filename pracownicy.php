@@ -117,6 +117,7 @@
     }
 
     include "side_part/gora.php";
+	include "side_part/nav.php";
 ?>
 
 
