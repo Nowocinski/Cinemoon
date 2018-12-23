@@ -120,6 +120,7 @@ END;
     }
     echo '</div>'; /* Zamknięcie diva row */
     echo '</div>'; /* Zamknięcie diva container */
+	include "side_part/footer.php";
     include "side_part/dol.php";
 
 ?>
