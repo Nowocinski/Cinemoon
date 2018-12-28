@@ -45,7 +45,7 @@ if (session_status() == PHP_SESSION_NONE)
 	<script>
 		function przeslanie(num)
 		{
-			document.getElementById("form-usuwania").innerHTML = '<button name="element" type="submit" class="btn btn-danger" value="' + num + '">Tak, chce usunąć</button>';
+			document.getElementById("form-usuwania").innerHTML = '<button name="element" type="submit" class="btn btn-danger" value="' + num + '">Tak, chce usunąć</button><button type="button" class="btn btn-default" data-dismiss="modal">Nie chce</button>';
 		}
 		
 		function przeslanie2(num, rok, miesiac, dzien, min, sek, min_do, sek_do, opis)
@@ -62,12 +62,12 @@ if (session_status() == PHP_SESSION_NONE)
 
 			document.getElementById("form-edycji").innerHTML = str1 + str2 + str3 + str4;
 
-			document.getElementById("dopodmiany").innerHTML = '<button type="submit" class="btn btn-primary" form="form-edycji" name="id" value="'+num+'">Edytuj</button>';
+			document.getElementById("dopodmiany").innerHTML = '<button type="submit" class="btn btn-primary" form="form-edycji" name="id" value="'+num+'">Edytuj</button><button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>';
 		}
 		
 		function wyslij(num)
 		{
-			document.getElementById("podmiento").innerHTML = '<button type="submit" class="btn btn-warning" form="dodaj" name="id" value="'+num+'">Dodaj</button>';
+			document.getElementById("podmiento").innerHTML = '<button type="submit" class="btn btn-warning" form="dodaj" name="id" value="'+num+'">Dodaj</button><button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>';
 		}
 	</script>
 </head>
@@ -90,7 +90,7 @@ if (session_status() == PHP_SESSION_NONE)
       </div>
       <div class="modal-footer">
 		<form id="form-usuwania" action="usun-z-harmonogramu.php" method="post"></form>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Nie chce</button>
+        <!--button type="button" class="btn btn-default" data-dismiss="modal">Nie chce</button-->
       </div>
     </div>
 
@@ -115,7 +115,7 @@ if (session_status() == PHP_SESSION_NONE)
       </div>
       <div class="modal-footer">
 		<div id="dopodmiany"></div>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+        <!--button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button-->
       </div>
     </div>
 
@@ -149,7 +149,7 @@ if (session_status() == PHP_SESSION_NONE)
       </div>
       <div class="modal-footer">
         <div id="podmiento"></div>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+        <!--button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button-->
       </div>
     </div>
 
