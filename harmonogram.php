@@ -36,7 +36,6 @@ if (session_status() == PHP_SESSION_NONE)
     <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 
-    <!-- you need to include the shieldui css and js assets in order for the charts to work -->
     <link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light-bootstrap/all.min.css" />
     <link id="gridcss" rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/dark-bootstrap/all.min.css" />
 
@@ -73,8 +72,6 @@ if (session_status() == PHP_SESSION_NONE)
 </head>
 <body>
 
-
-
 <!-- Modal do usuwania -->
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -97,9 +94,6 @@ if (session_status() == PHP_SESSION_NONE)
   </div>
 </div>
 
-
-
-
 <!-- Modal do edycji -->
 <div id="modelEdycji" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -121,9 +115,6 @@ if (session_status() == PHP_SESSION_NONE)
 
   </div>
 </div>
-
-
-
 
 <!-- Formularz dodawania zdarzenia -->
 <div id="formularz" class="modal fade" role="dialog">
@@ -155,11 +146,6 @@ if (session_status() == PHP_SESSION_NONE)
 
   </div>
 </div>
-
-
-
-
-
 
     <div id="wrapper">
           <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">

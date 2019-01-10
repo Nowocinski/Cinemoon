@@ -90,39 +90,6 @@
                         {
                             $_SESSION['udana_rezerwacja_miejsca'] = true;
 
-                            //Wysyłanie maila na adres klienta
-                            //-------------------------------------------------------------------------
-                            /*require_once('PHPMailer/PHPMailerAutoload.php');
-
-                            $mail = new PHPMailer();
-                            $mail->isSMTP();
-
-                            $mail->SMTPAuth = true;
-                            $mail->SMTPSecure = 'tls';
-                            $mail->Host = 'smtp.gmail.com';
-                            $mail->Port = 587;
-                            $mail->isHTML();
-                            $mail->Username = 'kinocinemoon@gmail.com';
-                            $mail->Password = 'Kino-Cinemoon#2';
-                            $mail->SetFrom('kinocinemoon@gmail.com');
-                            $mail->Subject = 'Cinemoon: Rejestracja przebiegła pomyślnie';
-                            $mail->Body = 'Rezerwacja jest już podpięta do twojego konta.';
-                            $mail->AddAddress($_SESSION['email']);
-
-                            if(!$mail->Send())
-                            {
-                              echo 'Nie działą!<br>';
-                              $_SESSION['wyslanomaila'] = false;
-                              $_SESSION['blad_emaila'] = 'Mailer Error: '.$mail->ErrorInfo;
-                            }
-
-                            else
-                            {
-                              //echo 'Działa!<br>';
-                              $_SESSION['wyslanomaila'] = true;
-                            }*/
-                            //-------------------------------------------------------------------------
-
                             header('Location: dziekujemy.php');
                         }
 

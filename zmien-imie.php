@@ -110,9 +110,6 @@
                 ?>
             </div>
 
-
-
-
             <div class="form-group">
                 <label>Podaj nowę imię</label>
                 <input type="text" class="form-control" placeholder="Nowę imię" name="nowe" />
@@ -124,14 +121,8 @@
                     }
                 ?>
             </div>
-
-
-
                 <button type="submit" class="btn btn-danger">Zmień imię</button>
                 <button type="reset" class="btn btn-default">Wyczyść</button>
-
-
-
         </form>
 </div>
 

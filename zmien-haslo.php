@@ -113,9 +113,6 @@
                 ?>
             </div>
 
-
-
-
             <div class="form-group">
                 <label>Podaj nowę hasło</label>
                 <input type="password" class="form-control" placeholder="Nowę hasło" name="nowe" />
@@ -127,14 +124,8 @@
                     }
                 ?>
             </div>
-
-
-
                 <button type="submit" class="btn btn-danger">Zmień hasło</button>
                 <button type="reset" class="btn btn-default">Wyczyść</button>
-
-
-
         </form>
 </div>
 

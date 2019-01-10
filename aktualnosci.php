@@ -5,7 +5,6 @@
 
     include "side_part/gora.php";
     include "side_part/nav.php";
-
 ?>
 
 <div class="dane-konta2 pt-3 pb-3 text-center" style="background-color: #071418">

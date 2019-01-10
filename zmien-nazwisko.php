@@ -123,14 +123,8 @@
                     }
                 ?>
             </div>
-
-
-
                 <button type="submit" class="btn btn-danger">Zmień nazwisko</button>
                 <button type="reset" class="btn btn-default">Wyczyść</button>
-
-
-
         </form>
 </div>
 

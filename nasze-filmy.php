@@ -136,20 +136,9 @@ echo<<<END
                     <tr><th>$nr_sali</th><th>$czas_rozpoczecia</th><th>$cena_biletu zł</th>
                     <th>
 END;
-                    //if($ilosc_osob_ktore_poszly_na_repertuar < $ilosc_miejsc_w_sali)
-                    //{
                         echo '<form action="wybor-miejsca.php" method="get">';
                         echo '<button name="id_repertuaru" value="'.$id_repertuaru.'" type="submit" class="btn btn-warning btn-md">Zapisz się</button>';
                         echo '</form>';
-                        //echo 'ilosc_osob_ktore_poszly_na_repertuar: '.$ilosc_osob_ktore_poszly_na_repertuar.'<br>ilosc_miejsc_w_sali: '.$ilosc_miejsc_w_sali;
-                        //echo '<br>Id_repertuaru: '.$id_repertuaru;
-                    //}
-                    /*else
-                    {
-                        echo '<button type="button" class="btn btn-danger btn-md">Bilety wyprzedane</button>';
-                        echo 'ilosc_osob_ktore_poszly_na_repertuar: '.$ilosc_osob_ktore_poszly_na_repertuar.'<br>ilosc_miejsc_w_sali: '.$ilosc_miejsc_w_sali;
-                        echo '<br>Id_repertuaru: '.$id_repertuaru;
-                    }*/
 echo<<<END
                     </th><tr>
 END;
