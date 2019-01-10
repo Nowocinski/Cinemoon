@@ -19,17 +19,17 @@
 
          <div class="collapse navbar-collapse" id="mainmenu">
              <ul class="navbar-nav mr-auto">
-                 <li class="nav-item active btn btn-default">
-                     <a class="nav-link" href="repertuar.php">REPERTUAR</a>
+                 <li class="nav-item btn btn-default">
+                     <a class="nav-link <?= isset($title) && $title=='Repertuar' ? 'active' : '' ?>" href="repertuar.php">REPERTUAR</a>
                  </li>
-                 <li class="nav-item active btn btn-default">
-                    <a class="nav-link active" href="kontakt.php">KONTAKT</a>
+                 <li class="nav-item btn btn-default">
+                    <a class="nav-link <?= isset($title) && $title=='Kontakt' ? 'active' : '' ?>" href="kontakt.php">KONTAKT</a>
                  </li>
                 <li class="nav-item <?php if(isset($_SESSION['zalogowany'])) echo 'disabled'; ?> btn btn-default">
-                    <a class="nav-link active" <?php if(!isset($_SESSION['zalogowany'])) echo 'href="pracownicy.php"'; ?> <?php if(isset($_SESSION['zalogowany'])) echo 'style="cursor: default;"'; ?>>DLA PRACOWNIKÓW</a>
+                    <a class="nav-link <?= isset($title) && $title=='Pracownicy' ? 'active' : '' ?>" <?php if(!isset($_SESSION['zalogowany'])) echo 'href="pracownicy.php"'; ?> <?php if(isset($_SESSION['zalogowany'])) echo 'style="cursor: default;"'; ?>>DLA PRACOWNIKÓW</a>
                 </li>
-				<li class="nav-item active btn btn-default">
-                    <a class="nav-link active" href="aktualnosci.php">AKTUALNOŚCI</a>
+				<li class="nav-item btn btn-default">
+                    <a class="nav-link <?= isset($title) && $title=='Aktualności' ? 'active' : '' ?>" href="aktualnosci.php">AKTUALNOŚCI</a>
                 </li>
              </ul>
 <?php
