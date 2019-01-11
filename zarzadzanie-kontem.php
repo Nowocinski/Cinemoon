@@ -260,65 +260,32 @@ if (session_status() == PHP_SESSION_NONE)
 									<tr>
 										<th class="text-center">Imię</th>
 										<td><?= $_SESSION['imie']; ?></td>
+										<td><button type="submit" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#zmienImie">Edytuj</button></td>
 									</tr>
 									<tr class="text-center">
 										<th class="text-center">Nazwisko</th>
 										<td><?= $_SESSION['nazwisko']; ?></td>
+										<td><button type="submit" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#zmienNazwisko">Edytuj</button></td>
 									</tr>
 									<tr>
 										<th class="text-center">Typ konta</th>
 										<td><?= $_SESSION['typ_konta']; ?></td>
+										<td></td>
 									</tr>
 									<tr>
 										<th class="text-center">Numer telefonu</th>
 										<td><?= $_SESSION['nr_telefonu']; ?></td>
+										<td><button type="submit" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#zmienNumer">Edytuj</button></td>
 									</tr>
 									<tr>
 										<th class="text-center">Miejscowość</th>
 										<td><?= $_SESSION['miejscowosc']; ?></td>
+										<td><button type="submit" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#zmienMiejscowosc">Edytuj</button></td>
 									</tr>
 									<tr>
 										<th class="text-center">Adres</th>
 										<td><?= $_SESSION['adres']; ?></td>
-									</tr>
-							  </table>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				
-				<div class="col-lg-9 text-center">
-                    <div class="panel panel-warning">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Edycja danych</h3>
-                        </div>
-                        <div class="panel-body">
-							<div class="table-responsive">
-							  <table class="table">
-									<tr>
-										<th class="text-center">Imię</th>
-										<td><button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#zmienImie">Edytuj</button></td>
-									</tr>
-									<tr>
-										<th class="text-center">Nazwisko</th>
-										<td><button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#zmienNazwisko">Edytuj</button></td>
-									</tr>
-									<tr>
-										<th class="text-center">Numer telefonu</th>
-										<td><button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#zmienNumer">Edytuj</button></td>
-									</tr>
-									<tr>
-										<th class="text-center">Miejscowość</th>
-										<td><button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#zmienMiejscowosc">Edytuj</button></td>
-									</tr>
-									<tr>
-										<th class="text-center">Adres</th>
-										<td><button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#zmienAdres">Edytuj</button></td>
-									</tr>
-									<tr>
-										<th class="text-center">Hasło</th>
-										<td><button type="submit" class="btn btn-warning" data-toggle="modal" data-target="#zmienHaslo">Zmień</button></td>
+										<td><button type="submit" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#zmienAdres">Edytuj</button></td>
 									</tr>
 							  </table>
 							</div>
