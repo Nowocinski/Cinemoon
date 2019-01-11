@@ -45,7 +45,7 @@
 	}
 ?>
 
-<header class="filmy2 mt-2 mb-4">
+<header class="filmy2 mt-2 mb-4 p-3">
 	<h1>Kontakt</h1>
 </header>
 
@@ -96,6 +96,5 @@
 </main>
 
 <?php
-	include "side_part/footer.php";
     include "side_part/dol.php";
 ?>
