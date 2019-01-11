@@ -109,64 +109,58 @@
             {
                 // Kodowanie polskich znaków
                 $polaczenie->query("SET NAMES utf8");
-                $rezultat = $polaczenie->query("SELECT grafika, tytul FROM filmy ORDER BY id_filmu DESC");
+
+                $rezultat = $polaczenie->query("SELECT id_klienta FROM klienci WHERE email='$email' AND email!=''");
+                $rezultatP = $polaczenie->query("SELECT id_pracownika FROM pracownicy WHERE email='$email' AND email!=''");
+
                 if(!$rezultat)
                     throw new Exception($polaczenie->error);
                 else
                 {
-                    // Kodowanie polskich znaków
-                    $polaczenie->query("SET NAMES utf8");
-
-                    $rezultat = $polaczenie->query("SELECT id_klienta FROM klienci WHERE email='$email' AND email!=''");
-
-                    if(!$rezultat)
-                        throw new Exception($polaczenie->error);
-                    else
+                    if($rezultat->num_rows > 0 || $rezultatP->num_rows > 0)
                     {
-                        if($rezultat->num_rows > 0)
-                        {
-                            $poprawna_walidacja = false;
-                            $_SESSION['blad_email'] = '<span style="color: red;">Podany e-mail jest już przypisany do innego konta</span>';
-                        }
+                        $poprawna_walidacja = false;
+                        $_SESSION['blad_email'] = '<span style="color: red;">Podany e-mail jest już przypisany do innego konta</span>';
                     }
-
-                    $rezultat2 = $polaczenie->query("SELECT id_klienta FROM klienci WHERE nr_telefonu='$numertelefonu' AND nr_telefonu!=''");
-
-                    if(!$rezultat2)
-                        throw new Exception($polaczenie->error);
-                    else
-                    {
-                        if($rezultat2->num_rows > 0)
-                        {
-                            $poprawna_walidacja = false;
-                            $_SESSION['blad_numertelefonu'] = '<span style="color: red;">Podany numer jest już przypisany do innego konta</span>';
-                        }
-                    }
-
-                    if($poprawna_walidacja)
-                    {
-                        if($polaczenie->query("INSERT INTO klienci VALUES (NULL, '$imie', '$nazwisko', '$email', '$zahasowane_haslo', '$numertelefonu', '$typ')"))
-                        {
-                            $_SESSION['zalogowany'] = true;
-                            $_SESSION['pierwszewejscie'] = true;
-
-                            $_SESSION['imie'] = $imie;
-                            $_SESSION['nazwisko'] = $nazwisko;
-                            $_SESSION['email'] = $email;
-                            $_SESSION['nr_telefonu'] = $numertelefonu;
-                            $_SESSION['typ'] = $typ;
-
-                            header('Location: konto.php');
-                            exit();
-                        }
-
-                        else
-                        throw new Exception($polaczenie->error);
-                    }
-                    $rezultat->free_result();
-                    $rezultat2->free_result();
-                    $polaczenie->close();
                 }
+
+                $rezultat2 = $polaczenie->query("SELECT id_klienta FROM klienci WHERE nr_telefonu='$numertelefonu' AND nr_telefonu!=''");
+                $rezultat2P = $polaczenie->query("SELECT id_pracownika FROM pracownicy WHERE nr_telefonu='$numertelefonu' AND nr_telefonu!=''");
+
+                if(!$rezultat2)
+                    throw new Exception($polaczenie->error);
+                else
+                {
+                    if($rezultat2->num_rows > 0 || $rezultat2P->num_rows > 0)
+                    {
+                        $poprawna_walidacja = false;
+                        $_SESSION['blad_numertelefonu'] = '<span style="color: red;">Podany numer jest już przypisany do innego konta</span>';
+                    }
+                }
+
+                if($poprawna_walidacja)
+                {
+                    if($polaczenie->query("INSERT INTO klienci VALUES (NULL, '$imie', '$nazwisko', '$email', '$zahasowane_haslo', '$numertelefonu', '$typ')"))
+                    {
+                        $_SESSION['zalogowany'] = true;
+						$_SESSION['pierwszewejscie'] = true;
+
+                        $_SESSION['imie'] = $imie;
+                        $_SESSION['nazwisko'] = $nazwisko;
+                        $_SESSION['email'] = $email;
+                        $_SESSION['nr_telefonu'] = $numertelefonu;
+                        $_SESSION['typ'] = $typ;
+
+                        header('Location: konto.php');
+                        exit();
+                    }
+
+                    else
+                    throw new Exception($polaczenie->error);
+                }
+                $rezultat->free_result();
+                $rezultat2->free_result();
+                $polaczenie->close();
             }
         }
 
