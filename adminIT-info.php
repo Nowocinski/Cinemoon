@@ -19,7 +19,7 @@ if (session_status() == PHP_SESSION_NONE)
 		echo "Nie można nazwiązać połączenia z bazą danych";
 	}
 	
-	$zapytanie = $polaczenie->prepare('SELECT dzien, czas_od, czas_do, info_o_pracy, DAYOFWEEK(dzien) as dtyg FROM harmonogram_prac WHERE id_prac=:id AND dzien >= CURDATE() ORDER BY dzien ASC');
+	$zapytanie = $polaczenie->prepare('SELECT id, dzien, czas_od, czas_do, info_o_pracy, DAYOFWEEK(dzien) as dtyg, status FROM harmonogram_prac WHERE id_prac=:id AND dzien >= CURDATE() ORDER BY dzien ASC');
 	$zapytanie->bindValue(':id', $_SESSION['id_pracownika'], PDO::PARAM_INT);
 	$zapytanie->execute();
 ?>
@@ -129,9 +129,10 @@ echo<<<END
 		<caption style="font-size: 20px;">{$dzien_tygodnia} <span style="color: white; font-size: 15px;">({$obj->dzien})</span></caption>
 		<thead>
 			<tr>
-				<th style="width:25%">Od kiedy</th>
-				<th style="width:25%">Do kiedy</th>
-				<th style="width:50%">Opis</th>
+				<th style="width:15%">Od kiedy</th>
+				<th style="width:15%">Do kiedy</th>
+				<th style="width:45%">Opis</th>
+				<th style="width:35%">Status</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -139,9 +140,28 @@ echo<<<END
 				<td>{$obj->czas_od}</td>
 				<td>{$obj->czas_do}</td>
 				<td>{$obj->info_o_pracy}</td>
+				<td>
+END;
+
+if($obj->status == 1)
+echo<<<END
+					Wykonano
+				</td>
+			</tr>
+END;
+
+else
+echo<<<END
+					<form method="post" action="skrypt_wykonanie_pracy.php">
+						<button type="submit" class="btn btn-danger" name="numer_pracy" value="{$obj->id}">
+							Dodaj wykonanie
+						</button>
+					</form>
+				</td>
 			</tr>
 END;
 	}
+
 	
 	else
 	{
