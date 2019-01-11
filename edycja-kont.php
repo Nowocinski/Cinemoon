@@ -32,7 +32,7 @@ if (session_status() == PHP_SESSION_NONE)
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edycja kont</title>
+    <title>Zarządzanie listą kont</title>
 
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
@@ -272,7 +272,7 @@ if (session_status() == PHP_SESSION_NONE)
                   <li><a href="dodaj-seans.php"><i class="fa fa-tasks"></i> Nowy seans</a></li>
                   <li><a href="dodaj-film.php"><i class="fa fa-video-camera"></i> Dodaj film</a></li>
                   <li><a href="dodaj-sale.php"><i class="fa fa-university"></i> Dodaj sale</a></li>
-				  <li class="selected"><a href="edycja-kont.php"><i class="fa fa-id-card" aria-hidden="true"></i> Edycja kont</a></li>
+				  <li class="selected"><a href="edycja-kont.php"><i class="fa fa-id-card" aria-hidden="true"></i> Zarządzanie listą kont</a></li>
 				  <li><a href="dodaj-pracownika.php"><i class="fa fa-handshake-o" aria-hidden="true"></i> Dodaj pracownika</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right navbar-user">
@@ -311,8 +311,8 @@ if (session_status() == PHP_SESSION_NONE)
 									<th>Nazwisko</th>
 									<th>Typ konta</th>
 									<th>Numer telefonu</th>
-									<th>Dane konta</th>
-									<th>Hasło</th>
+									<!--th>Dane konta</th>
+									<th>Hasło</th-->
 									<th>Status</th>
 								</tr>
 <?php
@@ -325,8 +325,8 @@ echo<<<END
 									<td>{$obj->nazwisko}</td>
 									<td>{$obj->typ_konta}</td>
 									<td>{$obj->nr_telefonu}</td>
-									<td><button type="button" class="btn btn-primary" onclick="edytujPrac({$obj->id_pracownika},'{$obj->imie}','{$obj->nazwisko}','{$obj->email}',{$obj->nr_telefonu},'{$obj->typ_konta}','{$obj->miejscowosc}','{$obj->adres}')" data-toggle="modal" data-target="#ePrac">Edytuj</button></td>
-									<td><button type="button" onclick="zmienPrac({$obj->id_pracownika})" class="btn btn-warning" data-toggle="modal" data-target="#zPrac">Zmień</button></td>
+									<!--td><button type="button" class="btn btn-primary" onclick="edytujPrac({$obj->id_pracownika},'{$obj->imie}','{$obj->nazwisko}','{$obj->email}',{$obj->nr_telefonu},'{$obj->typ_konta}','{$obj->miejscowosc}','{$obj->adres}')" data-toggle="modal" data-target="#ePrac">Edytuj</button></td>
+									<td><button type="button" onclick="zmienPrac({$obj->id_pracownika})" class="btn btn-warning" data-toggle="modal" data-target="#zPrac">Zmień</button></td-->
 									<td><button type="button" class="btn btn-danger" onclick="usunPrac({$obj->id_pracownika})" class="btn btn-warning" data-toggle="modal" data-target="#uPrac">Usuń</button></td>
 								</tr>
 END;
@@ -352,8 +352,8 @@ END;
 									<th>Nazwisko</th>
 									<th>Typ konta</th>
 									<th>Numer telefonu</th>
-									<th>Dane konta</th>
-									<th>Hasło</th>
+									<!--th>Dane konta</th>
+									<th>Hasło</th-->
 									<th>Status</th>
 								</tr>
 <?php
@@ -371,8 +371,8 @@ END;
 	else echo $obj->nr_telefonu;
 echo<<<END
 									</td>
-									<td><button type="submit" class="btn btn-primary" onclick="edytujKlie({$obj->id_klienta},'{$obj->imie}','{$obj->nazwisko}','{$obj->email}', '{$obj->nr_telefonu}', '{$obj->typ}')" data-toggle="modal" data-target="#eKlie">Edytuj</button></td>
-									<td><button type="button" onclick="zmienKlie({$obj->id_klienta})" class="btn btn-warning" data-toggle="modal" data-target="#zKlie">Zmień</button></td>
+									<!--td><button type="submit" class="btn btn-primary" onclick="edytujKlie({$obj->id_klienta},'{$obj->imie}','{$obj->nazwisko}','{$obj->email}', '{$obj->nr_telefonu}', '{$obj->typ}')" data-toggle="modal" data-target="#eKlie">Edytuj</button></td>
+									<td><button type="button" onclick="zmienKlie({$obj->id_klienta})" class="btn btn-warning" data-toggle="modal" data-target="#zKlie">Zmień</button></td-->
 									<td><button type="button" class="btn btn-danger" onclick="usunKlie({$obj->id_klienta})" class="btn btn-warning" data-toggle="modal" data-target="#uKlie">Usuń</button></td>
 								</tr>
 END;
