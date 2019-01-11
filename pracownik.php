@@ -19,9 +19,8 @@ if (session_status() == PHP_SESSION_NONE)
 		echo "Nie można nazwiązać połączenia z bazą danych";
 	}
 	
-	$zapytanie = $polaczenie->prepare('SELECT id, dzien, czas_od, czas_do, info_o_pracy, DAYOFWEEK(dzien) as dtyg, status FROM harmonogram_prac WHERE id_prac=:id AND dzien >= CURDATE() ORDER BY dzien ASC');
+	$zapytanie = $polaczenie->prepare('SELECT id, czas_od, czas_do, info_o_pracy, status FROM harmonogram_prac WHERE id_prac=:id AND YEARWEEK(dzien)=YEARWEEK(NOW()) AND DAYOFWEEK(dzien)=:dtyg ORDER BY dzien ASC');
 	$zapytanie->bindValue(':id', $_SESSION['id_pracownika'], PDO::PARAM_INT);
-	$zapytanie->execute();
 ?>
 <!DOCTYPE html>
 <html lang="pl">
@@ -93,51 +92,46 @@ if (session_status() == PHP_SESSION_NONE)
                             <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Harmonogram prac</h3>
                         </div>
                         <div class="panel-body">
+<!------------------------------------------------------------------------------------------------------------------->
+<!-- Harmonogram prac -->
 <?php
-$dzien_tygodnia = '';
-$dzien = '';
-$pierwszy = true;
-$i = true;
+$dnitygodnia = array("Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek" , "Piątek", "Sobota");
+
+for($i=1; $i<8; $i++)
+{
+echo<<<END
+						<div class="table-responsive">
+						  <table class="table">
+							<caption style="font-size: 20px; text-align: center;">{$dnitygodnia[$i-1]}</caption>
+END;
+
+$zapytanie->bindValue(':dtyg', $i, PDO::PARAM_INT);
+$zapytanie->execute();
+
+if($zapytanie->rowCount() == 0)
+	echo '<thead><tr><td><span style="color: gray;">Nie masz aktualnie przypisanej żadnej pracy na ten dzień</span></td></tr></thead>';
+else
+{
+echo<<<END
+	<thead>
+		<tr>
+			<th style="width:15%">Od kiedy</th>
+			<th style="width:15%">Do kiedy</th>
+			<th style="width:45%">Opis</th>
+			<th style="width:35%">Status</th>
+		</tr>
+	</thead>
+END;
+
 while($obj = $zapytanie->fetch(PDO::FETCH_OBJ))
 {
-	$i = false;
-	if($dzien != $obj->dzien)
-	{
-		$dzien = $obj->dzien;
-		
-		if($pierwszy == true)
-		{
 echo<<<END
-		</tbody>
-	</table>
-END;
-		}
-		
-		if($obj->dtyg == 1) $dzien_tygodnia = 'Niedziela';
-		elseif($obj->dtyg == 2) $dzien_tygodnia = 'Poniedziałek';
-		elseif($obj->dtyg == 3) $dzien_tygodnia = 'Wtorek';
-		elseif($obj->dtyg == 4) $dzien_tygodnia = 'Środa';
-		elseif($obj->dtyg == 5) $dzien_tygodnia = 'Czwartek';
-		elseif($obj->dtyg == 6) $dzien_tygodnia = 'Piątek';
-		elseif($obj->dtyg == 7) $dzien_tygodnia = 'Sobota';
-		
-echo<<<END
-	<table class="table">
-		<caption style="font-size: 20px;">{$dzien_tygodnia} <span style="color: white; font-size: 15px;">({$obj->dzien})</span></caption>
-		<thead>
-			<tr>
-				<th style="width:15%">Od kiedy</th>
-				<th style="width:15%">Do kiedy</th>
-				<th style="width:45%">Opis</th>
-				<th style="width:35%">Status</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>{$obj->czas_od}</td>
-				<td>{$obj->czas_do}</td>
-				<td>{$obj->info_o_pracy}</td>
-				<td>
+	<tbody>
+		<tr>
+			<td>{$obj->czas_od}</td>
+			<td>{$obj->czas_do}</td>
+			<td>{$obj->info_o_pracy}</td>
+			<td>
 END;
 
 if($obj->status == 1)
@@ -157,25 +151,21 @@ echo<<<END
 				</td>
 			</tr>
 END;
-	}
-	
-	else
-	{
-echo<<<END
-			<tr>
-				<td>{$obj->czas_od}</td>
-				<td>{$obj->czas_do}</td>
-				<td>{$obj->info_o_pracy}</td>
-			</tr>
-END;
-	}
 }
 
-if ($i == true)
-{
-	echo '<span style="color: gray;">Nie masz aktualnie przypisanej żadnej pracy</span>';
+echo<<<END
+		</tr>
+	</tbody>
+END;
+}
+
+echo<<<END
+		</table>
+	</div>
+END;
 }
 ?>
+<!------------------------------------------------------------------------------------------------------------------->
 		</tbody></table>
                     </div>
                 </div>
