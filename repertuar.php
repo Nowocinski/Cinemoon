@@ -8,8 +8,21 @@
 
     include "side_part/gora.php";
     include "side_part/nav.php";
-    echo '<div class="container mt-3">';
+    echo '<div class="container mt-3 text-center">';
     echo '<div class="row">';
+	
+	$dzien = date('Y-m-d');
+echo<<<END
+<div class="col-12 text-right">
+	<form action="repertuar.php" post="get">
+		<div class="form-group">
+			<label style="color: white;">Znajdź seans na konkretny dzień: </label>
+			<input type="date" value="{$dzien}" name="dzien">
+			<button style="color: black;">Szukaj</button>
+		</div>
+	</form>
+</div>
+END;
     //--------------------------------------------------------------------------
     //Wyłączenie worningów i włączenie wyświetlania wyjątków
     mysqli_report(MYSQLI_REPORT_STRICT);
@@ -26,12 +39,32 @@
         {
             // Kodowanie polskich znaków
             $polaczenie->query("SET NAMES utf8");
+			if(!isset($_GET['dzien']))
+			{
             $rezultat = $polaczenie->query("SELECT * FROM filmy INNER JOIN repertuar ON filmy.id_filmu=repertuar.id_filmu WHERE repertuar.czas_rozpoczecia >= CAST(CONCAT(CURDATE(),' ',CURTIME()) as DATETIME) GROUP BY filmy.id_filmu ORDER BY repertuar.czas_rozpoczecia ASC");
+			}
+			else
+			{
+				$rezultat = $polaczenie->query("SELECT * FROM filmy INNER JOIN repertuar ON filmy.id_filmu=repertuar.id_filmu WHERE CONVERT(repertuar.czas_rozpoczecia, DATE)=CONVERT('".$_GET['dzien']."', DATE) GROUP BY filmy.id_filmu ORDER BY repertuar.czas_rozpoczecia ASC");
+			}
             if(!$rezultat)
                 throw new Exception($polaczenie->error);
-
             else
             {
+			   if(mysqli_num_rows($rezultat) == 0)
+			   {
+echo<<<END
+<div class="container">
+	<div class="row">
+		<div class="col-12 dane-konta">
+		Nie znaleziono żadnego seansu o podanym czasie
+		</div>
+	</div>
+</div>
+END;
+			   }
+			   else
+			   {
                while($wiersz = $rezultat->fetch_assoc())
                {
                    $tytul = $wiersz['tytul'];
@@ -72,15 +105,11 @@
 
                            $ilosc_miejsc_w_sali = $wiersz2['ilosc_rzedow'] * $wiersz2['ilosc_miejsc'];
                            $id_repertuaru = $wiersz2['id_repertuaru'];
-//------------------------------------------------------------------------------------------------------------------------
         $rezultat3 = $polaczenie->query("SELECT * FROM rezerwacje WHERE id_repertuaru='$id_repertuaru'");
         $ilosc_osob_ktore_poszly_na_repertuar = $rezultat2->num_rows;
 
         if(!$rezultat3)
             throw new Exception($polaczenie->error);
-//------------------------------------------------------------------------------------------------------------------------
-                           //if($ilosc_osob_ktore_poszly_na_repertuar < $ilosc_miejsc_w_sali)
-                           //{
 echo<<<END
         <div class="col-12 col-sm-6 col-md-3 text-center">
         <form action="wybor-miejsca.php" method="get">
@@ -90,14 +119,6 @@ echo<<<END
             </form>
         </div>
 END;
-                          // }
-
-                           //else
-                           //{
-                            //echo '<div class="col-3"><button type="button" class="btn btn-danger btn-md">Bilety wyprzedane</button></div>';
-                          //  echo 'ilosc_osob_ktore_poszly_na_repertuar: '.$ilosc_osob_ktore_poszly_na_repertuar.'<br>ilosc_miejsc_w_sali: '.$ilosc_miejsc_w_sali;
-                           //}
-                          //  echo '<br>Id_repertuaru: '.$id_repertuaru;
                            echo '</div>';
                            echo '</div>';
 
@@ -106,7 +127,7 @@ END;
                            echo '</div>'; /* zamkniecie Containera */
                        }
                    }
-               }
+               }}
             }
 
             $polaczenie->close();
@@ -120,7 +141,6 @@ END;
     }
     echo '</div>'; /* Zamknięcie diva row */
     echo '</div>'; /* Zamknięcie diva container */
-	include "side_part/footer.php";
     include "side_part/dol.php";
 
 ?>
