@@ -58,6 +58,7 @@ if (session_status() == PHP_SESSION_NONE)
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul id="active" class="nav navbar-nav side-nav">
                     <li class="selected"><a href="specjalista-ds-obslugi.php"><i class="fa fa-area-chart"></i> Strona startowa</a></li>
+					<li><a href="zarzadanie-aktualnosciami.php"><i class="fa fa-area-chart"></i> Zarządzanie aktualnościami</a></li>
                     <li><a href="dodaj-aktualnosci.php"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Dodaj aktualności</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right navbar-user">
