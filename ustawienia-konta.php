@@ -133,6 +133,28 @@
   </div>
 </div>
 
+<!-- Usunięcie konta -->
+<div id="usunKonto" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+		<h4 class="modal-title text-danger">Usunięcie konta</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form action="usun-konto.php" method="post" id="uK">
+			<label>Usunięcie konta spowoduje usunięcie wszystkich zgoromadzonych przez Ciebie danych na tej stronie. Chcesz kontynuować?</label>
+			<label><input type="checkbox" name="potwierdzenie" required> Tak, chcę usunąć konto</label><br>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-danger" form="uK">Usuń</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container">
     <div class="row">
 		<div class="dane-konta col-12 mt-3 text-center px-5">
@@ -185,7 +207,7 @@
 					  <table class="table">
 						<tr>
 							<th>Ta opcja spowoduje usunięcie konta</th>
-							<td><button class="btn btn-danger" type="submit">Usuń</button></td>
+							<td><button class="btn btn-danger" type="submit" data-toggle="modal" data-target="#usunKonto">Usuń</button></td>
 						</tr>
 					  </table>
 					</div>
