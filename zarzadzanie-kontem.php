@@ -287,6 +287,11 @@ if (session_status() == PHP_SESSION_NONE)
 										<td><?= $_SESSION['adres']; ?></td>
 										<td><button type="submit" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#zmienAdres">Edytuj</button></td>
 									</tr>
+									<tr>
+										<th class="text-center">Hasło</th>
+										<td></td>
+										<td><button type="submit" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#zmienHaslo">Edytuj</button></td>
+									</tr>
 							  </table>
 							</div>
 						</div>
