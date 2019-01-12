@@ -19,8 +19,8 @@
 		echo "Nie można nazwiązać połączenia z bazą danych";
 	}
 
-	$zapytanie = $polaczenie->prepare('UPDATE klienci SET imie=:imie WHERE id_klienta=:id');
-	$zapytanie->bindValue(':id', $_SESSION['id_klienta'], PDO::PARAM_INT);
+	$zapytanie = $polaczenie->prepare('UPDATE konta SET imie=:imie WHERE id=:id');
+	$zapytanie->bindValue(':id', $_SESSION['id'], PDO::PARAM_INT);
 	$zapytanie->bindValue(':imie', htmlentities($_POST['imie']), PDO::PARAM_STR);
 	$zapytanie->execute();
 

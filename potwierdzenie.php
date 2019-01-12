@@ -101,8 +101,8 @@ END;
             if(isset($_SESSION['zalogowany']))
             {
                 $mnoznik = 1;
-                $id_klienta = $_SESSION['id_klienta'];
-                $rezultat4 = $polaczenie->query("SELECT typ FROM klienci WHERE id_klienta='$id_klienta'");
+                $id_klienta = $_SESSION['id'];
+                $rezultat4 = $polaczenie->query("SELECT typ_konta FROM konta WHERE id='$id_klienta'");
                 if(!$rezultat4)
                     throw new Exception($polaczenie->error);
 
@@ -111,7 +111,7 @@ END;
                 {
                     $wiersz = $rezultat4->fetch_assoc();
 
-                    if($wiersz['typ'] == "studencki")
+                    if($wiersz['typ_konta'] == "studencki")
                         $mnoznik = 0.5;
                 }
             }
@@ -127,13 +127,13 @@ echo<<<END
 END;
             if(isset($_SESSION['zalogowany']))
             {
-                if($wiersz['typ'] == 'studencki')
+                if($wiersz['typ_konta'] == 'studencki')
                 {
                     echo '<span style="color:red;text-decoration:line-through">'.$cena_biletu.' zł</span>';
                     echo '<p>('.$cena_biletu*$mnoznik.'zł, zniżka 50%)</p>';
                 }
                 
-                if($wiersz['typ'] == 'normalny')
+                if($wiersz['typ_konta'] == 'normalny')
                 {
                     echo $cena_biletu.' zł';
                     echo '<p>(Brak zniżki)</p>';

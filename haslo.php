@@ -22,9 +22,9 @@ catch(PDOException $e)
 	echo "Nie można nazwiązać połączenia z bazą danych";
 }
 
-$zapytanie = $polaczenie->prepare('UPDATE pracownicy SET haslo=:var1 WHERE id_pracownika=:var2');
+$zapytanie = $polaczenie->prepare('UPDATE konta SET haslo=:var1 WHERE id=:var2');
 $zapytanie->bindValue(':var1', $haslo_hash, PDO::PARAM_STR);
-$zapytanie->bindValue(':var2', $_SESSION['id_pracownika'], PDO::PARAM_INT);
+$zapytanie->bindValue(':var2', $_SESSION['id'], PDO::PARAM_INT);
 $zapytanie->execute();
 
 header('Location: zarzadzanie-kontem.php');

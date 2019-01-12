@@ -11,8 +11,7 @@
     <div class="row">
         <div class="col-12 text-center">Dziękujemy, <?php echo $_SESSION['imie']; ?>. Rezerwacja na film przebiegła poprawnie.</div>
         <div class="col-12 text-center">Pamiętaj, aby przyjść na około 30 minut przed jego rozpoczęciem.</div>
-        <div class="col-12 text-center">Jeśli chcesz możesz przejść do <a href="kont
-            ">swojego konta</a>, aby zobaczyć listę wszystkich Twoich rezerwacji.</div>
+        <div class="col-12 text-center">Jeśli chcesz możesz przejść do <a href="konto.php">swojego konta</a>, aby zobaczyć listę wszystkich Twoich rezerwacji.</div>
     </div>
 </div>
 

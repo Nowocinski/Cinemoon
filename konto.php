@@ -25,8 +25,8 @@
     include "side_part/gora.php";
     include "side_part/nav.php";
 
-    if(isset($_SESSION['id_klienta']))
-        $id_klienta = $_SESSION['id_klienta'];
+    if(isset($_SESSION['id']))
+        $id_klienta = $_SESSION['id'];
     else
     {
       //Wyłączenie worningów i włączenie wyświetlania wyjątków
@@ -52,15 +52,15 @@
                   // Kodowanie polskich znaków
                   $polaczenie->query("SET NAMES utf8");
 
-                  $rezultat = $polaczenie->query("SELECT id_klienta FROM klienci WHERE email='$email' AND email!=''");
+                  $rezultat = $polaczenie->query("SELECT id FROM konta WHERE email='$email' AND email!=''");
 
                   if(!$rezultat)
                       throw new Exception($polaczenie->error);
                   else
                   {
                       $wiersz = $rezultat->fetch_assoc();
-                      $_SESSION['id_klienta'] = $wiersz['id_klienta'];
-                      $id_klienta = $wiersz['id_klienta'];
+                      $_SESSION['id'] = $wiersz['id'];
+                      $id_klienta = $wiersz['id'];
                   }
 
 
@@ -183,7 +183,7 @@
                 {
                     // Kodowanie polskich znaków
                     $polaczenie->query("SET NAMES utf8");
-                    $rezultat = $polaczenie->query("SELECT * FROM rezerwacje INNER JOIN klienci ON rezerwacje.id_klienta=klienci.id_klienta INNER JOIN repertuar ON rezerwacje.id_repertuaru=repertuar.id_repertuaru INNER JOIN filmy ON repertuar.id_filmu=filmy.id_filmu INNER JOIN sale ON repertuar.id_sali=sale.id_sali WHERE rezerwacje.id_klienta='$id_klienta' AND repertuar.czas_rozpoczecia > CAST(CONCAT(CURDATE(),' ',CURTIME()) as DATETIME) ORDER BY repertuar.czas_rozpoczecia ASC");
+                    $rezultat = $polaczenie->query("SELECT * FROM rezerwacje INNER JOIN konta ON rezerwacje.id_klienta=konta.id INNER JOIN repertuar ON rezerwacje.id_repertuaru=repertuar.id_repertuaru INNER JOIN filmy ON repertuar.id_filmu=filmy.id_filmu INNER JOIN sale ON repertuar.id_sali=sale.id_sali WHERE rezerwacje.id_klienta='$id_klienta' AND repertuar.czas_rozpoczecia > CAST(CONCAT(CURDATE(),' ',CURTIME()) as DATETIME) ORDER BY repertuar.czas_rozpoczecia ASC");
 
                     if(!$rezultat)
                         throw new Exception($polaczenie->error);
@@ -249,7 +249,7 @@
                 {
                     // Kodowanie polskich znaków
                     $polaczenie->query("SET NAMES utf8");
-                    $rezultat = $polaczenie->query("SELECT * FROM rezerwacje INNER JOIN klienci ON rezerwacje.id_klienta=klienci.id_klienta INNER JOIN repertuar ON rezerwacje.id_repertuaru=repertuar.id_repertuaru INNER JOIN filmy ON repertuar.id_filmu=filmy.id_filmu INNER JOIN sale ON repertuar.id_sali=sale.id_sali WHERE rezerwacje.id_klienta='$id_klienta' AND repertuar.czas_rozpoczecia < CAST(CONCAT(CURDATE(),' ',CURTIME()) as DATETIME) ORDER BY repertuar.czas_rozpoczecia ASC");
+                    $rezultat = $polaczenie->query("SELECT * FROM rezerwacje INNER JOIN konta ON rezerwacje.id_klienta=konta.id INNER JOIN repertuar ON rezerwacje.id_repertuaru=repertuar.id_repertuaru INNER JOIN filmy ON repertuar.id_filmu=filmy.id_filmu INNER JOIN sale ON repertuar.id_sali=sale.id_sali WHERE rezerwacje.id_klienta='$id_klienta' AND repertuar.czas_rozpoczecia < CAST(CONCAT(CURDATE(),' ',CURTIME()) as DATETIME) ORDER BY repertuar.czas_rozpoczecia ASC");
 
                     if(!$rezultat)
                         throw new Exception($polaczenie->error);

@@ -20,11 +20,11 @@ if (session_status() == PHP_SESSION_NONE)
 	}
 	
 	//Do pracownika
-	$zapytanie = $polaczenie->prepare("SELECT * FROM pracownicy WHERE typ_konta!='administratorIT'");
+	$zapytanie = $polaczenie->prepare("SELECT * FROM konta WHERE typ_konta='administratorIT' OR typ_konta='pracownik' OR typ_konta='menadzerPracownikow' OR typ_konta='specjalistaDSObslugi'");
 	$zapytanie->execute();
 	
 	//Do klienta
-	$zapytanie2 = $polaczenie->prepare("SELECT * FROM klienci");
+	$zapytanie2 = $polaczenie->prepare("SELECT * FROM konta WHERE typ_konta='studencki' OR typ_konta='normalny'");
 	$zapytanie2->execute();
 ?>
 <!DOCTYPE html>
@@ -320,14 +320,14 @@ while($obj = $zapytanie->fetch(PDO::FETCH_OBJ))
 {
 echo<<<END
 								<tr>
-									<td>{$obj->id_pracownika}</td>
+									<td>{$obj->id}</td>
 									<td>{$obj->imie}</td>
 									<td>{$obj->nazwisko}</td>
 									<td>{$obj->typ_konta}</td>
 									<td>{$obj->nr_telefonu}</td>
-									<!--td><button type="button" class="btn btn-primary" onclick="edytujPrac({$obj->id_pracownika},'{$obj->imie}','{$obj->nazwisko}','{$obj->email}',{$obj->nr_telefonu},'{$obj->typ_konta}','{$obj->miejscowosc}','{$obj->adres}')" data-toggle="modal" data-target="#ePrac">Edytuj</button></td>
-									<td><button type="button" onclick="zmienPrac({$obj->id_pracownika})" class="btn btn-warning" data-toggle="modal" data-target="#zPrac">Zmień</button></td-->
-									<td><button type="button" class="btn btn-danger" onclick="usunPrac({$obj->id_pracownika})" class="btn btn-warning" data-toggle="modal" data-target="#uPrac">Usuń</button></td>
+									<!--td><button type="button" class="btn btn-primary" onclick="edytujPrac({$obj->id},'{$obj->imie}','{$obj->nazwisko}','{$obj->email}',{$obj->nr_telefonu},'{$obj->typ_konta}','{$obj->miejscowosc}','{$obj->adres}')" data-toggle="modal" data-target="#ePrac">Edytuj</button></td>
+									<td><button type="button" onclick="zmienPrac({$obj->id})" class="btn btn-warning" data-toggle="modal" data-target="#zPrac">Zmień</button></td-->
+									<td><button type="button" class="btn btn-danger" onclick="usunPrac({$obj->id})" class="btn btn-warning" data-toggle="modal" data-target="#uPrac">Usuń</button></td>
 								</tr>
 END;
 }
@@ -361,19 +361,19 @@ while($obj = $zapytanie2->fetch(PDO::FETCH_OBJ))
 {
 echo<<<END
 								<tr>
-									<td>{$obj->id_klienta}</td>
+									<td>{$obj->id}</td>
 									<td>{$obj->imie}</td>
 									<td>{$obj->nazwisko}</td>
-									<td>{$obj->typ}</td>
+									<td>{$obj->typ_konta}</td>
 									<td>
 END;
 	if($obj->nr_telefonu == '') echo '<span style="color: gray">Nie podano</span>';
 	else echo $obj->nr_telefonu;
 echo<<<END
 									</td>
-									<!--td><button type="submit" class="btn btn-primary" onclick="edytujKlie({$obj->id_klienta},'{$obj->imie}','{$obj->nazwisko}','{$obj->email}', '{$obj->nr_telefonu}', '{$obj->typ}')" data-toggle="modal" data-target="#eKlie">Edytuj</button></td>
-									<td><button type="button" onclick="zmienKlie({$obj->id_klienta})" class="btn btn-warning" data-toggle="modal" data-target="#zKlie">Zmień</button></td-->
-									<td><button type="button" class="btn btn-danger" onclick="usunKlie({$obj->id_klienta})" class="btn btn-warning" data-toggle="modal" data-target="#uKlie">Usuń</button></td>
+									<!--td><button type="submit" class="btn btn-primary" onclick="edytujKlie({$obj->id},'{$obj->imie}','{$obj->nazwisko}','{$obj->email}', '{$obj->nr_telefonu}', '{$obj->typ_konta}')" data-toggle="modal" data-target="#eKlie">Edytuj</button></td>
+									<td><button type="button" onclick="zmienKlie({$obj->id})" class="btn btn-warning" data-toggle="modal" data-target="#zKlie">Zmień</button></td-->
+									<td><button type="button" class="btn btn-danger" onclick="usunKlie({$obj->id})" class="btn btn-warning" data-toggle="modal" data-target="#uKlie">Usuń</button></td>
 								</tr>
 END;
 }

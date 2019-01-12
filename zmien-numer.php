@@ -19,7 +19,7 @@
 		echo "Nie można nazwiązać połączenia z bazą danych";
 	}
 
-	$zapytanie = $polaczenie->prepare('SELECT id_klienta FROM klienci WHERE nr_telefonu=:telefon');
+	$zapytanie = $polaczenie->prepare('SELECT id FROM konta WHERE nr_telefonu=:telefon');
 	$zapytanie->bindValue(':telefon', $_POST['telefon'], PDO::PARAM_STR);
 	$zapytanie->execute();
 	
@@ -31,8 +31,8 @@
 	}
 	else
 	{
-		$zapytanie = $polaczenie->prepare('UPDATE klienci SET nr_telefonu=:telefon WHERE id_klienta=:id');
-		$zapytanie->bindValue(':id', $_SESSION['id_klienta'], PDO::PARAM_INT);
+		$zapytanie = $polaczenie->prepare('UPDATE konta SET nr_telefonu=:telefon WHERE id=:id');
+		$zapytanie->bindValue(':id', $_SESSION['id'], PDO::PARAM_INT);
 		$zapytanie->bindValue(':telefon', $_POST['telefon'], PDO::PARAM_STR);
 		$zapytanie->execute();
 		

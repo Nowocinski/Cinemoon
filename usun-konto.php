@@ -19,12 +19,12 @@
 		echo "Nie można nazwiązać połączenia z bazą danych";
 	}
 
-	$zapytanie = $polaczenie->prepare('DELETE FROM klienci WHERE id_klienta=:id');
-	$zapytanie->bindValue(':id', $_SESSION['id_klienta'], PDO::PARAM_INT);
+	$zapytanie = $polaczenie->prepare('DELETE FROM konta WHERE id=:id');
+	$zapytanie->bindValue(':id', $_SESSION['id'], PDO::PARAM_INT);
 	$zapytanie->execute();
 	
 	$zapytanie = $polaczenie->prepare('DELETE FROM rezerwacje WHERE id_klienta=:id');
-	$zapytanie->bindValue(':id', $_SESSION['id_klienta'], PDO::PARAM_INT);
+	$zapytanie->bindValue(':id', $_SESSION['id'], PDO::PARAM_INT);
 	$zapytanie->execute();
 
 	$_SESSION['imie'] = $_POST['imie'];

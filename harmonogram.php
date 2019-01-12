@@ -19,7 +19,7 @@ if (session_status() == PHP_SESSION_NONE)
 		echo "Nie można nazwiązać połączenia z bazą danych";
 	}
 	
-	$zapytanie = $polaczenie->prepare("SELECT * FROM pracownicy");
+	$zapytanie = $polaczenie->prepare("SELECT * FROM konta WHERE typ_konta='administratorIT' OR typ_konta='pracownik' OR typ_konta='menadzerPracownikow' OR typ_konta='specjalistaDSObslugi'");
 	$zapytanie->execute();
 ?>
 <!DOCTYPE html>
@@ -204,18 +204,18 @@ while($obj = $zapytanie->fetch(PDO::FETCH_OBJ))
 if(!isset($_GET['dzien']))
 {
 $zapytanie2 = $polaczenie->prepare("SELECT * FROM harmonogram_prac WHERE id_prac=:id AND CAST(CONCAT(dzien,' ',czas_od) as DATETIME) >= CAST(CONCAT(CURDATE(),' ',CURTIME()) as DATETIME) ORDER BY dzien ASC");
-$zapytanie2->bindValue(':id', $obj->id_pracownika, PDO::PARAM_INT);
+$zapytanie2->bindValue(':id', $obj->id, PDO::PARAM_INT);
 $zapytanie2->execute();
 }
 else
 {
 $zapytanie2 = $polaczenie->prepare("SELECT * FROM harmonogram_prac WHERE id_prac=:id AND dzien='".$_GET['dzien']."' ORDER BY dzien ASC");
-$zapytanie2->bindValue(':id', $obj->id_pracownika, PDO::PARAM_INT);
+$zapytanie2->bindValue(':id', $obj->id, PDO::PARAM_INT);
 $zapytanie2->execute();
 }
 
 	echo '<table class="table">';
-	echo '<caption style="font-size: 20px;">'.$obj->imie.' '.$obj->nazwisko.' <span style="color: white; font-size: 15px;">('.$obj->typ_konta.') <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" onclick="wyslij('.$obj->id_pracownika.')" data-target="#formularz">Dodaj zdarzenie</button></span><caption>';
+	echo '<caption style="font-size: 20px;">'.$obj->imie.' '.$obj->nazwisko.' <span style="color: white; font-size: 15px;">('.$obj->typ_konta.') <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" onclick="wyslij('.$obj->id.')" data-target="#formularz">Dodaj zdarzenie</button></span><caption>';
 if($zapytanie2->rowCount() == 0)
 	echo '<tr><td style="color: gray;">Ta osoba nie ma przydzielonych żadnych obowiązków</td></tr>';
 else

@@ -59,8 +59,8 @@
 
                 else
                 {
-                    $id_klienta = $_SESSION['id_klienta'];
-                    $rezultat2 = $polaczenie->query("SELECT typ FROM klienci WHERE id_klienta='$id_klienta'");
+                    $id_klienta = $_SESSION['id'];
+                    $rezultat2 = $polaczenie->query("SELECT typ_konta FROM konta WHERE id='$id_klienta'");
 
                     if(!$rezultat2)
                         throw new Exception($polaczenie->error);
@@ -68,7 +68,7 @@
                     else
                     {
                          $wiersz = $rezultat2->fetch_assoc();
-                         $typ = $wiersz['typ'];
+                         $typ = $wiersz['typ_konta'];
                     }
 
                     $rezultat3 = $polaczenie->query("SELECT cena_biletu FROM repertuar WHERE id_repertuaru='$id_repertuaru'");
@@ -108,6 +108,6 @@
     catch(Exception $e)
     {
         echo '<span style="color: red">Błąd serwera. Spróbuj zarejestrować się później</span>';
-        //echo '<br>Informacja deweloperska: '.$e;
+        echo '<br>Informacja deweloperska: '.$e;
     }
 ?>

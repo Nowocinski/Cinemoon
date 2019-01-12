@@ -29,8 +29,8 @@
 	
 	else
 	{
-		$zapytanie = $polaczenie->prepare('UPDATE klienci SET haslo=:haslo WHERE id_klienta=:id');
-		$zapytanie->bindValue(':id', $_SESSION['id_klienta'], PDO::PARAM_INT);
+		$zapytanie = $polaczenie->prepare('UPDATE konta SET haslo=:haslo WHERE id=:id');
+		$zapytanie->bindValue(':id', $_SESSION['id'], PDO::PARAM_INT);
 		$zapytanie->bindValue(':haslo', password_hash($_POST['haslo'], PASSWORD_DEFAULT), PDO::PARAM_STR);
 		$zapytanie->execute();
 		

@@ -20,7 +20,7 @@ if (session_status() == PHP_SESSION_NONE)
 	}
 	
 	$zapytanie = $polaczenie->prepare('SELECT id, czas_od, czas_do, info_o_pracy, status FROM harmonogram_prac WHERE id_prac=:id AND YEARWEEK(dzien)=YEARWEEK(NOW()) AND DAYOFWEEK(dzien)=:dtyg ORDER BY dzien ASC');
-	$zapytanie->bindValue(':id', $_SESSION['id_pracownika'], PDO::PARAM_INT);
+	$zapytanie->bindValue(':id', $_SESSION['id'], PDO::PARAM_INT);
 ?>
 <!DOCTYPE html>
 <html lang="pl">

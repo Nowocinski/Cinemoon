@@ -17,7 +17,7 @@ catch(PDOException $e)
 	echo "Nie można nazwiązać połączenia z bazą danych";
 }
 
-$zapytanie = $polaczenie->prepare('DELETE FROM klienci WHERE id_klienta=:var1');
+$zapytanie = $polaczenie->prepare('DELETE FROM konta WHERE id=:var1');
 $zapytanie->bindValue(':var1', $_POST['id'], PDO::PARAM_INT);
 $zapytanie->execute();
 

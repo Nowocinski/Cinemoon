@@ -20,7 +20,7 @@ catch(PDOException $e)
 	echo "Nie można nazwiązać połączenia z bazą danych";
 }
 
-$zapytanie = $polaczenie->prepare('UPDATE pracownicy SET imie=:im, nazwisko=:na, email=:em, nr_telefonu=:te, miejscowosc=:mi, adres=:ad, typ_konta=:ty WHERE id_pracownika=:id');
+$zapytanie = $polaczenie->prepare('UPDATE konta SET imie=:im, nazwisko=:na, email=:em, nr_telefonu=:te, miejscowosc=:mi, adres=:ad, typ_konta=:ty WHERE id=:id');
 
 $zapytanie->bindValue(':im', $_POST['imie'], PDO::PARAM_STR);
 $zapytanie->bindValue(':na', $_POST['nazwisko'], PDO::PARAM_STR);
