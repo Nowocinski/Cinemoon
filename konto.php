@@ -160,17 +160,6 @@
                 <b>Numer telefonu</b><br><?php if($_SESSION['nr_telefonu'] != '') echo $_SESSION['nr_telefonu']; else echo '<span style="color: gray">(nie podano)</span><br>';?>
 			</section>
         </article>
-        <article>
-            <header>
-                <b>USTAWIENIA KONTA</b>
-            </header>
-                <div class="mb-1 mt-1"><a class="text-danger" href="zmien-imie.php">Zmień imię</a></div>
-                <div class="mb-1"><a class="text-danger" href="zmien-nazwisko.php">Zmień nazwisko</a></div>
-                <div class="mb-1"><a class="text-danger" href="zmien-email.php">Zmień adres e-mail</a></div>
-                <div class="mb-1"><a class="text-danger" href="zmien-haslo.php">Zmień hasło</a></div>
-                <div class="mb-1"><a class="text-danger" href="zmien-numer.php">Zmień numer telefonu</a></div>
-                <div><a class="text-danger" href="usun-konto.php">Usuń konto</a></div>
-        </article>
 </div>
 		<div class="col-12 col-lg-10">
         <article class="dane-konta col-12 mt-3">
