@@ -25,6 +25,12 @@ $zapytanie->bindValue(':var1', $_POST['nazwisko'], PDO::PARAM_STR);
 $zapytanie->bindValue(':var2', $_SESSION['id'], PDO::PARAM_INT);
 $zapytanie->execute();
 
+$_SESSION['powiadomienie'] = '<div class="col-lg-9">
+                    <div class="alert alert-dismissable alert-success">
+                        <button data-dismiss="alert" class="close" type="button">&times;</button>
+                        Pomyślnie zmieniono nazwisko
+                    </div>
+                </div>';
 $_SESSION['nazwisko'] = $_POST['nazwisko'];
 
 header('Location: zarzadzanie-kontem.php');

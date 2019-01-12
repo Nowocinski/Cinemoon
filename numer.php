@@ -27,5 +27,12 @@ $zapytanie->execute();
 
 $_SESSION['nr_telefonu'] = $_POST['numer'];
 
+$_SESSION['powiadomienie'] = '<div class="col-lg-9">
+                    <div class="alert alert-dismissable alert-success">
+                        <button data-dismiss="alert" class="close" type="button">&times;</button>
+                        Pomyślnie zedytowano numer telefonu
+                    </div>
+                </div>';
+
 header('Location: zarzadzanie-kontem.php');
 ?>

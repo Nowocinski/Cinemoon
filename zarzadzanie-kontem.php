@@ -44,7 +44,6 @@ if (session_status() == PHP_SESSION_NONE)
     <script type="text/javascript" src="http://www.prepbootstrap.com/Content/js/gridData.js"></script>
 </head>
 <body>
-
 <!-- Zmiana hasła -->
 <div id="zmienHaslo" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -248,7 +247,15 @@ if (session_status() == PHP_SESSION_NONE)
                 </div>
             </div>
             <div class="row">
+<?php
 
+if(isset($_SESSION['powiadomienie']))
+{
+	echo $_SESSION['powiadomienie'];
+	unset($_SESSION['powiadomienie']);
+}
+
+?>
 				<div class="col-lg-9 text-center">
                     <div class="panel panel-primary">
                         <div class="panel-heading">

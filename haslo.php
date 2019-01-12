@@ -27,5 +27,12 @@ $zapytanie->bindValue(':var1', $haslo_hash, PDO::PARAM_STR);
 $zapytanie->bindValue(':var2', $_SESSION['id'], PDO::PARAM_INT);
 $zapytanie->execute();
 
+$_SESSION['powiadomienie'] = '<div class="col-lg-9">
+                    <div class="alert alert-dismissable alert-success">
+                        <button data-dismiss="alert" class="close" type="button">&times;</button>
+                        Pomyślnie zedytowano hasło
+                    </div>
+                </div>';
+
 header('Location: zarzadzanie-kontem.php');
 ?>

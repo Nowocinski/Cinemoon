@@ -27,5 +27,12 @@ $zapytanie->execute();
 
 $_SESSION['adres'] = $_POST['adres'];
 
+$_SESSION['powiadomienie'] = '<div class="col-lg-9">
+                    <div class="alert alert-dismissable alert-success">
+                        <button data-dismiss="alert" class="close" type="button">&times;</button>
+                        Pomyślnie zedytowano adres
+                    </div>
+                </div>';
+
 header('Location: zarzadzanie-kontem.php');
 ?>
