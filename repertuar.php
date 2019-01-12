@@ -17,7 +17,7 @@ echo<<<END
 	<form action="repertuar.php" post="get">
 		<div class="form-group">
 			<label style="color: white;">Znajdź seans na konkretny dzień: </label>
-			<input type="date" value="{$dzien}" name="dzien">
+			<input type="date" value="{$dzien}" name="dzien" min="{$dzien}">
 			<button style="color: black;">Szukaj</button>
 		</div>
 	</form>
