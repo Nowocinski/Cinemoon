@@ -37,6 +37,5 @@ echo<<<END
 </div>
 END;
 
-	include "side_part/footer.php";
     include "side_part/dol.php";
 ?>
