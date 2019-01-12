@@ -25,9 +25,6 @@
                  <li class="nav-item btn btn-default">
                     <a class="nav-link <?= isset($title) && $title=='Kontakt' ? 'active' : '' ?>" href="kontakt.php">KONTAKT</a>
                  </li>
-                <li class="nav-item <?php if(isset($_SESSION['zalogowany'])) echo 'disabled'; ?> btn btn-default">
-                    <a class="nav-link <?= isset($title) && $title=='Pracownicy' ? 'active' : '' ?>" <?php if(!isset($_SESSION['zalogowany'])) echo 'href="pracownicy.php"'; ?> <?php if(isset($_SESSION['zalogowany'])) echo 'style="cursor: default;"'; ?>>DLA PRACOWNIKÓW</a>
-                </li>
 				<li class="nav-item btn btn-default">
                     <a class="nav-link <?= isset($title) && $title=='Aktualności' ? 'active' : '' ?>" href="aktualnosci.php">AKTUALNOŚCI</a>
                 </li>
@@ -71,6 +68,10 @@ echo<<<END
                          <a class="dropdown-item text-center" href="konto.php"> Moje konto </a>
 
                          <div class="dropdown-divider"></div>
+
+						 <a class="dropdown-item text-center" href="ustawienia-konta.php"> Ustawienia konta </a>
+
+						 <div class="dropdown-divider"></div>
 
                          <a class="dropdown-item text-center" href="wyloguj.php"> Wyloguj się </a>
 
