@@ -11,7 +11,10 @@
     echo '<div class="container mt-3 text-center">';
     echo '<div class="row">';
 	
-	$dzien = date('Y-m-d');
+	if(isset($_GET['dzien']))
+		$dzien = $_GET['dzien'];
+	else
+		$dzien = date('Y-m-d');
 echo<<<END
 <div class="col-12 text-right">
 	<form action="repertuar.php" post="get">
