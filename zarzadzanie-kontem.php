@@ -53,7 +53,7 @@ if (session_status() == PHP_SESSION_NONE)
         <h4 class="modal-title text-warning">Zmiana hasła</h4>
       </div>
       <div class="modal-body">
-        <form action="#" method="post" id="zHaslo">
+        <form action="haslo.php" method="post" id="zHaslo">
 			<label>Podaj stare hasło</label>
 			<input type="password" class="form-control" minlength="6" maxlength="30" placeholder="Stare hasło" name="haslo_stare" style="color: black;" required>
 			
