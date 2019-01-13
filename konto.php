@@ -158,6 +158,8 @@
                 <b>E-mail</b><br><?php echo $_SESSION['email']; ?><br>
 
                 <b>Numer telefonu</b><br><?php if($_SESSION['nr_telefonu'] != '') echo $_SESSION['nr_telefonu']; else echo '<span style="color: gray">(nie podano)</span><br>';?>
+				<b>Miejscowość</b><br><?php if($_SESSION['miejscowosc'] != '') echo $_SESSION['miejscowosc'].'<br>'; else echo '<span style="color: gray">(nie podano)</span><br>';?>
+				<b>Adres</b><br><?php if($_SESSION['adres'] != '') echo $_SESSION['adres']; else echo '<span style="color: gray">(nie podano)</span><br>';?>
 			</section>
         </article>
 </div>
