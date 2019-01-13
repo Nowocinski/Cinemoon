@@ -53,6 +53,18 @@ if($_POST['haslo_nowe']!=$_POST['haslo_powtorzone'])
 	exit();
 }
 
+if(strlen($_POST['haslo_nowe']) < 6 || strlen($_POST['haslo_nowe']) > 30)
+{
+	$_SESSION['powiadomienie'] = '<div class="col-lg-9">
+                    <div class="alert alert-dismissable alert-danger">
+                        <button data-dismiss="alert" class="close" type="button">&times;</button>
+                        Nowe hasło musi składać się od 6 do 30 znaków
+                    </div>
+                </div>';
+	header('Location: zarzadzanie-kontem.php');
+	exit();
+}
+
 else
 {
 $zapytanie = $polaczenie->prepare('UPDATE konta SET haslo=:var1 WHERE id=:var2');
