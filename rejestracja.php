@@ -85,18 +85,18 @@
 				$_SESSION['blad_miejscowosci'] = '<span style="color: red;">Nazwisko miejscowosci musi składać się od 2 do 40 znaków</span>';
 			}
 		}
-		
-		if(strlen($_POST['adres']) < 1 || strlen($_POST['haslo1']) > 6)
-        {
-            $poprawna_walidacja = false;
-            $_SESSION['blad_haslo1'] = '<span style="color: red;">Adres musi składać się od 1 do 6 znaków</span>';
-        }
 //----------------------------------------------------------------------------------------------------------------------------------
 		//Walidacja adresu
 		if(strlen($_POST['miejscowosc']) == 0 && strlen($_POST['adres']) > 0)
 		{
 			$_SESSION['blad_adresu'] = '<span style="color: red;">W przypadku podaniu nazwy adresu prosimy też o podania nazwy miejscowości</span>';
 		}
+
+		if(strlen($_POST['adres']) < 1 || strlen($_POST['adres']) > 6)
+        {
+            $poprawna_walidacja = false;
+            $_SESSION['blad_haslo1'] = '<span style="color: red;">Adres musi składać się od 1 do 6 znaków</span>';
+        }
 //----------------------------------------------------------------------------------------------------------------------------------
         //Walidacja regulaminu
         if(!isset($_POST['regulamin']))
