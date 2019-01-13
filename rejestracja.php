@@ -87,10 +87,10 @@
 		}
 //----------------------------------------------------------------------------------------------------------------------------------
 		//Walidacja adresu
-		if(strlen($_POST['adres']) < 1 || strlen($_POST['adres']) > 6)
+		if(strlen($_POST['adres']) < 1 || strlen($_POST['adres']) > 40)
         {
             $poprawna_walidacja = false;
-            $_SESSION['blad_haslo1'] = '<span style="color: red;">Adres musi składać się od 1 do 6 znaków</span>';
+            $_SESSION['blad_haslo1'] = '<span style="color: red;">Adres musi składać się od 1 do 40 znaków</span>';
         }
 //----------------------------------------------------------------------------------------------------------------------------------
         //Walidacja regulaminu
