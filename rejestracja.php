@@ -87,11 +87,6 @@
 		}
 //----------------------------------------------------------------------------------------------------------------------------------
 		//Walidacja adresu
-		if(strlen($_POST['miejscowosc']) == 0 && strlen($_POST['adres']) > 0)
-		{
-			$_SESSION['blad_adresu'] = '<span style="color: red;">W przypadku podaniu nazwy adresu prosimy też o podania nazwy miejscowości</span>';
-		}
-
 		if(strlen($_POST['adres']) < 1 || strlen($_POST['adres']) > 6)
         {
             $poprawna_walidacja = false;
