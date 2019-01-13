@@ -121,7 +121,10 @@
       <div class="modal-body">
         <form action="zmien-haslo.php" method="post" id="zHaslo">
 			<label>Podaj nowe hasło</label>
-			<input type="password" class="form-control" placeholder="Nowe hasło" name="haslo" style="color: black;" required>
+			<input type="password" class="form-control" placeholder="Nowe hasło" name="haslo1" style="color: black;" required>
+
+			<label>Powtórz nowe hasło</label>
+			<input type="password" class="form-control" placeholder="Powtórz nowe hasło" name="haslo2" style="color: black;" required>
 			<label><input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić hasło</label><br>
 		</form>
       </div>
