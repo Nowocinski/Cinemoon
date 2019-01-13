@@ -53,9 +53,16 @@ if (session_status() == PHP_SESSION_NONE)
         <h4 class="modal-title text-warning">Zmiana hasła</h4>
       </div>
       <div class="modal-body">
-        <form action="haslo.php" method="post" id="zHaslo">
+        <form action="#" method="post" id="zHaslo">
+			<label>Podaj stare hasło</label>
+			<input type="password" class="form-control" minlength="6" maxlength="30" placeholder="Stare hasło" name="haslo_stare" style="color: black;" required>
+			
 			<label>Podaj nowe hasło</label>
-			<input type="password" class="form-control" minlength="6" maxlength="30" placeholder="Nowe hasło" name="haslo" style="color: black;" required>
+			<input type="password" class="form-control" minlength="6" maxlength="30" placeholder="Nowe hasło" name="haslo_nowe" style="color: black;" required>
+			
+			<label>Powtórz nowe hasło</label>
+			<input type="password" class="form-control" minlength="6" maxlength="30" placeholder="Powtórzeone nowe hasło" name="haslo_powtorzone" style="color: black;" required>
+			
 			<label><input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić hasło</label><br>
 		</form>
       </div>
@@ -154,6 +161,29 @@ if (session_status() == PHP_SESSION_NONE)
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-warning" form="zAdres">Zmień</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Zmiana adresu e-mail -->
+<div id="zmienEmail" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title text-warning">Zmiana adresu e-mail</h4>
+      </div>
+      <div class="modal-body">
+        <form action="email.php" method="post" id="zEmail">
+			<label>Podaj nowy adres e-mail</label>
+			<input type="email" class="form-control" placeholder="Nowy adres e-mail" name="email" style="color: black;" required>
+			<label><input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić adres e-mail</label><br>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-warning" form="zEmail">Zmień</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
       </div>
     </div>
@@ -295,8 +325,13 @@ if(isset($_SESSION['powiadomienie']))
 										<td><button type="submit" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#zmienAdres">Edytuj</button></td>
 									</tr>
 									<tr>
+										<th class="text-center">Adres e-mail</th>
+										<td><?= $_SESSION['email']; ?></td>
+										<td><button type="submit" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#zmienEmail">Edytuj</button></td>
+									</tr>
+									<tr>
 										<th class="text-center">Hasło</th>
-										<td></td>
+										<td>****</td>
 										<td><button type="submit" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#zmienHaslo">Edytuj</button></td>
 									</tr>
 							  </table>
