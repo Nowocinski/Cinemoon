@@ -194,7 +194,7 @@ if (session_status() == PHP_SESSION_NONE)
 						<form action="harmonogram.php" post="get">
 							<div class="form-group col-4 text-center">
 							  <label>Wyświetl harmonogram na: </label>
-								<input type="date" style="height: 25px; color: black;" value="<?=date('Y-m-d')?>" name="dzien">
+								<input type="date" style="height: 25px; color: black;" value="<?= isset($_GET['dzien']) ? $_GET['dzien'] : date('Y-m-d')?>" name="dzien">
 							  <button style="color: black;">Wyświetl</button>
 							</div>
 						</form>
@@ -203,7 +203,7 @@ while($obj = $zapytanie->fetch(PDO::FETCH_OBJ))
 {
 if(!isset($_GET['dzien']))
 {
-$zapytanie2 = $polaczenie->prepare("SELECT * FROM harmonogram_prac WHERE id_prac=:id AND CAST(CONCAT(dzien,' ',czas_od) as DATETIME) >= CAST(CONCAT(CURDATE(),' ',CURTIME()) as DATETIME) ORDER BY dzien ASC");
+$zapytanie2 = $polaczenie->prepare("SELECT * FROM harmonogram_prac WHERE id_prac=:id AND YEARWEEK(dzien)=YEARWEEK(NOW()) ORDER BY dzien ASC");
 $zapytanie2->bindValue(':id', $obj->id, PDO::PARAM_INT);
 $zapytanie2->execute();
 }
