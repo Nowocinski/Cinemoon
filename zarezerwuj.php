@@ -82,9 +82,9 @@
 
                     if(isset($typ) && isset($cena_biletu))
                     {
-                        if($typ == "studencki") $monznik = 0.5;
+                        if($typ == "studencki") $mnoznik = 0.5;
                         if($typ == "normalny") $mnoznik = 1;
-                        $koszt = $cena_biletu * $monznik;
+                        $koszt = $cena_biletu * $mnoznik;
 
                         if($polaczenie->query("INSERT INTO rezerwacje VALUES (NULL, '$id_klienta', '$id_repertuaru', '$miejsce', '$rzad', '$koszt')"))
                         {
