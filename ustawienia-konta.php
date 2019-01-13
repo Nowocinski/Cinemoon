@@ -120,6 +120,9 @@
       </div>
       <div class="modal-body">
         <form action="zmien-haslo.php" method="post" id="zHaslo">
+			<label>Stare hasło</label>
+			<input type="password" class="form-control" placeholder="Stare hasło" name="haslo_stare" style="color: black;" required>
+		
 			<label>Podaj nowe hasło</label>
 			<input type="password" class="form-control" placeholder="Nowe hasło" name="haslo1" style="color: black;" required>
 

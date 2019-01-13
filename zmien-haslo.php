@@ -18,17 +18,31 @@
 	{
 		echo "Nie można nazwiązać połączenia z bazą danych";
 	}
+	
+	$zapytanie = $polaczenie->prepare('SELECT haslo FROM konta WHERE id=:id');
+	$zapytanie->bindValue(':id', $_SESSION['id'], PDO::PARAM_INT);
+	$zapytanie->execute();
+
+	$obj = $zapytanie->fetch(PDO::FETCH_OBJ);
+
+	//Weryfikacja starego hasła
+	if(!password_verify($_POST['haslo_stare'], $obj->haslo))
+	{
+		$_SESSION['blad'] = '<div class="col-12 p-2 text-center text-danger">Stare hasło nie jest identyczne ze starym hasłem</div>';
+		header('Location: ustawienia-konta.php');
+		exit();
+	}
+
+	if($_POST['haslo1'] != $_POST['haslo2'])
+    {
+        $_SESSION['blad'] = '<div class="col-12 p-2 text-center text-danger">Hasła nie pasują do siebie</div>';
+		header('Location: ustawienia-konta.php');
+		exit();
+    }
 
 	if(strlen($_POST['haslo2']) < 6 || strlen($_POST['haslo2']) > 30)
     {
         $_SESSION['blad'] = '<div class="col-12 p-2 text-center text-danger">Niepoprawna długość hasła</div>';
-		header('Location: ustawienia-konta.php');
-		exit();
-    }
-	
-	if($_POST['haslo1'] != $_POST['haslo2'])
-    {
-        $_SESSION['blad'] = '<div class="col-12 p-2 text-center text-danger">Hasła nie pasują do siebie</div>';
 		header('Location: ustawienia-konta.php');
 		exit();
     }
