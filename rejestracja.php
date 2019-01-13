@@ -18,6 +18,8 @@
         $email = $_POST['email'];
         $numertelefonu = $_POST['numertelefonu'];
         $typ = $_POST['typ'];
+        $miejscowosc = $_POST['miejscowosc'];
+        $adres = $_POST['adres'];
 
         //Walidacja imienia
         if(strlen($_POST['imie']) < 3 || strlen($_POST['imie']) > 20)
@@ -74,6 +76,28 @@
             $_SESSION['blad_numertelefonu'] = '<span style="color: red;">Numer telefonu musi składać się z 9 cyfr bez znaków specjalnych oraz spacji</span>';
         }
 //----------------------------------------------------------------------------------------------------------------------------------
+		//Walidacja miejscowości
+		if(strlen($_POST['miejscowosc']) != 0)
+		{
+			if(strlen($_POST['miejscowosc']) < 2 || strlen($_POST['miejscowosc']) > 40)
+			{
+				$poprawna_walidacja = false;
+				$_SESSION['blad_miejscowosci'] = '<span style="color: red;">Nazwisko miejscowosci musi składać się od 2 do 40 znaków</span>';
+			}
+		}
+		
+		if(strlen($_POST['adres']) < 1 || strlen($_POST['haslo1']) > 6)
+        {
+            $poprawna_walidacja = false;
+            $_SESSION['blad_haslo1'] = '<span style="color: red;">Adres musi składać się od 1 do 6 znaków</span>';
+        }
+//----------------------------------------------------------------------------------------------------------------------------------
+		//Walidacja adresu
+		if(strlen($_POST['miejscowosc']) == 0 && strlen($_POST['adres']) > 0)
+		{
+			$_SESSION['blad_adresu'] = '<span style="color: red;">W przypadku podaniu nazwy adresu prosimy też o podania nazwy miejscowości</span>';
+		}
+//----------------------------------------------------------------------------------------------------------------------------------
         //Walidacja regulaminu
         if(!isset($_POST['regulamin']))
         {
@@ -110,28 +134,26 @@
                 // Kodowanie polskich znaków
                 $polaczenie->query("SET NAMES utf8");
 
-                $rezultat = $polaczenie->query("SELECT id_klienta FROM klienci WHERE email='$email' AND email!=''");
-                $rezultatP = $polaczenie->query("SELECT id_pracownika FROM pracownicy WHERE email='$email' AND email!=''");
+                $rezultat = $polaczenie->query("SELECT id FROM konta WHERE email='$email' AND email!=''");
 
                 if(!$rezultat)
                     throw new Exception($polaczenie->error);
                 else
                 {
-                    if($rezultat->num_rows > 0 || $rezultatP->num_rows > 0)
+                    if($rezultat->num_rows > 0)
                     {
                         $poprawna_walidacja = false;
                         $_SESSION['blad_email'] = '<span style="color: red;">Podany e-mail jest już przypisany do innego konta</span>';
                     }
                 }
 
-                $rezultat2 = $polaczenie->query("SELECT id_klienta FROM klienci WHERE nr_telefonu='$numertelefonu' AND nr_telefonu!=''");
-                $rezultat2P = $polaczenie->query("SELECT id_pracownika FROM pracownicy WHERE nr_telefonu='$numertelefonu' AND nr_telefonu!=''");
+                $rezultat2 = $polaczenie->query("SELECT id FROM konta WHERE nr_telefonu='$numertelefonu' AND nr_telefonu!=''");
 
                 if(!$rezultat2)
                     throw new Exception($polaczenie->error);
                 else
                 {
-                    if($rezultat2->num_rows > 0 || $rezultat2P->num_rows > 0)
+                    if($rezultat2->num_rows > 0)
                     {
                         $poprawna_walidacja = false;
                         $_SESSION['blad_numertelefonu'] = '<span style="color: red;">Podany numer jest już przypisany do innego konta</span>';
@@ -140,7 +162,7 @@
 
                 if($poprawna_walidacja)
                 {
-                    if($polaczenie->query("INSERT INTO klienci VALUES (NULL, '$imie', '$nazwisko', '$email', '$zahasowane_haslo', '$numertelefonu', '$typ')"))
+                    if($polaczenie->query("INSERT INTO konta VALUES (NULL, '$imie', '$nazwisko', '$typ', '$miejscowosc', '$adres' , '$email', '$zahasowane_haslo', '$numertelefonu')"))
                     {
                         $_SESSION['zalogowany'] = true;
 						$_SESSION['pierwszewejscie'] = true;
@@ -150,6 +172,8 @@
                         $_SESSION['email'] = $email;
                         $_SESSION['nr_telefonu'] = $numertelefonu;
                         $_SESSION['typ'] = $typ;
+                        $_SESSION['miejscowosc'] = $miejscowosc;
+                        $_SESSION['adres'] = $adres;
 
                         header('Location: konto.php');
                         exit();
@@ -256,6 +280,30 @@
                 {
                     echo $_SESSION['blad_numertelefonu'];
                     unset($_SESSION['blad_numertelefonu']);
+                }
+            ?>
+        </div>
+
+		<div class="form-group">
+            <label for="phoneField">Miejscowość (opcjonalnie)</label>
+            <input type="text" class="form-control" placeholder="Podaj miejscowość w której mieszkasz" name="miejscowosc"/>
+            <?php
+                if(isset($_SESSION['blad_miejscowosci']))
+                {
+                    echo $_SESSION['blad_miejscowosci'];
+                    unset($_SESSION['blad_miejscowosci']);
+                }
+            ?>
+        </div>
+
+		<div class="form-group">
+            <label for="phoneField">Adres (opcjonalnie)</label>
+            <input type="text" class="form-control" placeholder="Podaj miejscowość w której mieszkasz" name="adres"/>
+            <?php
+                if(isset($_SESSION['blad_adresu']))
+                {
+                    echo $_SESSION['blad_adresu'];
+                    unset($_SESSION['blad_adresu']);
                 }
             ?>
         </div>
