@@ -133,6 +133,52 @@
   </div>
 </div>
 
+<!-- Zmiana miejscowosci -->
+<div id="zmienMiejscowosc" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+		<h4 class="modal-title text-warning">Zmiana miejscowości</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form action="zmien-miejscowosc.php" method="post" id="zMiejscowosc">
+			<label>Podaj nową nazwę miejscowości</label>
+			<input type="text" class="form-control" placeholder="Nowa miejscowość" name="miejscowosc" style="color: black;" minlength="2" maxlength="40" required>
+			<label><input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić miejscowości</label><br>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-warning" form="zMiejscowosc">Zmień</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Zmiana adresu -->
+<div id="zmienAdres" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+		<h4 class="modal-title text-warning">Zmiana adresu</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form action="zamiana-adresu.php" method="post" id="zAdres">
+			<label>Podaj nową adres</label>
+			<input type="text" class="form-control" placeholder="Nowa miejscowość" name="adres" style="color: black;" minlength="1" maxlength="40" required>
+			<label><input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić adres</label><br>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-warning" form="zAdres">Zmień</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Usunięcie konta -->
 <div id="usunKonto" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -181,13 +227,23 @@
 						</tr>
 						<tr>
 							<th>Hasło</th>
-							<td></td>
+							<td>****</td>
 							<td><button class="btn btn-warning" type="submit" data-toggle="modal" data-target="#zmienHaslo">Zmień</button></td>
 						</tr>
 						<tr>
 							<th>Numer telefonu</th>
 							<td><?php if($_SESSION['nr_telefonu'] != '') echo $_SESSION['nr_telefonu']; else echo '<span style="color: gray">(nie podano)</span><br>';?></td>
 							<td><button class="btn btn-warning" type="submit" data-toggle="modal" data-target="#zmienNrTelefonu">Zmień</button></td>
+						</tr>
+						<tr>
+							<th>Miejscowość</th>
+							<td><?php if($_SESSION['miejscowosc'] != '') echo $_SESSION['miejscowosc']; else echo '<span style="color: gray">(nie podano)</span><br>';?></td>
+							<td><button class="btn btn-warning" type="submit" data-toggle="modal" data-target="#zmienMiejscowosc">Zmień</button></td>
+						</tr>
+						<tr>
+							<th>Adres</th>
+							<td><?php if($_SESSION['adres'] != '') echo $_SESSION['adres']; else echo '<span style="color: gray">(nie podano)</span><br>';?></td>
+							<td><button class="btn btn-warning" type="submit" data-toggle="modal" data-target="#zmienAdres">Zmień</button></td>
 						</tr>
 					  </table>
 					</div>
