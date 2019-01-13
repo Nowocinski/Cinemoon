@@ -194,14 +194,14 @@ if (session_status() == PHP_SESSION_NONE)
       <div class="modal-body">
         <form action="usuwanie.php" method="post" id="uKonto">
 			<p>
-				Usunięcie konta spowoduj bezpowrotne utracenie wszystkich zgromadzonych danych takich jak:
+				Usunięcie konta spowoduje bezpowrotne utracenie wszystkich zgromadzonych danych takich jak:
 				<ul>
 					<li>harmonogram prac</li>
 					<li>dane osobowe</li>
 					<li>login</li>
 					<li>hasło</li>
 				</ul>
-				Jesteś pewien, żę chcesz tego dokonać?
+				Jesteś pewien, że chcesz tego dokonać?
 			</p>
 			<label><input type="checkbox" name="potwierdzenie" value="tak" required> Tak, chcę usunąć konto<br></label>
 		</form>

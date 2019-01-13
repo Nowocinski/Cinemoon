@@ -93,7 +93,7 @@
 		
 		else
 		{
-			document.getElementById("doPodmiany").innerHTML = '<form id="formularz" method="post" action="odwolanie-rezerwacji.php"><p>Czy chcesz odwołać rezerwacje?</p><label><input type="checkbox" required> Tak, chcę odwołać rezerwacje</label></form>';
+			document.getElementById("doPodmiany").innerHTML = '<form id="formularz" method="post" action="odwolanie-rezerwacji.php"><p>Czy chcesz odwołać wybrane rezerwacje?</p><label><input type="checkbox" required> Tak, chcę odwołać wybrane rezerwacje</label></form>';
 		
 			document.getElementById("przyciskiDoPodmiany").innerHTML = '<button type="submit" class="btn btn-warning" form="formularz" name="przycisk" value="'+str+'">Odwołaj</button><button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>';
 		}

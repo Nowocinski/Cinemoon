@@ -69,13 +69,13 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-		<h4 class="modal-title text-warning">Zmiana numer telefonu</h4>
+		<h4 class="modal-title text-warning">Zmiana numeru telefonu</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
         <form action="zmien-numer.php" method="post" id="zNrTel">
-			<label>Podaj nowe numer telegonu</label>
-			<input type="number" class="form-control" placeholder="Nowe numer telefonu" name="telefon" style="color: black;" min="100000000" max="999999999" required>
+			<label>Podaj nowy numer telefonu</label>
+			<input type="number" class="form-control" placeholder="Nowy numer telefonu" name="telefon" style="color: black;" min="100000000" max="999999999" required>
 			<label><input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić numer telefonu</label><br>
 		</form>
       </div>
@@ -92,13 +92,13 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-		<h4 class="modal-title text-warning">Zmiana adres e-mail</h4>
+		<h4 class="modal-title text-warning">Zmiana adresu e-mail</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
         <form action="zmien-email.php" method="post" id="zEmail">
-			<label>Podaj nowe adres e-mail</label>
-			<input type="email" class="form-control" placeholder="Nowe adres e-mail" name="email" style="color: black;" required>
+			<label>Podaj nowy adres e-mail</label>
+			<input type="email" class="form-control" placeholder="Nowy adres e-mail" name="email" style="color: black;" required>
 			<label><input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić adres e-mail</label><br>
 		</form>
       </div>
@@ -115,13 +115,13 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-		<h4 class="modal-title text-warning">Zmiane hasło</h4>
+		<h4 class="modal-title text-warning">Zmiana hasła</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
         <form action="zmien-haslo.php" method="post" id="zHaslo">
-			<label>Podaj nowe adres e-mail</label>
-			<input type="password" class="form-control" placeholder="Nowe nowe hasło" name="haslo" style="color: black;" required>
+			<label>Podaj nowe hasło</label>
+			<input type="password" class="form-control" placeholder="Nowe hasło" name="haslo" style="color: black;" required>
 			<label><input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić hasło</label><br>
 		</form>
       </div>
@@ -143,7 +143,7 @@
       </div>
       <div class="modal-body">
         <form action="usun-konto.php" method="post" id="uK">
-			<label>Usunięcie konta spowoduje usunięcie wszystkich zgoromadzonych przez Ciebie danych na tej stronie. Chcesz kontynuować?</label>
+			<label>Usunięcie konta spowoduje usunięcie wszystkich zgromadzonych przez Ciebie danych na tej stronie. Chcesz kontynuować?</label>
 			<label><input type="checkbox" name="potwierdzenie" required> Tak, chcę usunąć konto</label><br>
 		</form>
       </div>
