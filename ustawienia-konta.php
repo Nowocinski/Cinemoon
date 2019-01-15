@@ -227,6 +227,16 @@
 							<td><button class="btn btn-warning" type="submit" data-toggle="modal" data-target="#zmienNazwisko">Zmień</button></td>
 						</tr>
 						<tr>
+							<th>Typ konta</th>
+							<td><?php echo $_SESSION['typ_konta']; ?></td>
+							<td>
+<?=
+	$_SESSION['typ_konta']=='studencki'
+		?'<form action="zmien-typ.php" method="post"><button class="btn btn-warning btn-sm" type="submit" name="typ" value="'.$_SESSION['typ_konta'].'">Zmień<br>na normalny</button></form>'
+		:'<form action="zmien-typ.php" method="post"><button class="btn btn-warning btn-sm" type="submit" name="typ" value="'.$_SESSION['typ_konta'].'">Zmień<br>na studencki</button></form>'
+?>							</td>
+						</tr>
+						<tr>
 							<th>Adres e-mail</th>
 							<td><?php echo $_SESSION['email']; ?></td>
 							<td><button class="btn btn-warning" type="submit" data-toggle="modal" data-target="#zmienEmail">Zmień</button></td>
