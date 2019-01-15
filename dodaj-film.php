@@ -227,7 +227,7 @@ echo<<<END
         <div class="col-lg-12">
             <div class="alert alert-dismissable alert-success">
                 <button data-dismiss="alert" class="close" type="button">&times;</button>
-                Pomyślnie dodano nową sale
+                Pomyślnie dodano nowy film
             </div>
         </div>
 END;
