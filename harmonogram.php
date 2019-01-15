@@ -178,6 +178,13 @@ if (session_status() == PHP_SESSION_NONE)
         </nav>
 
         <div id="page-wrapper">
+<?php		
+if(isset($_SESSION['powiadomienie']))
+{
+	echo $_SESSION['powiadomienie'];
+	unset($_SESSION['powiadomienie']);
+}
+?>
             <div class="row">
                 <div class="col-lg-12">
                     <h1><small>Konto menadżera pracowników</small></h1>
