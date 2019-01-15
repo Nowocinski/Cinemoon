@@ -20,6 +20,24 @@ catch(PDOException $e)
 	echo "Nie można nazwiązać połączenia z bazą danych";
 }
 
+$zapytanie = $polaczenie->prepare('SELECT haslo FROM konta WHERE id=:id');
+$zapytanie->bindValue(':id', $_SESSION['id'], PDO::PARAM_INT);
+$zapytanie->execute();
+
+$obj = $zapytanie->fetch(PDO::FETCH_OBJ);
+
+if(!password_verify($_POST['haslo'], $obj->haslo))
+{
+	$_SESSION['powiadomienie'] = '<div class="col-lg-9">
+                    <div class="alert alert-dismissable alert-danger">
+                        <button data-dismiss="alert" class="close" type="button">&times;</button>
+                        Podano niepoprawne hasło
+                    </div>
+                </div>';
+	header('Location: zarzadzanie-kontem.php');
+	exit();
+}
+
 if(!preg_match('/^[a-zA-Z0-9\.\_\-]+@[a-zA-Z0-9]+.(com|pl|org)$/',$_POST['email']))
 {
 	$_SESSION['powiadomienie'] = '<div class="col-lg-9">
@@ -31,6 +49,7 @@ if(!preg_match('/^[a-zA-Z0-9\.\_\-]+@[a-zA-Z0-9]+.(com|pl|org)$/',$_POST['email'
 	header('Location: zarzadzanie-kontem.php');
 	exit();
 }
+
 
 $zapytanie = $polaczenie->prepare('SELECT id FROM konta WHERE email=:email AND id!=:id');
 $zapytanie->bindValue(':email', $_SESSION['email'], PDO::PARAM_STR);
