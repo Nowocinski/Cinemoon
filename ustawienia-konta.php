@@ -99,6 +99,10 @@
         <form action="zmien-email.php" method="post" id="zEmail">
 			<label>Podaj nowy adres e-mail</label>
 			<input type="email" class="form-control" placeholder="Nowy adres e-mail" name="email" style="color: black;" required>
+			
+			<label>Podaj hasło</label>
+			<input type="password" class="form-control" placeholder="Podaj hasło" name="haslo" style="color: black;" required>
+			
 			<label><input type="checkbox" name="potwierdzenie" required> Tak, chcę zmienić adres e-mail</label><br>
 		</form>
       </div>

@@ -19,6 +19,19 @@
 		echo "Nie można nazwiązać połączenia z bazą danych";
 	}
 
+	$zapytanie = $polaczenie->prepare('SELECT haslo FROM konta WHERE id=:id');
+	$zapytanie->bindValue(':id', $_SESSION['id'], PDO::PARAM_INT);
+	$zapytanie->execute();
+
+	$obj = $zapytanie->fetch(PDO::FETCH_OBJ);
+
+	if(!password_verify($_POST['haslo'], $obj->haslo))
+	{
+		$_SESSION['blad'] = '<div class="col-12 p-2 text-center text-danger">Podano nieprawidłowe hasło</div>';
+		header('Location: ustawienia-konta.php');
+		exit();
+	}
+
 	$zapytanie = $polaczenie->prepare('SELECT id FROM konta WHERE email=:email');
 	$zapytanie->bindValue(':email', $_POST['email'], PDO::PARAM_STR);
 	$zapytanie->execute();
