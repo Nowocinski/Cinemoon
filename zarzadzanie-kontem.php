@@ -2,7 +2,7 @@
 if (session_status() == PHP_SESSION_NONE)
     session_start();
 
-    if(!isset($_SESSION['typ_konta']))
+    if(!isset($_SESSION['typ_konta']) || $_SESSION['typ_konta']=='studencki' || $_SESSION['typ_konta']=='normalny')
     {
       header('Location: index.php');
       exit();
